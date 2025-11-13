@@ -1,0 +1,82 @@
+<div class="max-w-4xl mx-auto">
+  <div class="bg-white rounded-lg shadow-lg overflow-hidden">
+    <div class="md:flex">
+      <div class="md:w-1/2 bg-gradient-to-br from-green-400 to-blue-500 flex items-center justify-center p-12">
+        <span class="text-9xl">🌾</span>
+      </div>
+      <div class="md:w-1/2 p-8">
+        <div class="mb-4">
+          <span class="text-sm text-gray-500">
+            By <%= link_to @product.producer.name, producer_path(@product.producer), class: "text-blue-600 hover:text-blue-800 font-medium" %>
+          </span>
+        </div>
+        <h1 class="text-3xl font-bold text-gray-900 mb-4"><%= @product.name %></h1>
+        <div class="mb-6">
+          <span class="text-4xl font-bold text-green-600"><%= @product.formatted_price %></span>
+          <span class="text-gray-500 ml-2">per unit</span>
+        </div>
+
+        <div class="mb-6">
+          <% if @product.available? %>
+            <span class="inline-flex items-center px-3 py-1 rounded-full text-sm font-medium bg-green-100 text-green-800">
+              ✓ In Stock: <%= @product.stock %> available
+            </span>
+          <% else %>
+            <span class="inline-flex items-center px-3 py-1 rounded-full text-sm font-medium bg-red-100 text-red-800">
+              Out of Stock
+            </span>
+          <% end %>
+        </div>
+
+        <div class="mb-6">
+          <h2 class="text-lg font-semibold text-gray-900 mb-2">Description</h2>
+          <p class="text-gray-600"><%= @product.description || "No description available" %></p>
+        </div>
+
+        <div class="space-y-3">
+          <% if @product.available? && @product.producer.can_receive_payments? %>
+            <!-- Add to Cart Form -->
+            <%= form_with url: add_item_cart_path, method: :post, class: "flex gap-2" do |f| %>
+              <%= f.hidden_field :product_id, value: @product.id %>
+              <%= f.number_field :quantity, value: 1, min: 1, max: @product.stock, class: "w-24 px-3 py-2 border rounded-md text-center" %>
+              <%= f.submit "🛒 Add to Cart", class: "flex-1 px-6 py-3 bg-blue-600 text-white font-medium rounded-md hover:bg-blue-700 cursor-pointer" %>
+            <% end %>
+            
+            <%= link_to "Buy Now (Direct)", new_product_order_path(@product), class: "block w-full text-center px-6 py-3 bg-green-600 text-white font-medium rounded-md hover:bg-green-700" %>
+          <% else %>
+            <button disabled class="block w-full px-6 py-3 bg-gray-300 text-gray-500 rounded-md cursor-not-allowed">
+              <%= @product.available? ? "Producer cannot receive payments yet" : "Out of Stock" %>
+            </button>
+          <% end %>
+
+          <% if user_signed_in? && current_user.producer? && @product.producer.user == current_user %>
+            <div class="flex gap-2 mt-4">
+              <%= link_to "Edit Product", edit_product_path(@product), class: "flex-1 text-center px-4 py-2 border border-blue-600 text-blue-600 rounded-md hover:bg-blue-50" %>
+              <%= button_to "Delete", product_path(@product), method: :delete, data: { turbo_confirm: "Are you sure?" }, class: "flex-1 px-4 py-2 border border-red-600 text-red-600 rounded-md hover:bg-red-50" %>
+            </div>
+          <% end %>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="mt-8 bg-white rounded-lg shadow p-6">
+    <h2 class="text-xl font-semibold mb-4">💰 Payment Details</h2>
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-4 text-center">
+      <div>
+        <p class="text-sm text-gray-500 mb-1">Product Price</p>
+        <p class="text-2xl font-bold text-gray-900"><%= @product.formatted_price %></p>
+      </div>
+      <div>
+        <p class="text-sm text-gray-500 mb-1">Platform Fee (10%)</p>
+        <p class="text-2xl font-bold text-gray-900">€<%= format('%.2f', @product.price * 0.10) %></p>
+      </div>
+      <div>
+        <p class="text-sm text-gray-500 mb-1">Producer Receives</p>
+        <p class="text-2xl font-bold text-green-600">€<%= format('%.2f', @product.price * 0.90) %></p>
+      </div>
+    </div>
+  </div>
+
+  <%= link_to "← Back to Products", products_path, class: "inline-block mt-6 text-gray-600 hover:text-gray-900" %>
+</div>

@@ -1,0 +1,66 @@
+<div class="max-w-4xl mx-auto">
+  <h1 class="text-3xl font-bold text-gray-900 mb-6">✅ Confirm Your Order</h1>
+
+  <!-- Récapitulatif par producteur -->
+  <div class="space-y-6 mb-6">
+    <% @items_by_producer.each do |producer, items| %>
+      <div class="bg-white shadow rounded-lg overflow-hidden">
+        <div class="bg-gray-50 px-6 py-4 border-b">
+          <h2 class="text-xl font-semibold text-gray-900">🌾 <%= producer.name %></h2>
+        </div>
+        <div class="px-6 py-4 space-y-3">
+          <% items.each do |cart_item| %>
+            <div class="flex justify-between">
+              <div>
+                <p class="font-medium"><%= cart_item.product.name %></p>
+                <p class="text-sm text-gray-500">Quantity: <%= cart_item.quantity %> × <%= cart_item.product.formatted_price %></p>
+              </div>
+              <p class="font-medium"><%= number_to_currency(cart_item.subtotal, unit: "€") %></p>
+            </div>
+          <% end %>
+        </div>
+      </div>
+    <% end %>
+  </div>
+
+  <!-- Summary final -->
+  <div class="bg-white shadow rounded-lg p-6 mb-6">
+    <h2 class="text-xl font-semibold mb-4">Payment Breakdown</h2>
+    
+    <div class="space-y-3">
+      <% @producer_amounts.each do |pa| %>
+        <div class="flex justify-between text-sm">
+          <span class="text-gray-600"><%= pa[:producer].name %> receives:</span>
+          <span class="font-medium text-green-600"><%= number_to_currency(pa[:producer_amount], unit: "€") %></span>
+        </div>
+      <% end %>
+      
+      <div class="border-t pt-3">
+        <div class="flex justify-between text-sm">
+          <span class="text-gray-600">Platform fee (10%):</span>
+          <span class="font-medium"><%= number_to_currency(@cart.total_platform_fee, unit: "€") %></span>
+        </div>
+      </div>
+      
+      <div class="border-t pt-3">
+        <div class="flex justify-between text-2xl font-bold">
+          <span>Total to Pay:</span>
+          <span class="text-green-600"><%= number_to_currency(@cart.total, unit: "€") %></span>
+        </div>
+      </div>
+    </div>
+
+    <div class="bg-blue-50 border-l-4 border-blue-400 p-4 mt-4">
+      <p class="text-sm text-blue-800">
+        💡 <strong>Automatic Split Payment</strong><br>
+        One payment of <%= number_to_currency(@cart.total, unit: "€") %> will be automatically split between <%= @cart.producers.count %> <%= "producer".pluralize(@cart.producers.count) %>. Each producer receives their amount directly in their Stripe account.
+      </p>
+    </div>
+  </div>
+
+  <!-- Actions -->
+  <div class="flex gap-3">
+    <%= link_to "← Back to Cart", cart_path, class: "flex-1 text-center px-6 py-3 border border-gray-300 rounded-md hover:bg-gray-50" %>
+    <%= button_to "Continue to Payment →", checkout_path, method: :post, class: "flex-1 px-6 py-3 bg-green-600 text-white rounded-md hover:bg-green-700 font-medium", data: { turbo: false } %>
+  </div>
+</div>

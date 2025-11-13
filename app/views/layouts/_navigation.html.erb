@@ -1,0 +1,47 @@
+<nav class="bg-white shadow-lg">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div class="flex justify-between h-16">
+      <div class="flex">
+        <div class="flex-shrink-0 flex items-center">
+          <%= link_to "🌾 Marketplace Demo", root_path, class: "text-2xl font-bold text-green-600" %>
+        </div>
+        <div class="hidden sm:ml-6 sm:flex sm:space-x-8">
+          <%= link_to "Products", products_path, class: "inline-flex items-center px-1 pt-1 text-sm font-medium text-gray-900 hover:text-green-600" %>
+          <% if user_signed_in? && current_user.producer? %>
+            <%= link_to "My Dashboard", producer_dashboard_path, class: "inline-flex items-center px-1 pt-1 text-sm font-medium text-gray-900 hover:text-green-600" %>
+          <% end %>
+          <% if user_signed_in? %>
+            <%= link_to "My Order Groups", order_groups_path, class: "inline-flex items-center px-1 pt-1 text-sm font-medium text-gray-900 hover:text-green-600" %>
+          <% end %>
+        </div>
+      </div>
+      <div class="flex items-center space-x-4">
+        <!-- Cart Icon -->
+        <% 
+          session_id = session.id.to_s rescue nil
+          cart = session_id ? Cart.find_by(session_id: session_id) : nil
+          cart_count = cart ? cart.total_items : 0
+        %>
+        <%= link_to cart_path, class: "relative" do %>
+          <span class="text-2xl">🛒</span>
+          <% if cart_count > 0 %>
+            <span class="absolute -top-1 -right-1 bg-red-500 text-white text-xs font-bold rounded-full h-5 w-5 flex items-center justify-center">
+              <%= cart_count %>
+            </span>
+          <% end %>
+        <% end %>
+
+        <% if user_signed_in? %>
+          <span class="text-sm text-gray-700">👤 <%= current_user.email.split('@').first %></span>
+          <% unless current_user.producer? %>
+            <%= link_to "Become a Producer", new_producer_path, class: "px-4 py-2 rounded-md text-sm font-medium text-white bg-green-600 hover:bg-green-700" %>
+          <% end %>
+          <%= button_to "Sign Out", destroy_user_session_path, method: :delete, class: "px-4 py-2 rounded-md text-sm font-medium text-gray-700 hover:text-gray-900" %>
+        <% else %>
+          <%= link_to "Sign In", new_user_session_path, class: "px-4 py-2 rounded-md text-sm font-medium text-gray-700 hover:text-gray-900" %>
+          <%= link_to "Sign Up", new_user_registration_path, class: "px-4 py-2 rounded-md text-sm font-medium text-white bg-green-600 hover:bg-green-700" %>
+        <% end %>
+      </div>
+    </div>
+  </div>
+</nav>

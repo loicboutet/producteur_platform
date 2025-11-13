@@ -1,0 +1,61 @@
+<div class="space-y-6">
+  <div class="flex justify-between items-center">
+    <div>
+      <h1 class="text-3xl font-bold text-gray-900">🛒 Products Marketplace</h1>
+      <p class="text-gray-600 mt-2">Browse products from local producers</p>
+    </div>
+    <% if user_signed_in? && current_user.producer? && current_user.producer.can_receive_payments? %>
+      <%= link_to "Add Product", new_product_path, class: "px-4 py-2 bg-green-600 text-white rounded-md hover:bg-green-700" %>
+    <% end %>
+  </div>
+
+  <% if @products.any? %>
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+      <% @products.each do |product| %>
+        <div class="bg-white rounded-lg shadow-md overflow-hidden hover:shadow-xl transition-shadow">
+          <div class="bg-gradient-to-r from-green-400 to-blue-500 h-48 flex items-center justify-center">
+            <span class="text-6xl">🌾</span>
+          </div>
+          <div class="p-6">
+            <div class="flex justify-between items-start mb-2">
+              <h3 class="text-xl font-semibold text-gray-900"><%= product.name %></h3>
+              <span class="text-2xl font-bold text-green-600"><%= product.formatted_price %></span>
+            </div>
+            <p class="text-gray-600 text-sm mb-3 line-clamp-2"><%= product.description %></p>
+            <div class="flex justify-between items-center mb-4">
+              <span class="text-sm text-gray-500">
+                By <%= link_to product.producer.name, producer_path(product.producer), class: "text-blue-600 hover:text-blue-800 font-medium" %>
+              </span>
+              <span class="text-sm <%= product.stock > 0 ? 'text-green-600' : 'text-red-600' %>">
+                <%= product.stock > 0 ? "In stock: #{product.stock}" : "Out of stock" %>
+              </span>
+            </div>
+            <div class="flex gap-2">
+              <%= link_to "View Details", product_path(product), class: "flex-1 text-center px-4 py-2 border border-gray-300 rounded-md hover:bg-gray-50" %>
+              <% if product.available? && product.producer.can_receive_payments? %>
+                <%= link_to "Buy Now", new_product_order_path(product), class: "flex-1 text-center px-4 py-2 bg-green-600 text-white rounded-md hover:bg-green-700" %>
+              <% else %>
+                <button disabled class="flex-1 px-4 py-2 bg-gray-300 text-gray-500 rounded-md cursor-not-allowed">
+                  Unavailable
+                </button>
+              <% end %>
+            </div>
+          </div>
+        </div>
+      <% end %>
+    </div>
+  <% else %>
+    <div class="text-center py-12">
+      <div class="text-6xl mb-4">🌾</div>
+      <h3 class="text-xl font-medium text-gray-900 mb-2">No products available yet</h3>
+      <p class="text-gray-600 mb-6">Be the first producer to add products!</p>
+      <% if user_signed_in? %>
+        <% unless current_user.producer? %>
+          <%= link_to "Become a Producer", new_producer_path, class: "px-6 py-3 bg-green-600 text-white rounded-md hover:bg-green-700" %>
+        <% end %>
+      <% else %>
+        <%= link_to "Sign Up to Sell", new_user_registration_path, class: "px-6 py-3 bg-green-600 text-white rounded-md hover:bg-green-700" %>
+      <% end %>
+    </div>
+  <% end %>
+</div>

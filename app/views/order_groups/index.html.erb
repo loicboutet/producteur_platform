@@ -1,0 +1,53 @@
+<div class="space-y-6">
+  <h1 class="text-3xl font-bold text-gray-900">📦 My Order Groups</h1>
+
+  <% if @order_groups.any? %>
+    <div class="space-y-4">
+      <% @order_groups.each do |order_group| %>
+        <div class="bg-white shadow rounded-lg p-6">
+          <div class="flex justify-between items-start">
+            <div>
+              <h2 class="text-xl font-semibold text-gray-900">Order Group #<%= order_group.id %></h2>
+              <p class="text-sm text-gray-500 mt-1">
+                <%= order_group.created_at.strftime("%B %d, %Y at %H:%M") %>
+              </p>
+              <p class="text-sm text-gray-600 mt-2">
+                <%= order_group.producers_count %> <%= "producer".pluralize(order_group.producers_count) %> • 
+                <%= order_group.orders.sum(:quantity) %> <%= "item".pluralize(order_group.orders.sum(:quantity)) %>
+              </p>
+            </div>
+            <div class="text-right">
+              <p class="text-2xl font-bold text-green-600"><%= order_group.formatted_total %></p>
+              <span class="mt-2 inline-flex items-center px-3 py-1 rounded-full text-xs font-semibold <%= order_group.paid? ? 'bg-green-100 text-green-800' : 'bg-yellow-100 text-yellow-800' %>">
+                <%= order_group.status.upcase %>
+              </span>
+            </div>
+          </div>
+
+          <div class="mt-4 pt-4 border-t">
+            <div class="flex justify-between items-center">
+              <div class="flex gap-4 text-sm text-gray-600">
+                <span>Platform fee: <%= order_group.formatted_platform_fee %></span>
+                <span>•</span>
+                <span>Producers receive: <%= number_to_currency(order_group.orders.sum(:producer_amount), unit: "€") %></span>
+              </div>
+              <div class="flex gap-2">
+                <%= link_to "View Details", order_group_path(order_group), class: "px-4 py-2 text-blue-600 hover:text-blue-800 font-medium" %>
+                <% if order_group.pending? %>
+                  <%= link_to "Pay Now", payment_checkout_path, class: "px-4 py-2 bg-green-600 text-white rounded-md hover:bg-green-700" %>
+                <% end %>
+              </div>
+            </div>
+          </div>
+        </div>
+      <% end %>
+    </div>
+  <% else %>
+    <div class="bg-white shadow rounded-lg p-12 text-center">
+      <div class="text-6xl mb-4">📦</div>
+      <h3 class="text-xl font-medium text-gray-900 mb-2">No order groups yet</h3>
+      <p class="text-gray-600 mb-6">Start shopping to see your orders here!</p>
+      <%= link_to "Browse Products", products_path, class: "inline-block px-6 py-3 bg-green-600 text-white rounded-md hover:bg-green-700" %>
+    </div>
+  <% end %>
+</div>

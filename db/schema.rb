@@ -10,7 +10,85 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2025_01_22_142453) do
+ActiveRecord::Schema[8.0].define(version: 2025_10_30_110818) do
+  create_table "cart_items", force: :cascade do |t|
+    t.integer "cart_id", null: false
+    t.integer "product_id", null: false
+    t.integer "quantity", default: 1, null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["cart_id", "product_id"], name: "index_cart_items_on_cart_id_and_product_id", unique: true
+    t.index ["cart_id"], name: "index_cart_items_on_cart_id"
+    t.index ["product_id"], name: "index_cart_items_on_product_id"
+  end
+
+  create_table "carts", force: :cascade do |t|
+    t.integer "user_id"
+    t.string "session_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["session_id"], name: "index_carts_on_session_id", unique: true
+    t.index ["user_id"], name: "index_carts_on_user_id"
+  end
+
+  create_table "order_groups", force: :cascade do |t|
+    t.integer "user_id", null: false
+    t.decimal "total_amount", precision: 10, scale: 2, null: false
+    t.decimal "platform_fee", precision: 10, scale: 2, null: false
+    t.string "status", default: "pending", null: false
+    t.string "stripe_payment_intent_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["status"], name: "index_order_groups_on_status"
+    t.index ["stripe_payment_intent_id"], name: "index_order_groups_on_stripe_payment_intent_id", unique: true
+    t.index ["user_id"], name: "index_order_groups_on_user_id"
+  end
+
+  create_table "orders", force: :cascade do |t|
+    t.integer "user_id", null: false
+    t.integer "producer_id", null: false
+    t.integer "product_id", null: false
+    t.integer "quantity", null: false
+    t.decimal "total_amount", precision: 10, scale: 2, null: false
+    t.decimal "platform_fee", precision: 10, scale: 2, null: false
+    t.decimal "producer_amount", precision: 10, scale: 2, null: false
+    t.string "status", default: "pending", null: false
+    t.string "stripe_payment_intent_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.integer "order_group_id"
+    t.index ["order_group_id"], name: "index_orders_on_order_group_id"
+    t.index ["producer_id"], name: "index_orders_on_producer_id"
+    t.index ["product_id"], name: "index_orders_on_product_id"
+    t.index ["status"], name: "index_orders_on_status"
+    t.index ["stripe_payment_intent_id"], name: "index_orders_on_stripe_payment_intent_id", unique: true
+    t.index ["user_id"], name: "index_orders_on_user_id"
+  end
+
+  create_table "producers", force: :cascade do |t|
+    t.string "name", null: false
+    t.string "email", null: false
+    t.string "stripe_account_id"
+    t.string "stripe_account_status", default: "pending"
+    t.integer "user_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["email"], name: "index_producers_on_email", unique: true
+    t.index ["stripe_account_id"], name: "index_producers_on_stripe_account_id", unique: true
+    t.index ["user_id"], name: "index_producers_on_user_id"
+  end
+
+  create_table "products", force: :cascade do |t|
+    t.string "name", null: false
+    t.text "description"
+    t.decimal "price", precision: 10, scale: 2, null: false
+    t.integer "stock", default: 0, null: false
+    t.integer "producer_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["producer_id"], name: "index_products_on_producer_id"
+  end
+
   create_table "users", force: :cascade do |t|
     t.string "email", default: "", null: false
     t.string "encrypted_password", default: "", null: false
@@ -22,4 +100,15 @@ ActiveRecord::Schema[8.0].define(version: 2025_01_22_142453) do
     t.index ["email"], name: "index_users_on_email", unique: true
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end
+
+  add_foreign_key "cart_items", "carts"
+  add_foreign_key "cart_items", "products"
+  add_foreign_key "carts", "users"
+  add_foreign_key "order_groups", "users"
+  add_foreign_key "orders", "order_groups"
+  add_foreign_key "orders", "producers"
+  add_foreign_key "orders", "products"
+  add_foreign_key "orders", "users"
+  add_foreign_key "producers", "users"
+  add_foreign_key "products", "producers"
 end

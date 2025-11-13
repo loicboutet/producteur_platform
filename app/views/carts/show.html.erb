@@ -1,0 +1,144 @@
+<div class="max-w-4xl mx-auto">
+  <div class="flex justify-between items-center mb-6">
+    <h1 class="text-3xl font-bold text-gray-900">🛒 Your Cart</h1>
+    <% if @cart.total_items > 0 %>
+      <%= button_to "Clear Cart", clear_cart_path, method: :delete, data: { turbo_confirm: "Are you sure?" }, class: "text-red-600 hover:text-red-800 text-sm" %>
+    <% end %>
+  </div>
+
+  <% if @cart.empty? %>
+    <div class="bg-white shadow rounded-lg p-12 text-center">
+      <div class="text-6xl mb-4">🛒</div>
+      <h3 class="text-xl font-medium text-gray-900 mb-2">Your cart is empty</h3>
+      <p class="text-gray-600 mb-6">Add some products to get started!</p>
+      <%= link_to "Browse Products", products_path, class: "inline-block px-6 py-3 bg-green-600 text-white rounded-md hover:bg-green-700" %>
+    </div>
+  <% else %>
+    <!-- Items groupés par producteur -->
+    <div class="space-y-6">
+      <% @items_by_producer.each do |producer, items| %>
+        <div class="bg-white shadow rounded-lg overflow-hidden">
+          <!-- Header du producteur -->
+          <div class="bg-gray-50 px-6 py-4 border-b">
+            <div class="flex justify-between items-center">
+              <div>
+                <h2 class="text-xl font-semibold text-gray-900">🌾 <%= producer.name %></h2>
+                <p class="text-sm text-gray-500"><%= producer.email %></p>
+              </div>
+              <% if producer.can_receive_payments? %>
+                <span class="text-sm text-green-600">✓ Active</span>
+              <% else %>
+                <span class="text-sm text-yellow-600">⚠️ Setup pending</span>
+              <% end %>
+            </div>
+          </div>
+
+          <!-- Produits de ce producteur -->
+          <div class="divide-y">
+            <% items.each do |cart_item| %>
+              <div class="px-6 py-4">
+                <div class="flex items-center justify-between">
+                  <div class="flex-1">
+                    <h3 class="font-medium text-gray-900"><%= cart_item.product.name %></h3>
+                    <p class="text-sm text-gray-500"><%= cart_item.product.formatted_price %> per unit</p>
+                    <% if cart_item.product.stock < cart_item.quantity %>
+                      <p class="text-sm text-red-600 mt-1">⚠️ Only <%= cart_item.product.stock %> in stock</p>
+                    <% end %>
+                  </div>
+
+                  <div class="flex items-center space-x-4">
+                    <!-- Quantity selector -->
+                    <%= form_with url: update_item_cart_path, method: :patch, class: "flex items-center space-x-2" do |f| %>
+                      <%= f.hidden_field :product_id, value: cart_item.product.id %>
+                      <%= f.number_field :quantity, value: cart_item.quantity, min: 0, max: cart_item.product.stock, class: "w-20 px-3 py-2 border rounded-md text-center" %>
+                      <%= f.submit "Update", class: "px-3 py-2 bg-gray-600 text-white text-sm rounded-md hover:bg-gray-700" %>
+                    <% end %>
+
+                    <!-- Subtotal -->
+                    <div class="text-right min-w-[80px]">
+                      <p class="font-medium text-gray-900"><%= number_to_currency(cart_item.subtotal, unit: "€") %></p>
+                    </div>
+
+                    <!-- Remove button -->
+                    <%= button_to "✕", remove_item_cart_path(product_id: cart_item.product.id), method: :delete, class: "text-red-600 hover:text-red-800 px-2" %>
+                  </div>
+                </div>
+              </div>
+            <% end %>
+          </div>
+        </div>
+      <% end %>
+    </div>
+
+    <!-- Summary -->
+    <div class="mt-6 bg-white shadow rounded-lg p-6">
+      <h2 class="text-xl font-semibold mb-4">Order Summary</h2>
+      
+      <div class="space-y-4">
+        <!-- Par producteur -->
+        <% @producer_amounts.each do |pa| %>
+          <div class="border-l-4 border-green-500 pl-4 py-2 bg-gray-50">
+            <p class="font-medium text-gray-900"><%= pa[:producer].name %></p>
+            <div class="text-sm text-gray-600 space-y-1 mt-2">
+              <div class="flex justify-between">
+                <span>Subtotal (<%= pa[:items].count %> items):</span>
+                <span class="font-medium"><%= number_to_currency(pa[:subtotal], unit: "€") %></span>
+              </div>
+              <div class="flex justify-between">
+                <span>Platform fee (10%):</span>
+                <span><%= number_to_currency(pa[:platform_fee], unit: "€") %></span>
+              </div>
+              <div class="flex justify-between">
+                <span>Producer receives:</span>
+                <span class="text-green-600 font-medium"><%= number_to_currency(pa[:producer_amount], unit: "€") %></span>
+              </div>
+            </div>
+          </div>
+        <% end %>
+
+        <!-- Total général -->
+        <div class="border-t pt-4 mt-4">
+          <div class="flex justify-between text-lg">
+            <span class="font-medium">Total Items:</span>
+            <span><%= @cart.total_items %></span>
+          </div>
+          <div class="flex justify-between text-lg">
+            <span class="font-medium">Total Platform Fee:</span>
+            <span><%= number_to_currency(@cart.total_platform_fee, unit: "€") %></span>
+          </div>
+          <div class="flex justify-between text-2xl font-bold mt-2">
+            <span>Total:</span>
+            <span class="text-green-600"><%= number_to_currency(@cart.total, unit: "€") %></span>
+          </div>
+        </div>
+
+        <!-- Info split payment -->
+        <div class="bg-blue-50 border-l-4 border-blue-400 p-4 mt-4">
+          <p class="text-sm text-blue-800">
+            💡 <strong>One payment, multiple producers!</strong><br>
+            You'll make one payment of <%= number_to_currency(@cart.total, unit: "€") %>, and we'll automatically split it between <%= @cart.producers.count %> <%= "producer".pluralize(@cart.producers.count) %>.
+          </p>
+        </div>
+
+        <!-- Buttons -->
+        <div class="flex gap-3 mt-6">
+          <%= link_to "Continue Shopping", products_path, class: "flex-1 text-center px-6 py-3 border border-gray-300 rounded-md hover:bg-gray-50" %>
+          
+          <% can_checkout = @cart.producers.all?(&:can_receive_payments?) %>
+          
+          <% if can_checkout %>
+            <% if user_signed_in? %>
+              <%= link_to "Proceed to Checkout", checkout_path, class: "flex-1 text-center px-6 py-3 bg-green-600 text-white rounded-md hover:bg-green-700 font-medium" %>
+            <% else %>
+              <%= link_to "Sign In to Checkout", new_user_session_path, class: "flex-1 text-center px-6 py-3 bg-green-600 text-white rounded-md hover:bg-green-700 font-medium" %>
+            <% end %>
+          <% else %>
+            <button disabled class="flex-1 px-6 py-3 bg-gray-300 text-gray-500 rounded-md cursor-not-allowed">
+              Some producers cannot receive payments yet
+            </button>
+          <% end %>
+        </div>
+      </div>
+    </div>
+  <% end %>
+</div>
