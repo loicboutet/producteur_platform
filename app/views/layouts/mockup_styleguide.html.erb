@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="fr">
+  <head>
+    <title><%= content_for(:title) || "Silloun - Style Guide" %></title>
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="mobile-web-app-capable" content="yes">
+    <%= csrf_meta_tags %>
+    <%= csp_meta_tag %>
+
+    <%= yield :head %>
+
+    <link rel="icon" href="/icon.png" type="image/png">
+    <link rel="icon" href="/icon.svg" type="image/svg+xml">
+    <link rel="apple-touch-icon" href="/icon.png">
+
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;900&display=swap" rel="stylesheet">
+
+    <%= stylesheet_link_tag "tailwind", "inter-font", "data-turbo-track": "reload" %>
+    <%= stylesheet_link_tag :app, "data-turbo-track": "reload" %>
+    <%= javascript_importmap_tags %>
+
+    <style>
+      .font-piepie {
+        font-family: 'Montserrat', sans-serif;
+        font-weight: 900;
+        letter-spacing: -0.02em;
+        text-transform: uppercase;
+      }
+      
+      .font-marydale {
+        font-family: 'Brush Script MT', 'Segoe Script', cursive;
+        font-style: italic;
+      }
+      
+      html {
+        scroll-behavior: smooth;
+      }
+      
+      .nav-link {
+        position: relative;
+        transition: all 0.3s ease;
+      }
+      
+      .nav-link::after {
+        content: '';
+        position: absolute;
+        bottom: -2px;
+        left: 0;
+        width: 0;
+        height: 2px;
+        background: #FBE216;
+        transition: width 0.3s ease;
+      }
+      
+      .nav-link:hover::after {
+        width: 100%;
+      }
+      
+      .color-swatch {
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+      }
+      
+      .color-swatch:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+      }
+      
+      .section-divider {
+        height: 4px;
+        background: linear-gradient(90deg, #005D46, #FBE216);
+      }
+    </style>
+  </head>
+
+  <body class="bg-white">
+    <!-- Navigation -->
+    <nav class="fixed w-full z-50 shadow-md bg-silloun-green">
+      <div class="max-w-7xl mx-auto px-4 py-2">
+        <div class="flex items-center justify-between">
+          <!-- Logo -->
+          <div class="flex items-center">
+            <%= silloun_logo(variant: :jaune, size: 32) %>
+          </div>
+          
+          <!-- Nav Links -->
+          <div class="hidden md:flex items-center space-x-6">
+            <a href="#marque" class="nav-link text-white hover:text-silloun-yellow transition text-sm">Marque</a>
+            <a href="#logo" class="nav-link text-white hover:text-silloun-yellow transition text-sm">Logo</a>
+            <a href="#couleurs" class="nav-link text-white hover:text-silloun-yellow transition text-sm">Couleurs</a>
+            <a href="#typographie" class="nav-link text-white hover:text-silloun-yellow transition text-sm">Typographie</a>
+            <a href="#composants" class="nav-link text-white hover:text-silloun-yellow transition text-sm">Composants</a>
+            <a href="#applications" class="nav-link text-white hover:text-silloun-yellow transition text-sm">Applications</a>
+            <%= link_to "← Mockups", mockups_index_path, class: "text-silloun-yellow hover:text-white transition text-sm ml-4" %>
+          </div>
+        </div>
+      </div>
+    </nav>
+
+    <main>
+      <%= yield %>
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-silloun-green border-t border-silloun-yellow border-opacity-20 py-8">
+      <div class="max-w-7xl mx-auto px-4">
+        <div class="flex flex-col md:flex-row items-center justify-between">
+          <div class="flex items-center mb-4 md:mb-0">
+            <%= silloun_logo(variant: :jaune, size: 24) %>
+          </div>
+          <div class="text-center md:text-right">
+            <p class="text-silloun-yellow opacity-80 text-sm">Style Guide - Document de référence</p>
+            <p class="text-white text-xs">Version 1 - <%= Date.today.strftime("%d/%m/%Y") %></p>
+          </div>
+        </div>
+      </div>
+    </footer>
+  </body>
+</html>

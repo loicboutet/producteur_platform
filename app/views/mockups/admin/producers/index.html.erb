@@ -1,0 +1,147 @@
+<% content_for :title, "Producteurs - Admin Silloun" %>
+
+<div class="space-y-6">
+  <!-- Header -->
+  <div class="flex flex-col md:flex-row md:items-center md:justify-between">
+    <div>
+      <h1 class="font-piepie text-3xl text-gray-900">PRODUCTEURS</h1>
+      <p class="text-gray-600 mt-1">Gérez les producteurs de la plateforme</p>
+    </div>
+  </div>
+
+  <!-- Filters & Stats -->
+  <div class="bg-white rounded-xl shadow-sm border border-gray-100 p-4">
+    <div class="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
+      <!-- Status Tabs -->
+      <div class="flex flex-wrap gap-2">
+        <%= link_to mockups_admin_producers_path, 
+            class: "px-4 py-2 rounded-lg text-sm font-medium transition #{@status_filter.nil? ? 'bg-purple-600 text-white' : 'bg-gray-100 text-gray-700 hover:bg-gray-200'}" do %>
+          Tous
+          <span class="ml-1 text-xs opacity-75">(<%= mock_admin_producers.count %>)</span>
+        <% end %>
+        
+        <%= link_to mockups_admin_producers_path(status: "pending"), 
+            class: "px-4 py-2 rounded-lg text-sm font-medium transition #{@status_filter == 'pending' ? 'bg-orange-500 text-white' : 'bg-gray-100 text-gray-700 hover:bg-gray-200'}" do %>
+          En attente
+          <span class="ml-1 text-xs opacity-75">(<%= mock_admin_producers.count { |p| p[:status] == 'pending' } %>)</span>
+        <% end %>
+        
+        <%= link_to mockups_admin_producers_path(status: "active"), 
+            class: "px-4 py-2 rounded-lg text-sm font-medium transition #{@status_filter == 'active' ? 'bg-green-500 text-white' : 'bg-gray-100 text-gray-700 hover:bg-gray-200'}" do %>
+          Actifs
+          <span class="ml-1 text-xs opacity-75">(<%= mock_admin_producers.count { |p| p[:status] == 'active' } %>)</span>
+        <% end %>
+        
+        <%= link_to mockups_admin_producers_path(status: "suspended"), 
+            class: "px-4 py-2 rounded-lg text-sm font-medium transition #{@status_filter == 'suspended' ? 'bg-red-500 text-white' : 'bg-gray-100 text-gray-700 hover:bg-gray-200'}" do %>
+          Suspendus
+          <span class="ml-1 text-xs opacity-75">(<%= mock_admin_producers.count { |p| p[:status] == 'suspended' } %>)</span>
+        <% end %>
+      </div>
+
+      <!-- Search -->
+      <div class="flex items-center space-x-3">
+        <div class="relative">
+          <input type="text" placeholder="Rechercher un producteur..." class="pl-10 pr-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent w-64">
+          <svg class="w-5 h-5 text-gray-400 absolute left-3 top-2.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
+          </svg>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Producers Table -->
+  <div class="bg-white rounded-xl shadow-sm border border-gray-100 overflow-hidden">
+    <div class="overflow-x-auto">
+      <table class="w-full">
+        <thead class="bg-gray-50">
+          <tr>
+            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Producteur</th>
+            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Statut</th>
+            <th class="px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider">Stripe</th>
+            <th class="px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider">Produits</th>
+            <th class="px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider">Commandes</th>
+            <th class="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider">CA Total</th>
+            <th class="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider">Actions</th>
+          </tr>
+        </thead>
+        <tbody class="divide-y divide-gray-100">
+          <% @producers.each do |producer| %>
+            <tr class="hover:bg-gray-50 transition">
+              <td class="px-6 py-4">
+                <div class="flex items-center">
+                  <div class="w-10 h-10 rounded-full flex items-center justify-center flex-shrink-0 <%= producer[:status] == 'pending' ? 'bg-orange-100' : (producer[:status] == 'suspended' ? 'bg-red-100' : 'bg-silloun-green') %>">
+                    <span class="font-semibold text-sm <%= producer[:status] == 'pending' ? 'text-orange-600' : (producer[:status] == 'suspended' ? 'text-red-600' : 'text-white') %>">
+                      <%= producer[:name].split.map(&:first).join.upcase %>
+                    </span>
+                  </div>
+                  <div class="ml-4">
+                    <p class="font-medium text-gray-900"><%= producer[:farm_name] %></p>
+                    <p class="text-sm text-gray-500"><%= producer[:name] %> • <%= producer[:city] %></p>
+                  </div>
+                </div>
+              </td>
+              <td class="px-6 py-4">
+                <% status_styles = {
+                  "active" => "bg-green-100 text-green-700",
+                  "pending" => "bg-orange-100 text-orange-700",
+                  "suspended" => "bg-red-100 text-red-700"
+                } %>
+                <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium <%= status_styles[producer[:status]] %>">
+                  <%= producer[:status] == 'active' ? 'Actif' : (producer[:status] == 'pending' ? 'En attente' : 'Suspendu') %>
+                </span>
+              </td>
+              <td class="px-6 py-4 text-center">
+                <% if producer[:stripe_connected] %>
+                  <span class="inline-flex items-center text-green-600">
+                    <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
+                      <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"></path>
+                    </svg>
+                  </span>
+                <% else %>
+                  <span class="inline-flex items-center text-gray-400">
+                    <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
+                      <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z" clip-rule="evenodd"></path>
+                    </svg>
+                  </span>
+                <% end %>
+              </td>
+              <td class="px-6 py-4 text-center text-sm text-gray-900"><%= producer[:products_count] %></td>
+              <td class="px-6 py-4 text-center text-sm text-gray-900"><%= producer[:orders_count] %></td>
+              <td class="px-6 py-4 text-right text-sm font-medium text-gray-900">
+                <%= number_to_currency(producer[:total_sales], unit: "€", format: "%n %u") %>
+              </td>
+              <td class="px-6 py-4 text-right">
+                <div class="flex items-center justify-end space-x-2">
+                  <%= link_to mockups_admin_producer_path(producer[:id]), class: "p-2 text-gray-600 hover:text-purple-600 hover:bg-purple-50 rounded-lg transition" do %>
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path>
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"></path>
+                    </svg>
+                  <% end %>
+                  <%= link_to edit_mockups_admin_producer_path(producer[:id]), class: "p-2 text-gray-600 hover:text-purple-600 hover:bg-purple-50 rounded-lg transition" do %>
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"></path>
+                    </svg>
+                  <% end %>
+                </div>
+              </td>
+            </tr>
+          <% end %>
+        </tbody>
+      </table>
+    </div>
+
+    <% if @producers.empty? %>
+      <div class="p-12 text-center">
+        <div class="w-16 h-16 bg-gray-100 rounded-full flex items-center justify-center mx-auto mb-4">
+          <svg class="w-8 h-8 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20 13V6a2 2 0 00-2-2H6a2 2 0 00-2 2v7m16 0v5a2 2 0 01-2 2H6a2 2 0 01-2-2v-5m16 0h-2.586a1 1 0 00-.707.293l-2.414 2.414a1 1 0 01-.707.293h-3.172a1 1 0 01-.707-.293l-2.414-2.414A1 1 0 006.586 13H4"></path>
+          </svg>
+        </div>
+        <p class="text-gray-500">Aucun producteur trouvé</p>
+      </div>
+    <% end %>
+  </div>
+</div>

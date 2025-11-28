@@ -1,0 +1,257 @@
+<!DOCTYPE html>
+<html lang="fr">
+  <head>
+    <title><%= content_for(:title) || "Espace Producteur - Silloun" %></title>
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="mobile-web-app-capable" content="yes">
+    <%= csrf_meta_tags %>
+    <%= csp_meta_tag %>
+
+    <%= yield :head %>
+
+    <link rel="icon" href="/icon.png" type="image/png">
+    <link rel="icon" href="/icon.svg" type="image/svg+xml">
+    <link rel="apple-touch-icon" href="/icon.png">
+
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;900&display=swap" rel="stylesheet">
+
+    <%= stylesheet_link_tag "tailwind", "inter-font", "data-turbo-track": "reload" %>
+    <%= stylesheet_link_tag :app, "data-turbo-track": "reload" %>
+    <%= javascript_importmap_tags %>
+
+    <style>
+      .font-piepie {
+        font-family: 'Montserrat', sans-serif;
+        font-weight: 900;
+        letter-spacing: -0.02em;
+        text-transform: uppercase;
+      }
+      
+      .font-marydale {
+        font-family: 'Brush Script MT', 'Segoe Script', cursive;
+        font-style: italic;
+      }
+      
+      html {
+        scroll-behavior: smooth;
+      }
+    </style>
+  </head>
+
+  <body class="bg-gray-50 min-h-screen flex flex-col">
+    <!-- Mockup indicator banner -->
+    <div class="bg-gray-800 text-white text-center py-1 text-xs">
+      🎨 Mode Mockup (Producer) - <%= link_to "Retour à l'index", mockups_index_path, class: "underline hover:text-silloun-yellow" %>
+    </div>
+
+    <!-- Header -->
+    <header class="bg-silloun-green shadow-md">
+      <div class="max-w-7xl mx-auto px-4">
+        <div class="flex items-center justify-between h-16">
+          <!-- Logo -->
+          <%= link_to mockups_producer_dashboard_path, class: "flex items-center" do %>
+            <%= silloun_logo(variant: :jaune, size: 72) %>
+            <span class="ml-3 text-white text-sm font-medium hidden sm:inline">Espace Producteur</span>
+          <% end %>
+
+          <!-- Quick Stats (Desktop) -->
+          <div class="hidden lg:flex items-center space-x-6">
+            <div class="text-center">
+              <p class="text-silloun-yellow text-lg font-bold">3</p>
+              <p class="text-white text-xs">Nouvelles commandes</p>
+            </div>
+            <div class="text-center">
+              <p class="text-silloun-yellow text-lg font-bold">234,50 €</p>
+              <p class="text-white text-xs">Ventes du mois</p>
+            </div>
+          </div>
+
+          <!-- User Menu -->
+          <div class="flex items-center space-x-4">
+            <!-- Notifications -->
+            <button class="relative text-white hover:text-silloun-yellow transition">
+              <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9"></path>
+              </svg>
+              <span class="absolute -top-1 -right-1 bg-red-500 text-white text-xs w-5 h-5 rounded-full flex items-center justify-center font-bold">3</span>
+            </button>
+
+            <!-- User dropdown -->
+            <div class="relative">
+              <button class="flex items-center space-x-2 text-white hover:text-silloun-yellow transition">
+                <div class="w-8 h-8 bg-silloun-yellow rounded-full flex items-center justify-center">
+                  <span class="text-silloun-green font-bold text-sm">MD</span>
+                </div>
+                <span class="hidden md:inline text-sm">Marie Dupont</span>
+                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+                </svg>
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </header>
+
+    <!-- Main Content with Sidebar -->
+    <div class="flex-1 flex">
+      <!-- Sidebar -->
+      <aside class="hidden md:block w-64 bg-white border-r border-gray-200 flex-shrink-0">
+        <nav class="p-4 space-y-1">
+          <p class="text-xs text-gray-400 uppercase tracking-wider mb-3 px-3">Général</p>
+          
+          <%= link_to mockups_producer_dashboard_path, 
+              class: "flex items-center px-3 py-2 rounded-lg transition #{request.path == mockups_producer_dashboard_path ? 'bg-silloun-green text-white' : 'text-gray-700 hover:bg-gray-100'}" do %>
+            <svg class="w-5 h-5 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"></path>
+            </svg>
+            Tableau de bord
+          <% end %>
+          
+          <%= link_to mockups_producer_stats_path, 
+              class: "flex items-center px-3 py-2 rounded-lg transition #{request.path.include?('stats') ? 'bg-silloun-green text-white' : 'text-gray-700 hover:bg-gray-100'}" do %>
+            <svg class="w-5 h-5 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"></path>
+            </svg>
+            Statistiques
+          <% end %>
+
+          <div class="border-t border-gray-200 my-4"></div>
+          <p class="text-xs text-gray-400 uppercase tracking-wider mb-3 px-3">Catalogue</p>
+          
+          <%= link_to mockups_producer_products_path, 
+              class: "flex items-center px-3 py-2 rounded-lg transition #{request.path.include?('products') ? 'bg-silloun-green text-white' : 'text-gray-700 hover:bg-gray-100'}" do %>
+            <svg class="w-5 h-5 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4"></path>
+            </svg>
+            Mes produits
+            <span class="ml-auto bg-gray-100 text-gray-600 text-xs px-2 py-0.5 rounded-full">12</span>
+          <% end %>
+
+          <div class="border-t border-gray-200 my-4"></div>
+          <p class="text-xs text-gray-400 uppercase tracking-wider mb-3 px-3">Commandes</p>
+          
+          <%= link_to mockups_producer_orders_path, 
+              class: "flex items-center px-3 py-2 rounded-lg transition #{request.path.include?('orders') ? 'bg-silloun-green text-white' : 'text-gray-700 hover:bg-gray-100'}" do %>
+            <svg class="w-5 h-5 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z"></path>
+            </svg>
+            Commandes
+            <span class="ml-auto bg-silloun-yellow text-silloun-green text-xs px-2 py-0.5 rounded-full font-bold">3</span>
+          <% end %>
+
+          <div class="border-t border-gray-200 my-4"></div>
+          <p class="text-xs text-gray-400 uppercase tracking-wider mb-3 px-3">Points de retrait</p>
+          
+          <%= link_to mockups_producer_pickup_points_path, 
+              class: "flex items-center px-3 py-2 rounded-lg transition #{request.path.include?('pickup_points') ? 'bg-silloun-green text-white' : 'text-gray-700 hover:bg-gray-100'}" do %>
+            <svg class="w-5 h-5 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"></path>
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"></path>
+            </svg>
+            Ma ferme
+          <% end %>
+          
+          <%= link_to mockups_producer_market_presences_path, 
+              class: "flex items-center px-3 py-2 rounded-lg transition #{request.path.include?('market_presences') ? 'bg-silloun-green text-white' : 'text-gray-700 hover:bg-gray-100'}" do %>
+            <svg class="w-5 h-5 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"></path>
+            </svg>
+            Mes marchés
+            <span class="ml-auto bg-gray-100 text-gray-600 text-xs px-2 py-0.5 rounded-full">2</span>
+          <% end %>
+
+          <div class="border-t border-gray-200 my-4"></div>
+          <p class="text-xs text-gray-400 uppercase tracking-wider mb-3 px-3">Paramètres</p>
+          
+          <%= link_to mockups_producer_profile_path, 
+              class: "flex items-center px-3 py-2 rounded-lg transition #{request.path.include?('profile') ? 'bg-silloun-green text-white' : 'text-gray-700 hover:bg-gray-100'}" do %>
+            <svg class="w-5 h-5 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"></path>
+            </svg>
+            Mon profil
+          <% end %>
+          
+          <%= link_to mockups_producer_stripe_path, 
+              class: "flex items-center px-3 py-2 rounded-lg transition #{request.path.include?('stripe') ? 'bg-silloun-green text-white' : 'text-gray-700 hover:bg-gray-100'}" do %>
+            <svg class="w-5 h-5 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 10h18M7 15h1m4 0h1m-7 4h12a3 3 0 003-3V8a3 3 0 00-3-3H6a3 3 0 00-3 3v8a3 3 0 003 3z"></path>
+            </svg>
+            Paiements
+            <% if true # stripe_connected %>
+              <span class="ml-auto text-green-500">
+                <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
+                  <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"></path>
+                </svg>
+              </span>
+            <% end %>
+          <% end %>
+          
+          <div class="border-t border-gray-200 my-4"></div>
+          
+          <%= link_to mockups_public_producers_path(id: 1), class: "flex items-center px-3 py-2 rounded-lg text-gray-700 hover:bg-gray-100 transition" do %>
+            <svg class="w-5 h-5 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path>
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"></path>
+            </svg>
+            Voir ma page publique
+          <% end %>
+          
+          <a href="#" class="flex items-center px-3 py-2 rounded-lg text-red-600 hover:bg-red-50 transition">
+            <svg class="w-5 h-5 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1"></path>
+            </svg>
+            Déconnexion
+          </a>
+        </nav>
+      </aside>
+
+      <!-- Mobile Navigation -->
+      <div class="md:hidden fixed bottom-0 left-0 right-0 bg-white border-t border-gray-200 z-50">
+        <nav class="flex justify-around py-2">
+          <%= link_to mockups_producer_dashboard_path, class: "flex flex-col items-center p-2 #{request.path == mockups_producer_dashboard_path ? 'text-silloun-green' : 'text-gray-500'}" do %>
+            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"></path>
+            </svg>
+            <span class="text-xs mt-1">Accueil</span>
+          <% end %>
+          
+          <%= link_to mockups_producer_products_path, class: "flex flex-col items-center p-2 #{request.path.include?('products') ? 'text-silloun-green' : 'text-gray-500'}" do %>
+            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4"></path>
+            </svg>
+            <span class="text-xs mt-1">Produits</span>
+          <% end %>
+          
+          <%= link_to mockups_producer_orders_path, class: "flex flex-col items-center p-2 relative #{request.path.include?('orders') ? 'text-silloun-green' : 'text-gray-500'}" do %>
+            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z"></path>
+            </svg>
+            <span class="text-xs mt-1">Commandes</span>
+            <span class="absolute top-1 right-1 bg-silloun-yellow text-silloun-green text-xs w-4 h-4 rounded-full flex items-center justify-center font-bold">3</span>
+          <% end %>
+          
+          <%= link_to mockups_producer_stats_path, class: "flex flex-col items-center p-2 #{request.path.include?('stats') ? 'text-silloun-green' : 'text-gray-500'}" do %>
+            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"></path>
+            </svg>
+            <span class="text-xs mt-1">Stats</span>
+          <% end %>
+          
+          <%= link_to mockups_producer_profile_path, class: "flex flex-col items-center p-2 #{request.path.include?('profile') ? 'text-silloun-green' : 'text-gray-500'}" do %>
+            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"></path>
+            </svg>
+            <span class="text-xs mt-1">Profil</span>
+          <% end %>
+        </nav>
+      </div>
+
+      <!-- Page Content -->
+      <main class="flex-1 p-4 md:p-8 pb-24 md:pb-8 overflow-x-hidden">
+        <%= yield %>
+      </main>
+    </div>
+  </body>
+</html>

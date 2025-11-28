@@ -1,0 +1,127 @@
+<% content_for(:title, "Inscription en cours - Silloun") %>
+<% content_for(:hide_become_producer, true) %>
+
+<!-- Main Content -->
+<section class="min-h-[70vh] flex items-center bg-gray-50">
+  <div class="max-w-2xl mx-auto px-4 py-16 text-center">
+    <!-- Success Icon -->
+    <div class="w-24 h-24 bg-silloun-yellow rounded-full flex items-center justify-center mx-auto mb-8">
+      <svg class="w-12 h-12 text-silloun-green" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+      </svg>
+    </div>
+    
+    <p class="font-marydale text-silloun-green text-2xl mb-2">Merci pour votre inscription !</p>
+    <h1 class="font-piepie text-silloun-green text-4xl mb-6">VOTRE COMPTE EST EN COURS DE VALIDATION</h1>
+    
+    <div class="bg-white rounded-2xl shadow-lg p-8 mb-8">
+      <p class="text-gray-600 mb-6">
+        Nous avons bien reçu votre demande d'inscription. Notre équipe vérifie actuellement 
+        les informations que vous avez fournies, notamment votre numéro SIRET.
+      </p>
+      
+      <!-- Timeline -->
+      <div class="relative">
+        <div class="absolute left-6 top-0 bottom-0 w-0.5 bg-gray-200"></div>
+        
+        <div class="relative flex items-start mb-6">
+          <div class="w-12 h-12 bg-silloun-green rounded-full flex items-center justify-center flex-shrink-0 z-10">
+            <svg class="w-6 h-6 text-white" fill="currentColor" viewBox="0 0 20 20">
+              <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"></path>
+            </svg>
+          </div>
+          <div class="ml-4 pt-1">
+            <p class="font-semibold text-silloun-green">Inscription envoyée</p>
+            <p class="text-gray-500 text-sm">Vos informations ont été reçues</p>
+          </div>
+        </div>
+        
+        <div class="relative flex items-start mb-6">
+          <div class="w-12 h-12 bg-silloun-yellow rounded-full flex items-center justify-center flex-shrink-0 z-10 animate-pulse">
+            <svg class="w-6 h-6 text-silloun-green" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
+            </svg>
+          </div>
+          <div class="ml-4 pt-1">
+            <p class="font-semibold text-silloun-green">Vérification en cours</p>
+            <p class="text-gray-500 text-sm">Nous vérifions votre SIRET et vos informations</p>
+          </div>
+        </div>
+        
+        <div class="relative flex items-start">
+          <div class="w-12 h-12 bg-gray-200 rounded-full flex items-center justify-center flex-shrink-0 z-10">
+            <svg class="w-6 h-6 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+            </svg>
+          </div>
+          <div class="ml-4 pt-1">
+            <p class="font-semibold text-gray-400">Compte validé</p>
+            <p class="text-gray-400 text-sm">Vous pourrez accéder à votre espace producteur</p>
+          </div>
+        </div>
+      </div>
+    </div>
+    
+    <!-- Estimated Time -->
+    <div class="bg-silloun-green/10 rounded-xl p-6 mb-8">
+      <div class="flex items-center justify-center gap-2 text-silloun-green mb-2">
+        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+        </svg>
+        <span class="font-semibold">Délai estimé : 24 à 48h</span>
+      </div>
+      <p class="text-gray-600 text-sm">
+        Vous recevrez un email de confirmation dès que votre compte sera validé.
+      </p>
+    </div>
+    
+    <!-- What to expect -->
+    <div class="text-left bg-white rounded-xl p-6 shadow-sm mb-8">
+      <h3 class="font-semibold text-silloun-green mb-4">En attendant, préparez-vous !</h3>
+      <ul class="space-y-3 text-gray-600 text-sm">
+        <li class="flex items-start">
+          <svg class="w-5 h-5 mr-2 text-silloun-green flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
+            <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"></path>
+          </svg>
+          Prenez des photos de vos produits (lumière naturelle, fond neutre)
+        </li>
+        <li class="flex items-start">
+          <svg class="w-5 h-5 mr-2 text-silloun-green flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
+            <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"></path>
+          </svg>
+          Préparez la liste de vos produits avec prix et descriptions
+        </li>
+        <li class="flex items-start">
+          <svg class="w-5 h-5 mr-2 text-silloun-green flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
+            <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"></path>
+          </svg>
+          Définissez vos horaires d'ouverture pour le click & collect
+        </li>
+        <li class="flex items-start">
+          <svg class="w-5 h-5 mr-2 text-silloun-green flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
+            <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"></path>
+          </svg>
+          Préparez votre RIB pour configurer les paiements
+        </li>
+      </ul>
+    </div>
+    
+    <!-- Contact -->
+    <div class="text-gray-600">
+      <p class="mb-2">Une question ? Contactez-nous :</p>
+      <a href="mailto:producteurs@silloun.fr" class="text-silloun-green font-semibold hover:underline">
+        producteurs@silloun.fr
+      </a>
+    </div>
+    
+    <!-- Back to home -->
+    <div class="mt-8">
+      <%= link_to mockups_public_home_index_path, class: "inline-flex items-center text-silloun-green hover:text-silloun-green/70 transition" do %>
+        <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"></path>
+        </svg>
+        Retour à l'accueil
+      <% end %>
+    </div>
+  </div>
+</section>

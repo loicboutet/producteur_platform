@@ -10,7 +10,13 @@ module.exports = {
   theme: {
     extend: {
       fontFamily: {
-        sans: ['Inter var', ...defaultTheme.fontFamily.sans],
+        sans: ['Montserrat', 'Inter var', ...defaultTheme.fontFamily.sans],
+      },
+      colors: {
+        'silloun': {
+          'yellow': '#FBE216',
+          'green': '#005D46',
+        }
       },
     },
   },

@@ -1,68 +1,366 @@
-<div class="w-full">
-  <h1 class="text-3xl font-bold text-center mb-8">Mockup Journey Explorer</h1>
-  
-  <div class="flex flex-col lg:flex-row gap-8">
-    <!-- User Journey Card -->
-    <div class="flex-1 bg-white p-6 rounded-lg shadow-md border border-blue-100">
-      <h2 class="text-2xl font-bold text-blue-600 mb-4">User Journey</h2>
-      <p class="text-gray-600 mb-6">Explore the user-facing interface mockups for the application.</p>
-      
-      <ul class="space-y-3 mb-8">
-        <li class="flex items-center">
-          <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-blue-500 mr-2" viewBox="0 0 20 20" fill="currentColor">
-            <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd" />
-          </svg>
-          <span>User Dashboard - Overview of user activities</span>
-        </li>
-        <li class="flex items-center">
-          <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-blue-500 mr-2" viewBox="0 0 20 20" fill="currentColor">
-            <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd" />
-          </svg>
-          <span>User Profile - Personal information management</span>
-        </li>
-        <li class="flex items-center">
-          <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-blue-500 mr-2" viewBox="0 0 20 20" fill="currentColor">
-            <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd" />
-          </svg>
-          <span>User Settings - Customize application preferences</span>
-        </li>
-      </ul>
-      
-      <%= link_to "Explore User Journey", { controller: "mockups", action: "user_dashboard" }, class: "block w-full text-center bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded" %>
-    </div>
+<div class="max-w-6xl mx-auto px-4 py-12">
+  <div class="text-center mb-12">
+    <%= silloun_logo(variant: :vert, size: 60) %>
+    <h1 class="font-piepie text-4xl text-silloun-green mt-4 mb-2">MOCKUP EXPLORER</h1>
+    <p class="text-gray-600 text-lg">Explorez les maquettes de l'application Silloun</p>
     
-    <!-- Admin Journey Card -->
-    <div class="flex-1 bg-white p-6 rounded-lg shadow-md border border-purple-100">
-      <h2 class="text-2xl font-bold text-purple-600 mb-4">Admin Journey</h2>
-      <p class="text-gray-600 mb-6">Explore the administrative interface mockups for the application.</p>
-      
-      <ul class="space-y-3 mb-8">
-        <li class="flex items-center">
-          <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-purple-500 mr-2" viewBox="0 0 20 20" fill="currentColor">
-            <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd" />
-          </svg>
-          <span>Admin Dashboard - System overview and statistics</span>
-        </li>
-        <li class="flex items-center">
-          <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-purple-500 mr-2" viewBox="0 0 20 20" fill="currentColor">
-            <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd" />
-          </svg>
-          <span>User Management - Manage user accounts and permissions</span>
-        </li>
-        <li class="flex items-center">
-          <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-purple-500 mr-2" viewBox="0 0 20 20" fill="currentColor">
-            <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd" />
-          </svg>
-          <span>Analytics - View usage statistics and reports</span>
-        </li>
-      </ul>
-      
-      <%= link_to "Explore Admin Journey", { controller: "mockups", action: "admin_dashboard" }, class: "block w-full text-center bg-purple-600 hover:bg-purple-700 text-white font-bold py-2 px-4 rounded" %>
+    <!-- Progress Bar -->
+    <div class="max-w-md mx-auto mt-6">
+      <div class="flex justify-between text-sm text-gray-500 mb-2">
+        <span>Progression globale</span>
+        <span class="font-semibold text-silloun-green">60/60 pages (100%)</span>
+      </div>
+      <div class="h-3 bg-gray-200 rounded-full overflow-hidden">
+        <div class="h-full bg-silloun-green rounded-full" style="width: 100%"></div>
+      </div>
     </div>
   </div>
-  
-  <div class="mt-8 text-center text-gray-600">
-    <p>These mockups demonstrate possible UI layouts and user flows for the application.</p>
-    <p class="text-sm mt-2">For development purposes only.</p>
+
+  <!-- Style Guide Card - Featured -->
+  <div class="mb-12">
+    <div class="rounded-2xl p-8 text-white shadow-xl bg-silloun-green">
+      <div class="flex flex-col md:flex-row items-center justify-between gap-8">
+        <div class="flex-1">
+          <span class="inline-block text-xs font-bold px-3 py-1 rounded-full mb-4 bg-silloun-yellow text-silloun-green">RÉFÉRENCE</span>
+          <h2 class="text-3xl font-bold mb-4">🎨 Style Guide Silloun</h2>
+          <p class="text-white/80 mb-6">
+            Guide complet de la charte graphique : logo, couleurs, typographie, composants UI.
+          </p>
+        </div>
+        <div class="flex-shrink-0">
+          <%= link_to mockups_styleguide_path, class: "btn-silloun-primary text-lg" do %>
+            Voir le Style Guide →
+          <% end %>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Mockups Structure -->
+  <div class="grid md:grid-cols-2 gap-8 mb-12">
+    
+    <!-- Public Journey -->
+    <div class="bg-white p-6 rounded-xl shadow-lg border-2 border-silloun-green relative overflow-hidden">
+      <div class="absolute top-0 right-0 bg-silloun-green text-white text-xs font-bold px-3 py-1 rounded-bl-lg">
+        ✅ 100%
+      </div>
+      
+      <div class="flex items-center mb-4">
+        <span class="bg-silloun-yellow text-silloun-green p-2 rounded-lg mr-3">
+          <svg class="h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"></path>
+          </svg>
+        </span>
+        <h2 class="font-piepie text-2xl text-silloun-green">PUBLIC</h2>
+      </div>
+      <p class="text-gray-600 mb-6">Parcours visiteur et acheteur : accueil, catalogue, producteurs, marchés, panier, checkout.</p>
+      
+      <div class="space-y-2 mb-6 text-sm max-h-64 overflow-y-auto">
+        <p class="text-xs text-gray-400 uppercase font-semibold mb-2">Accueil & Catalogue</p>
+        <div class="flex items-center">
+          <span class="text-green-500 mr-2">✅</span>
+          <%= link_to "Accueil (géolocalisation)", mockups_public_home_index_path, class: "text-silloun-green hover:underline" %>
+        </div>
+        <div class="flex items-center">
+          <span class="text-green-500 mr-2">✅</span>
+          <%= link_to "Produits (liste)", mockups_public_products_path, class: "text-silloun-green hover:underline" %>
+        </div>
+        <div class="flex items-center">
+          <span class="text-green-500 mr-2">✅</span>
+          <%= link_to "Produit (détail)", mockups_public_product_path(1), class: "text-silloun-green hover:underline" %>
+        </div>
+        <div class="flex items-center">
+          <span class="text-green-500 mr-2">✅</span>
+          <%= link_to "Catégories (liste)", mockups_public_categories_path, class: "text-silloun-green hover:underline" %>
+        </div>
+        <div class="flex items-center">
+          <span class="text-green-500 mr-2">✅</span>
+          <%= link_to "Catégorie (détail)", mockups_public_category_path(slug: "fruits-legumes"), class: "text-silloun-green hover:underline" %>
+        </div>
+        
+        <p class="text-xs text-gray-400 uppercase font-semibold mt-4 mb-2">Producteurs & Marchés</p>
+        <div class="flex items-center">
+          <span class="text-green-500 mr-2">✅</span>
+          <%= link_to "Producteurs (liste/carte)", mockups_public_producers_path, class: "text-silloun-green hover:underline" %>
+        </div>
+        <div class="flex items-center">
+          <span class="text-green-500 mr-2">✅</span>
+          <%= link_to "Producteur (profil)", mockups_public_producer_path(1), class: "text-silloun-green hover:underline" %>
+        </div>
+        <div class="flex items-center">
+          <span class="text-green-500 mr-2">✅</span>
+          <%= link_to "Marchés (liste/carte)", mockups_public_markets_path, class: "text-silloun-green hover:underline" %>
+        </div>
+        <div class="flex items-center">
+          <span class="text-green-500 mr-2">✅</span>
+          <%= link_to "Marché (détail)", mockups_public_market_path(1), class: "text-silloun-green hover:underline" %>
+        </div>
+        
+        <p class="text-xs text-gray-400 uppercase font-semibold mt-4 mb-2">Panier & Checkout</p>
+        <div class="flex items-center">
+          <span class="text-green-500 mr-2">✅</span>
+          <%= link_to "Panier", mockups_public_cart_path, class: "text-silloun-green hover:underline" %>
+        </div>
+        <div class="flex items-center">
+          <span class="text-green-500 mr-2">✅</span>
+          <%= link_to "Checkout (choix retrait)", mockups_public_checkout_path, class: "text-silloun-green hover:underline" %>
+        </div>
+        <div class="flex items-center">
+          <span class="text-green-500 mr-2">✅</span>
+          <%= link_to "Paiement", payment_mockups_public_checkout_path, class: "text-silloun-green hover:underline" %>
+        </div>
+        <div class="flex items-center">
+          <span class="text-green-500 mr-2">✅</span>
+          <%= link_to "Confirmation", success_mockups_public_checkout_path, class: "text-silloun-green hover:underline" %>
+        </div>
+        
+        <p class="text-xs text-gray-400 uppercase font-semibold mt-4 mb-2">Inscription Producteur</p>
+        <div class="flex items-center">
+          <span class="text-green-500 mr-2">✅</span>
+          <%= link_to "Devenir producteur", mockups_public_become_producer_index_path, class: "text-silloun-green hover:underline" %>
+        </div>
+        <div class="flex items-center">
+          <span class="text-green-500 mr-2">✅</span>
+          <%= link_to "En attente de validation", pending_mockups_public_become_producer_index_path, class: "text-silloun-green hover:underline" %>
+        </div>
+      </div>
+      
+      <%= link_to "Explorer Public →", mockups_public_home_index_path, class: "btn-silloun-primary w-full text-center" %>
+    </div>
+
+    <!-- Account Journey -->
+    <div class="bg-white p-6 rounded-xl shadow-lg border-2 border-blue-500 relative overflow-hidden">
+      <div class="absolute top-0 right-0 bg-blue-500 text-white text-xs font-bold px-3 py-1 rounded-bl-lg">
+        ✅ 100%
+      </div>
+      
+      <div class="flex items-center mb-4">
+        <span class="bg-blue-100 text-blue-600 p-2 rounded-lg mr-3">
+          <svg class="h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"></path>
+          </svg>
+        </span>
+        <h2 class="font-piepie text-2xl text-blue-600">ACCOUNT</h2>
+      </div>
+      <p class="text-gray-600 mb-6">Espace client connecté : dashboard, profil, historique commandes.</p>
+      
+      <div class="space-y-2 mb-6 text-sm">
+        <p class="text-xs text-gray-400 uppercase font-semibold mb-2">Dashboard</p>
+        <div class="flex items-center">
+          <span class="text-green-500 mr-2">✅</span>
+          <%= link_to "Tableau de bord", mockups_account_dashboard_path, class: "text-blue-600 hover:underline" %>
+        </div>
+        
+        <p class="text-xs text-gray-400 uppercase font-semibold mt-4 mb-2">Commandes</p>
+        <div class="flex items-center">
+          <span class="text-green-500 mr-2">✅</span>
+          <%= link_to "Mes commandes", mockups_account_orders_path, class: "text-blue-600 hover:underline" %>
+        </div>
+        <div class="flex items-center">
+          <span class="text-green-500 mr-2">✅</span>
+          <%= link_to "Détail commande", mockups_account_order_path(1), class: "text-blue-600 hover:underline" %>
+        </div>
+        
+        <p class="text-xs text-gray-400 uppercase font-semibold mt-4 mb-2">Profil</p>
+        <div class="flex items-center">
+          <span class="text-green-500 mr-2">✅</span>
+          <%= link_to "Mon profil", mockups_account_profile_path, class: "text-blue-600 hover:underline" %>
+        </div>
+        <div class="flex items-center">
+          <span class="text-green-500 mr-2">✅</span>
+          <%= link_to "Modifier profil", edit_mockups_account_profile_path, class: "text-blue-600 hover:underline" %>
+        </div>
+      </div>
+      
+      <%= link_to "Explorer Account →", mockups_account_dashboard_path, class: "bg-blue-500 hover:bg-blue-600 text-white font-bold py-3 px-4 rounded-lg w-full text-center block transition" %>
+    </div>
+
+    <!-- Producer Journey -->
+    <div class="bg-white p-6 rounded-xl shadow-lg border-2 border-orange-500 relative overflow-hidden">
+      <div class="absolute top-0 right-0 bg-orange-500 text-white text-xs font-bold px-3 py-1 rounded-bl-lg">
+        ✅ 100%
+      </div>
+      
+      <div class="flex items-center mb-4">
+        <span class="bg-orange-100 text-orange-600 p-2 rounded-lg mr-3">
+          <svg class="h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3.055 11H5a2 2 0 012 2v1a2 2 0 002 2 2 2 0 012 2v2.945M8 3.935V5.5A2.5 2.5 0 0010.5 8h.5a2 2 0 012 2 2 2 0 104 0 2 2 0 012-2h1.064M15 20.488V18a2 2 0 012-2h3.064"></path>
+          </svg>
+        </span>
+        <h2 class="font-piepie text-2xl text-orange-600">PRODUCER</h2>
+      </div>
+      <p class="text-gray-600 mb-6">Espace producteur : dashboard, produits, commandes, points de retrait, Stripe.</p>
+      
+      <div class="space-y-2 mb-6 text-sm max-h-64 overflow-y-auto">
+        <p class="text-xs text-gray-400 uppercase font-semibold mb-2">Dashboard & Profil</p>
+        <div class="flex items-center">
+          <span class="text-green-500 mr-2">✅</span>
+          <%= link_to "Dashboard producteur", mockups_producer_dashboard_path, class: "text-orange-600 hover:underline" %>
+        </div>
+        <div class="flex items-center">
+          <span class="text-green-500 mr-2">✅</span>
+          <%= link_to "Mon profil", mockups_producer_profile_path, class: "text-orange-600 hover:underline" %>
+        </div>
+        <div class="flex items-center">
+          <span class="text-green-500 mr-2">✅</span>
+          <%= link_to "Modifier profil", edit_mockups_producer_profile_path, class: "text-orange-600 hover:underline" %>
+        </div>
+        <div class="flex items-center">
+          <span class="text-green-500 mr-2">✅</span>
+          <%= link_to "Statistiques", mockups_producer_stats_path, class: "text-orange-600 hover:underline" %>
+        </div>
+        
+        <p class="text-xs text-gray-400 uppercase font-semibold mt-4 mb-2">Produits</p>
+        <div class="flex items-center">
+          <span class="text-green-500 mr-2">✅</span>
+          <%= link_to "Mes produits", mockups_producer_products_path, class: "text-orange-600 hover:underline" %>
+        </div>
+        <div class="flex items-center">
+          <span class="text-green-500 mr-2">✅</span>
+          <%= link_to "Nouveau produit", new_mockups_producer_product_path, class: "text-orange-600 hover:underline" %>
+        </div>
+        <div class="flex items-center">
+          <span class="text-green-500 mr-2">✅</span>
+          <%= link_to "Voir produit", mockups_producer_product_path(1), class: "text-orange-600 hover:underline" %>
+        </div>
+        <div class="flex items-center">
+          <span class="text-green-500 mr-2">✅</span>
+          <%= link_to "Modifier produit", edit_mockups_producer_product_path(1), class: "text-orange-600 hover:underline" %>
+        </div>
+        
+        <p class="text-xs text-gray-400 uppercase font-semibold mt-4 mb-2">Commandes</p>
+        <div class="flex items-center">
+          <span class="text-green-500 mr-2">✅</span>
+          <%= link_to "Commandes reçues", mockups_producer_orders_path, class: "text-orange-600 hover:underline" %>
+        </div>
+        <div class="flex items-center">
+          <span class="text-green-500 mr-2">✅</span>
+          <%= link_to "Détail commande", mockups_producer_order_path(1), class: "text-orange-600 hover:underline" %>
+        </div>
+        
+        <p class="text-xs text-gray-400 uppercase font-semibold mt-4 mb-2">Points de retrait</p>
+        <div class="flex items-center">
+          <span class="text-green-500 mr-2">✅</span>
+          <%= link_to "Ma ferme (horaires)", mockups_producer_pickup_points_path, class: "text-orange-600 hover:underline" %>
+        </div>
+        <div class="flex items-center">
+          <span class="text-green-500 mr-2">✅</span>
+          <%= link_to "Mes marchés", mockups_producer_market_presences_path, class: "text-orange-600 hover:underline" %>
+        </div>
+        <div class="flex items-center">
+          <span class="text-green-500 mr-2">✅</span>
+          <%= link_to "S'inscrire à un marché", new_mockups_producer_market_presence_path, class: "text-orange-600 hover:underline" %>
+        </div>
+        
+        <p class="text-xs text-gray-400 uppercase font-semibold mt-4 mb-2">Paiements</p>
+        <div class="flex items-center">
+          <span class="text-green-500 mr-2">✅</span>
+          <%= link_to "Stripe Connect", mockups_producer_stripe_path, class: "text-orange-600 hover:underline" %>
+        </div>
+        <div class="flex items-center">
+          <span class="text-green-500 mr-2">✅</span>
+          <%= link_to "Onboarding Stripe", connect_mockups_producer_stripe_path, class: "text-orange-600 hover:underline" %>
+        </div>
+      </div>
+      
+      <%= link_to "Explorer Producer →", mockups_producer_dashboard_path, class: "bg-orange-500 hover:bg-orange-600 text-white font-bold py-3 px-4 rounded-lg w-full text-center block transition" %>
+    </div>
+
+    <!-- Admin Journey -->
+    <div class="bg-white p-6 rounded-xl shadow-lg border-2 border-purple-500 relative overflow-hidden">
+      <div class="absolute top-0 right-0 bg-purple-500 text-white text-xs font-bold px-3 py-1 rounded-bl-lg">
+        ✅ 100%
+      </div>
+      
+      <div class="flex items-center mb-4">
+        <span class="bg-purple-100 text-purple-600 p-2 rounded-lg mr-3">
+          <svg class="h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"></path>
+          </svg>
+        </span>
+        <h2 class="font-piepie text-2xl text-purple-600">ADMIN</h2>
+      </div>
+      <p class="text-gray-600 mb-6">Back-office : dashboard, producteurs, utilisateurs, marchés, finances, config.</p>
+      
+      <div class="space-y-2 mb-6 text-sm max-h-64 overflow-y-auto">
+        <p class="text-xs text-gray-400 uppercase font-semibold mb-2">Dashboard</p>
+        <div class="flex items-center">
+          <span class="text-green-500 mr-2">✅</span>
+          <%= link_to "Dashboard admin", mockups_admin_dashboard_path, class: "text-purple-600 hover:underline" %>
+        </div>
+        
+        <p class="text-xs text-gray-400 uppercase font-semibold mt-4 mb-2">Gestion</p>
+        <div class="flex items-center">
+          <span class="text-green-500 mr-2">✅</span>
+          <%= link_to "Producteurs", mockups_admin_producers_path, class: "text-purple-600 hover:underline" %>
+        </div>
+        <div class="flex items-center">
+          <span class="text-green-500 mr-2">✅</span>
+          <%= link_to "Détail producteur", mockups_admin_producer_path(1), class: "text-purple-600 hover:underline" %>
+        </div>
+        <div class="flex items-center">
+          <span class="text-green-500 mr-2">✅</span>
+          <%= link_to "Modifier producteur", edit_mockups_admin_producer_path(1), class: "text-purple-600 hover:underline" %>
+        </div>
+        <div class="flex items-center">
+          <span class="text-green-500 mr-2">✅</span>
+          <%= link_to "Utilisateurs", mockups_admin_users_path, class: "text-purple-600 hover:underline" %>
+        </div>
+        <div class="flex items-center">
+          <span class="text-green-500 mr-2">✅</span>
+          <%= link_to "Catégories", mockups_admin_categories_path, class: "text-purple-600 hover:underline" %>
+        </div>
+        <div class="flex items-center">
+          <span class="text-green-500 mr-2">✅</span>
+          <%= link_to "Marchés", mockups_admin_markets_path, class: "text-purple-600 hover:underline" %>
+        </div>
+        <div class="flex items-center">
+          <span class="text-green-500 mr-2">✅</span>
+          <%= link_to "Produits", mockups_admin_products_path, class: "text-purple-600 hover:underline" %>
+        </div>
+        
+        <p class="text-xs text-gray-400 uppercase font-semibold mt-4 mb-2">Commandes</p>
+        <div class="flex items-center">
+          <span class="text-green-500 mr-2">✅</span>
+          <%= link_to "Commandes", mockups_admin_orders_path, class: "text-purple-600 hover:underline" %>
+        </div>
+        <div class="flex items-center">
+          <span class="text-green-500 mr-2">✅</span>
+          <%= link_to "Détail commande", mockups_admin_order_path(1), class: "text-purple-600 hover:underline" %>
+        </div>
+        
+        <p class="text-xs text-gray-400 uppercase font-semibold mt-4 mb-2">Finances</p>
+        <div class="flex items-center">
+          <span class="text-green-500 mr-2">✅</span>
+          <%= link_to "Transactions", mockups_admin_transactions_path, class: "text-purple-600 hover:underline" %>
+        </div>
+        <div class="flex items-center">
+          <span class="text-green-500 mr-2">✅</span>
+          <%= link_to "Finances", mockups_admin_finances_path, class: "text-purple-600 hover:underline" %>
+        </div>
+        
+        <p class="text-xs text-gray-400 uppercase font-semibold mt-4 mb-2">Configuration</p>
+        <div class="flex items-center">
+          <span class="text-green-500 mr-2">✅</span>
+          <%= link_to "Configuration", mockups_admin_settings_path, class: "text-purple-600 hover:underline" %>
+        </div>
+        <div class="flex items-center">
+          <span class="text-green-500 mr-2">✅</span>
+          <%= link_to "Modifier config", edit_mockups_admin_settings_path, class: "text-purple-600 hover:underline" %>
+        </div>
+      </div>
+      
+      <%= link_to "Explorer Admin →", mockups_admin_dashboard_path, class: "bg-purple-500 hover:bg-purple-600 text-white font-bold py-3 px-4 rounded-lg w-full text-center block transition" %>
+    </div>
+  </div>
+
+  <!-- Info Footer -->
+  <div class="mt-12 text-center">
+    <div class="inline-flex items-center bg-silloun-yellow/30 rounded-full px-6 py-3">
+      <svg class="h-5 w-5 text-silloun-green mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+      </svg>
+      <span class="text-silloun-green">Ces mockups présentent les UI/UX de l'application. Usage développement uniquement.</span>
+    </div>
   </div>
 </div>

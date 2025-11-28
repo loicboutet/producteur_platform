@@ -1,0 +1,95 @@
+<% content_for(:title, "Connecter Stripe - Espace Producteur") %>
+
+<div class="max-w-2xl mx-auto py-8">
+  <!-- Header -->
+  <div class="text-center mb-12">
+    <div class="w-20 h-20 bg-silloun-yellow rounded-full flex items-center justify-center mx-auto mb-6">
+      <svg class="w-10 h-10 text-silloun-green" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 10h18M7 15h1m4 0h1m-7 4h12a3 3 0 003-3V8a3 3 0 00-3-3H6a3 3 0 00-3 3v8a3 3 0 003 3z"></path>
+      </svg>
+    </div>
+    <h1 class="font-piepie text-3xl md:text-4xl text-silloun-green mb-4">CONFIGURER VOS PAIEMENTS</h1>
+    <p class="text-gray-600 text-lg">Connectez votre compte bancaire pour recevoir vos paiements automatiquement</p>
+  </div>
+
+  <!-- Steps -->
+  <div class="bg-white rounded-xl shadow-sm border border-gray-100 overflow-hidden mb-8">
+    <div class="p-6 border-b border-gray-100">
+      <h2 class="font-piepie text-xl text-silloun-green">COMMENT ÇA MARCHE ?</h2>
+    </div>
+    <div class="p-6">
+      <div class="space-y-6">
+        <div class="flex items-start">
+          <div class="w-10 h-10 bg-silloun-green text-white rounded-full flex items-center justify-center font-bold mr-4 flex-shrink-0">1</div>
+          <div>
+            <h3 class="font-semibold text-gray-900 mb-1">Créez votre compte Stripe</h3>
+            <p class="text-gray-600">Renseignez vos informations personnelles et bancaires sur la plateforme sécurisée Stripe.</p>
+          </div>
+        </div>
+        
+        <div class="flex items-start">
+          <div class="w-10 h-10 bg-silloun-green text-white rounded-full flex items-center justify-center font-bold mr-4 flex-shrink-0">2</div>
+          <div>
+            <h3 class="font-semibold text-gray-900 mb-1">Vérification de votre identité</h3>
+            <p class="text-gray-600">Stripe vérifie votre identité pour sécuriser les transactions (pièce d'identité, SIRET...).</p>
+          </div>
+        </div>
+        
+        <div class="flex items-start">
+          <div class="w-10 h-10 bg-silloun-green text-white rounded-full flex items-center justify-center font-bold mr-4 flex-shrink-0">3</div>
+          <div>
+            <h3 class="font-semibold text-gray-900 mb-1">Recevez vos paiements</h3>
+            <p class="text-gray-600">Une fois configuré, vos paiements sont virés automatiquement sur votre compte bancaire sous 7 jours.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Benefits -->
+  <div class="bg-silloun-yellow rounded-xl p-6 mb-8">
+    <h3 class="font-piepie text-lg text-silloun-green mb-4">✨ AVANTAGES</h3>
+    <div class="grid md:grid-cols-2 gap-4">
+      <div class="flex items-center">
+        <svg class="w-5 h-5 text-silloun-green mr-2" fill="currentColor" viewBox="0 0 20 20">
+          <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"></path>
+        </svg>
+        <span class="text-silloun-green">Paiements automatiques</span>
+      </div>
+      <div class="flex items-center">
+        <svg class="w-5 h-5 text-silloun-green mr-2" fill="currentColor" viewBox="0 0 20 20">
+          <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"></path>
+        </svg>
+        <span class="text-silloun-green">100% sécurisé</span>
+      </div>
+      <div class="flex items-center">
+        <svg class="w-5 h-5 text-silloun-green mr-2" fill="currentColor" viewBox="0 0 20 20">
+          <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"></path>
+        </svg>
+        <span class="text-silloun-green">Virements sous 7 jours</span>
+      </div>
+      <div class="flex items-center">
+        <svg class="w-5 h-5 text-silloun-green mr-2" fill="currentColor" viewBox="0 0 20 20">
+          <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"></path>
+        </svg>
+        <span class="text-silloun-green">Suivi en temps réel</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- CTA -->
+  <div class="text-center">
+    <a href="#" class="btn-silloun-primary inline-flex items-center text-lg px-8 py-4">
+      <svg class="w-6 h-6 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path>
+      </svg>
+      Commencer la configuration
+    </a>
+    <p class="text-gray-500 text-sm mt-4">Vous serez redirigé vers Stripe pour compléter votre inscription</p>
+  </div>
+
+  <!-- Back Link -->
+  <div class="text-center mt-8">
+    <%= link_to "← Retour aux paiements", mockups_producer_stripe_path, class: "text-silloun-green hover:underline" %>
+  </div>
+</div>

@@ -1,0 +1,182 @@
+<% content_for(:title, "Modifier #{@product[:name]} - Espace Producteur") %>
+
+<!-- Header -->
+<div class="mb-8">
+  <div class="flex items-center mb-4">
+    <%= link_to mockups_producer_products_path, class: "text-gray-500 hover:text-silloun-green transition mr-2" do %>
+      <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path>
+      </svg>
+    <% end %>
+    <h1 class="font-piepie text-3xl md:text-4xl text-silloun-green">MODIFIER LE PRODUIT</h1>
+  </div>
+  <p class="text-gray-600">Modifiez les informations de <%= @product[:name] %></p>
+</div>
+
+<%= form_with url: mockups_producer_product_path(@product[:id]), method: :patch, local: true, class: "space-y-8" do |f| %>
+  <div class="grid lg:grid-cols-3 gap-8">
+    <!-- Main Form -->
+    <div class="lg:col-span-2 space-y-6">
+      <!-- Basic Info -->
+      <div class="bg-white rounded-xl shadow-sm border border-gray-100 overflow-hidden">
+        <div class="p-6 border-b border-gray-100">
+          <h2 class="font-piepie text-xl text-silloun-green">INFORMATIONS GÉNÉRALES</h2>
+        </div>
+        <div class="p-6 space-y-6">
+          <!-- Name -->
+          <div>
+            <label class="block text-sm font-medium text-gray-700 mb-2">Nom du produit *</label>
+            <input type="text" name="name" value="<%= @product[:name] %>"
+                   class="w-full px-4 py-3 border-2 border-gray-200 rounded-lg focus:outline-none focus:border-silloun-green">
+          </div>
+
+          <!-- Description -->
+          <div>
+            <label class="block text-sm font-medium text-gray-700 mb-2">Description *</label>
+            <textarea name="description" rows="4" 
+                      class="w-full px-4 py-3 border-2 border-gray-200 rounded-lg focus:outline-none focus:border-silloun-green resize-none"><%= @product[:description] %></textarea>
+          </div>
+
+          <!-- Category -->
+          <div>
+            <label class="block text-sm font-medium text-gray-700 mb-2">Catégorie *</label>
+            <select name="category" class="w-full px-4 py-3 border-2 border-gray-200 rounded-lg focus:outline-none focus:border-silloun-green bg-white">
+              <% @categories.each do |category| %>
+                <option value="<%= category[:id] %>" <%= 'selected' if category[:name] == @product[:category] %>><%= category[:icon] %> <%= category[:name] %></option>
+              <% end %>
+            </select>
+          </div>
+        </div>
+      </div>
+
+      <!-- Pricing -->
+      <div class="bg-white rounded-xl shadow-sm border border-gray-100 overflow-hidden">
+        <div class="p-6 border-b border-gray-100">
+          <h2 class="font-piepie text-xl text-silloun-green">PRIX ET STOCK</h2>
+        </div>
+        <div class="p-6 space-y-6">
+          <div class="grid md:grid-cols-2 gap-6">
+            <!-- Price -->
+            <div>
+              <label class="block text-sm font-medium text-gray-700 mb-2">Prix *</label>
+              <div class="relative">
+                <input type="number" name="price" step="0.01" min="0" value="<%= @product[:price] %>"
+                       class="w-full px-4 py-3 pr-12 border-2 border-gray-200 rounded-lg focus:outline-none focus:border-silloun-green">
+                <span class="absolute right-4 top-1/2 transform -translate-y-1/2 text-gray-500">€</span>
+              </div>
+            </div>
+
+            <!-- Unit -->
+            <div>
+              <label class="block text-sm font-medium text-gray-700 mb-2">Unité *</label>
+              <select name="unit" class="w-full px-4 py-3 border-2 border-gray-200 rounded-lg focus:outline-none focus:border-silloun-green bg-white">
+                <option value="kg" <%= 'selected' if @product[:unit] == 'kg' %>>Kilogramme (kg)</option>
+                <option value="piece" <%= 'selected' if @product[:unit] == 'piece' %>>Pièce</option>
+                <option value="lot" <%= 'selected' if @product[:unit] == 'lot' %>>Lot</option>
+                <option value="barquette" <%= 'selected' if @product[:unit].include?('barquette') %>>Barquette</option>
+                <option value="bouteille" <%= 'selected' if @product[:unit] == 'bouteille' %>>Bouteille</option>
+                <option value="pot" <%= 'selected' if @product[:unit].include?('pot') %>>Pot</option>
+                <option value="douzaine" <%= 'selected' if @product[:unit] == 'douzaine' %>>Douzaine</option>
+              </select>
+            </div>
+
+            <!-- Stock -->
+            <div>
+              <label class="block text-sm font-medium text-gray-700 mb-2">Stock disponible *</label>
+              <input type="number" name="stock" min="0" value="<%= @product[:stock] %>"
+                     class="w-full px-4 py-3 border-2 border-gray-200 rounded-lg focus:outline-none focus:border-silloun-green">
+            </div>
+
+            <!-- Low Stock Alert -->
+            <div>
+              <label class="block text-sm font-medium text-gray-700 mb-2">Alerte stock faible</label>
+              <input type="number" name="low_stock_alert" min="0" value="10"
+                     class="w-full px-4 py-3 border-2 border-gray-200 rounded-lg focus:outline-none focus:border-silloun-green">
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Images -->
+      <div class="bg-white rounded-xl shadow-sm border border-gray-100 overflow-hidden">
+        <div class="p-6 border-b border-gray-100">
+          <h2 class="font-piepie text-xl text-silloun-green">PHOTOS</h2>
+        </div>
+        <div class="p-6">
+          <!-- Current Image -->
+          <div class="mb-6">
+            <p class="text-sm font-medium text-gray-700 mb-2">Photo actuelle</p>
+            <div class="flex items-center space-x-4">
+              <div class="w-24 h-24 bg-gray-100 rounded-lg overflow-hidden">
+                <%= image_tag @product[:image], alt: @product[:name], class: "w-full h-full object-cover" %>
+              </div>
+              <button type="button" class="text-red-600 hover:text-red-700 text-sm font-medium">
+                Supprimer
+              </button>
+            </div>
+          </div>
+          
+          <!-- Upload New -->
+          <div class="border-2 border-dashed border-gray-300 rounded-xl p-6 text-center hover:border-silloun-green transition cursor-pointer">
+            <svg class="w-10 h-10 mx-auto text-gray-400 mb-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"></path>
+            </svg>
+            <label class="cursor-pointer">
+              <span class="text-silloun-green font-semibold hover:underline">Ajouter d'autres photos</span>
+              <input type="file" class="hidden" accept="image/*" multiple>
+            </label>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Sidebar -->
+    <div class="space-y-6">
+      <!-- Save Actions -->
+      <div class="bg-white rounded-xl shadow-sm border border-gray-100 p-6 sticky top-4">
+        <h3 class="font-semibold text-gray-800 mb-4">Publication</h3>
+        
+        <!-- Status -->
+        <div class="mb-4">
+          <label class="flex items-center">
+            <input type="checkbox" name="available" <%= 'checked' if @product[:available] %> class="w-5 h-5 border-gray-300 rounded accent-green-700 mr-3">
+            <span class="text-gray-700">Produit disponible à la vente</span>
+          </label>
+        </div>
+        
+        <div class="space-y-3">
+          <button type="submit" class="btn-silloun-primary w-full">
+            <svg class="w-5 h-5 mr-2 inline" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+            </svg>
+            Enregistrer les modifications
+          </button>
+          <%= link_to "Annuler", mockups_producer_products_path, class: "btn-silloun-outline w-full text-center block" %>
+        </div>
+      </div>
+
+      <!-- Quick Stats -->
+      <div class="bg-gray-50 rounded-xl p-6">
+        <h3 class="font-semibold text-gray-800 mb-3">Statistiques</h3>
+        <div class="space-y-2 text-sm">
+          <div class="flex justify-between">
+            <span class="text-gray-600">Ventes totales</span>
+            <span class="font-semibold"><%= @product[:sales_count] %></span>
+          </div>
+          <div class="flex justify-between">
+            <span class="text-gray-600">Ajouté le</span>
+            <span class="font-semibold"><%= @product[:created_at].strftime("%d/%m/%Y") %></span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Danger Zone -->
+      <div class="bg-white rounded-xl shadow-sm border border-red-200 p-6">
+        <h3 class="font-semibold text-red-600 mb-4">Zone de danger</h3>
+        <button type="button" class="w-full py-2 px-4 border-2 border-red-500 text-red-500 rounded-lg font-semibold hover:bg-red-50 transition">
+          Supprimer le produit
+        </button>
+      </div>
+    </div>
+  </div>
+<% end %>

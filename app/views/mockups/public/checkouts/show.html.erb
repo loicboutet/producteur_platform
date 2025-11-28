@@ -1,0 +1,200 @@
+<% content_for(:title) { "Validation de commande - Silloun" } %>
+
+<section class="py-8 bg-gray-50 min-h-screen">
+  <div class="max-w-5xl mx-auto px-4">
+    <!-- Breadcrumb -->
+    <nav class="text-sm text-gray-500 mb-6">
+      <%= link_to "Accueil", mockups_public_home_index_path, class: "hover:text-silloun-green" %> 
+      <span class="mx-2">/</span>
+      <%= link_to "Panier", mockups_public_cart_path, class: "hover:text-silloun-green" %>
+      <span class="mx-2">/</span>
+      <span class="text-silloun-green">Validation</span>
+    </nav>
+
+    <!-- Progress Steps -->
+    <div class="flex items-center justify-center mb-8">
+      <div class="flex items-center">
+        <div class="flex items-center">
+          <div class="w-8 h-8 bg-silloun-green text-white rounded-full flex items-center justify-center font-bold text-sm">✓</div>
+          <span class="ml-2 text-silloun-green font-medium">Panier</span>
+        </div>
+        <div class="w-16 h-1 bg-silloun-green mx-4"></div>
+        <div class="flex items-center">
+          <div class="w-8 h-8 bg-silloun-yellow text-silloun-green rounded-full flex items-center justify-center font-bold text-sm">2</div>
+          <span class="ml-2 text-silloun-green font-medium">Retrait</span>
+        </div>
+        <div class="w-16 h-1 bg-gray-300 mx-4"></div>
+        <div class="flex items-center">
+          <div class="w-8 h-8 bg-gray-300 text-gray-500 rounded-full flex items-center justify-center font-bold text-sm">3</div>
+          <span class="ml-2 text-gray-500">Paiement</span>
+        </div>
+      </div>
+    </div>
+
+    <h1 class="font-piepie text-silloun-green text-3xl mb-8">CHOISISSEZ VOS POINTS DE RETRAIT</h1>
+
+    <div class="grid lg:grid-cols-3 gap-8">
+      <!-- Pickup Selection -->
+      <div class="lg:col-span-2 space-y-6">
+        <!-- Producer 1 -->
+        <div class="bg-white rounded-2xl shadow-sm overflow-hidden">
+          <div class="bg-silloun-green px-6 py-4 flex items-center">
+            <div class="w-10 h-10 bg-silloun-yellow rounded-full flex items-center justify-center mr-3">
+              <span class="text-silloun-green font-bold text-lg">🌱</span>
+            </div>
+            <div>
+              <p class="text-white font-semibold">Ferme du Soleil</p>
+              <p class="text-white/70 text-sm">2 articles • 17,40 €</p>
+            </div>
+          </div>
+
+          <div class="p-6">
+            <p class="text-gray-600 mb-4">Sélectionnez un point de retrait :</p>
+            
+            <div class="space-y-3">
+              <!-- Option 1: Farm -->
+              <label class="block cursor-pointer">
+                <input type="radio" name="pickup_1" class="sr-only peer" checked>
+                <div class="border-2 rounded-xl p-4 peer-checked:border-silloun-green peer-checked:bg-green-50 transition">
+                  <div class="flex items-start">
+                    <div class="w-10 h-10 bg-silloun-green rounded-full flex items-center justify-center flex-shrink-0 mr-4">
+                      <svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"></path>
+                      </svg>
+                    </div>
+                    <div class="flex-1">
+                      <div class="flex justify-between">
+                        <p class="font-semibold text-silloun-green">À la ferme</p>
+                        <span class="text-green-600 text-sm font-medium">Prochain créneau : Sam. 14h-18h</span>
+                      </div>
+                      <p class="text-sm text-gray-600">123 Route de la Campagne, 87000 Limoges</p>
+                    </div>
+                  </div>
+                </div>
+              </label>
+
+              <!-- Option 2: Market -->
+              <label class="block cursor-pointer">
+                <input type="radio" name="pickup_1" class="sr-only peer">
+                <div class="border-2 rounded-xl p-4 peer-checked:border-silloun-green peer-checked:bg-green-50 transition">
+                  <div class="flex items-start">
+                    <div class="w-10 h-10 bg-silloun-yellow rounded-full flex items-center justify-center flex-shrink-0 mr-4">
+                      <svg class="w-5 h-5 text-silloun-green" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"></path>
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"></path>
+                      </svg>
+                    </div>
+                    <div class="flex-1">
+                      <div class="flex justify-between">
+                        <p class="font-semibold text-silloun-green">Marché de Limoges</p>
+                        <span class="text-green-600 text-sm font-medium">Sam. 8h-13h</span>
+                      </div>
+                      <p class="text-sm text-gray-600">Place de la Motte, 87000 Limoges</p>
+                    </div>
+                  </div>
+                </div>
+              </label>
+            </div>
+          </div>
+        </div>
+
+        <!-- Producer 2 -->
+        <div class="bg-white rounded-2xl shadow-sm overflow-hidden">
+          <div class="bg-silloun-green px-6 py-4 flex items-center">
+            <div class="w-10 h-10 bg-silloun-yellow rounded-full flex items-center justify-center mr-3">
+              <span class="text-silloun-green font-bold text-lg">🧀</span>
+            </div>
+            <div>
+              <p class="text-white font-semibold">Chèvrerie des Collines</p>
+              <p class="text-white/70 text-sm">1 article • 17,00 €</p>
+            </div>
+          </div>
+
+          <div class="p-6">
+            <p class="text-gray-600 mb-4">Sélectionnez un point de retrait :</p>
+            
+            <div class="space-y-3">
+              <label class="block cursor-pointer">
+                <input type="radio" name="pickup_2" class="sr-only peer" checked>
+                <div class="border-2 rounded-xl p-4 peer-checked:border-silloun-green peer-checked:bg-green-50 transition">
+                  <div class="flex items-start">
+                    <div class="w-10 h-10 bg-silloun-green rounded-full flex items-center justify-center flex-shrink-0 mr-4">
+                      <svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"></path>
+                      </svg>
+                    </div>
+                    <div class="flex-1">
+                      <div class="flex justify-between">
+                        <p class="font-semibold text-silloun-green">À la chèvrerie</p>
+                        <span class="text-green-600 text-sm font-medium">Ven. 10h-17h</span>
+                      </div>
+                      <p class="text-sm text-gray-600">45 Chemin des Chèvres, 15000 Aurillac</p>
+                    </div>
+                  </div>
+                </div>
+              </label>
+            </div>
+          </div>
+        </div>
+
+        <!-- Customer Info -->
+        <div class="bg-white rounded-2xl shadow-sm p-6">
+          <h2 class="font-piepie text-silloun-green text-xl mb-6">VOS COORDONNÉES</h2>
+          
+          <div class="grid md:grid-cols-2 gap-4">
+            <div>
+              <label class="block text-sm font-medium text-gray-700 mb-1">Prénom *</label>
+              <input type="text" class="w-full px-4 py-3 border border-gray-200 rounded-lg focus:outline-none focus:border-silloun-green" placeholder="Jean">
+            </div>
+            <div>
+              <label class="block text-sm font-medium text-gray-700 mb-1">Nom *</label>
+              <input type="text" class="w-full px-4 py-3 border border-gray-200 rounded-lg focus:outline-none focus:border-silloun-green" placeholder="Dupont">
+            </div>
+            <div>
+              <label class="block text-sm font-medium text-gray-700 mb-1">Email *</label>
+              <input type="email" class="w-full px-4 py-3 border border-gray-200 rounded-lg focus:outline-none focus:border-silloun-green" placeholder="jean@exemple.fr">
+            </div>
+            <div>
+              <label class="block text-sm font-medium text-gray-700 mb-1">Téléphone *</label>
+              <input type="tel" class="w-full px-4 py-3 border border-gray-200 rounded-lg focus:outline-none focus:border-silloun-green" placeholder="06 12 34 56 78">
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Order Summary -->
+      <div class="lg:col-span-1">
+        <div class="bg-white rounded-2xl shadow-sm p-6 sticky top-24">
+          <h2 class="font-piepie text-silloun-green text-xl mb-6">RÉCAPITULATIF</h2>
+
+          <div class="space-y-3 text-sm">
+            <div class="flex justify-between">
+              <span class="text-gray-600">Ferme du Soleil (2 art.)</span>
+              <span>17,40 €</span>
+            </div>
+            <div class="flex justify-between">
+              <span class="text-gray-600">Chèvrerie des Collines (1 art.)</span>
+              <span>17,00 €</span>
+            </div>
+            <hr class="my-4">
+            <div class="flex justify-between font-bold text-lg">
+              <span class="text-silloun-green">Total</span>
+              <span class="text-silloun-green">34,40 €</span>
+            </div>
+          </div>
+
+          <%= link_to payment_mockups_public_checkout_path, class: "w-full btn-silloun-primary py-3 flex items-center justify-center mt-6" do %>
+            Procéder au paiement
+            <svg class="w-5 h-5 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"></path>
+            </svg>
+          <% end %>
+
+          <p class="text-gray-400 text-xs text-center mt-4">
+            🔒 Paiement sécurisé par Stripe
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

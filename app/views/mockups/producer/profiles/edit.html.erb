@@ -1,0 +1,220 @@
+<% content_for(:title, "Modifier mon profil - Espace Producteur") %>
+
+<!-- Header -->
+<div class="mb-8">
+  <div class="flex items-center mb-4">
+    <%= link_to mockups_producer_profile_path, class: "text-gray-500 hover:text-silloun-green transition mr-2" do %>
+      <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path>
+      </svg>
+    <% end %>
+    <h1 class="font-piepie text-3xl md:text-4xl text-silloun-green">MODIFIER MON PROFIL</h1>
+  </div>
+  <p class="text-gray-600">Mettez à jour les informations de votre ferme</p>
+</div>
+
+<%= form_with url: mockups_producer_profile_path, method: :patch, local: true, class: "space-y-8" do |f| %>
+  <div class="grid lg:grid-cols-3 gap-8">
+    <!-- Main Form -->
+    <div class="lg:col-span-2 space-y-6">
+      <!-- Farm Info -->
+      <div class="bg-white rounded-xl shadow-sm border border-gray-100 overflow-hidden">
+        <div class="p-6 border-b border-gray-100">
+          <h2 class="font-piepie text-xl text-silloun-green">INFORMATIONS DE LA FERME</h2>
+        </div>
+        <div class="p-6 space-y-6">
+          <!-- Photo -->
+          <div>
+            <label class="block text-sm font-medium text-gray-700 mb-2">Photo de profil</label>
+            <div class="flex items-center space-x-6">
+              <div class="w-24 h-24 rounded-xl overflow-hidden border-4 border-silloun-yellow">
+                <%= image_tag @producer[:photo], alt: "Photo actuelle", class: "w-full h-full object-cover" %>
+              </div>
+              <div>
+                <label class="btn-silloun-outline cursor-pointer inline-block">
+                  <input type="file" class="hidden" accept="image/*">
+                  Changer la photo
+                </label>
+                <p class="text-sm text-gray-500 mt-2">JPG, PNG ou GIF. Max 5 Mo.</p>
+              </div>
+            </div>
+          </div>
+
+          <div class="grid md:grid-cols-2 gap-6">
+            <!-- Farm Name -->
+            <div class="md:col-span-2">
+              <label class="block text-sm font-medium text-gray-700 mb-2">Nom de la ferme *</label>
+              <input type="text" name="farm_name" value="<%= @producer[:farm_name] %>" 
+                     class="w-full px-4 py-3 border-2 border-gray-200 rounded-lg focus:outline-none focus:border-silloun-green" 
+                     placeholder="Ex: Ferme du Soleil">
+            </div>
+
+            <!-- Short Description -->
+            <div class="md:col-span-2">
+              <label class="block text-sm font-medium text-gray-700 mb-2">Slogan / Description courte</label>
+              <input type="text" name="short_description" value="<%= @producer[:short_description] %>" 
+                     class="w-full px-4 py-3 border-2 border-gray-200 rounded-lg focus:outline-none focus:border-silloun-green" 
+                     placeholder="Ex: Légumes bio de saison, cultivés avec passion"
+                     maxlength="100">
+              <p class="text-sm text-gray-500 mt-1">Maximum 100 caractères</p>
+            </div>
+
+            <!-- Full Description -->
+            <div class="md:col-span-2">
+              <label class="block text-sm font-medium text-gray-700 mb-2">Description complète</label>
+              <textarea name="description" rows="5" 
+                        class="w-full px-4 py-3 border-2 border-gray-200 rounded-lg focus:outline-none focus:border-silloun-green resize-none"
+                        placeholder="Présentez votre ferme, votre histoire, vos méthodes de production..."><%= @producer[:description] %></textarea>
+              <p class="text-sm text-gray-500 mt-1">Cette description sera visible sur votre page publique</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Personal Info -->
+      <div class="bg-white rounded-xl shadow-sm border border-gray-100 overflow-hidden">
+        <div class="p-6 border-b border-gray-100">
+          <h2 class="font-piepie text-xl text-silloun-green">VOS COORDONNÉES</h2>
+        </div>
+        <div class="p-6 space-y-6">
+          <div class="grid md:grid-cols-2 gap-6">
+            <!-- First Name -->
+            <div>
+              <label class="block text-sm font-medium text-gray-700 mb-2">Prénom *</label>
+              <input type="text" name="first_name" value="<%= @producer[:first_name] %>" 
+                     class="w-full px-4 py-3 border-2 border-gray-200 rounded-lg focus:outline-none focus:border-silloun-green">
+            </div>
+
+            <!-- Last Name -->
+            <div>
+              <label class="block text-sm font-medium text-gray-700 mb-2">Nom *</label>
+              <input type="text" name="last_name" value="<%= @producer[:last_name] %>" 
+                     class="w-full px-4 py-3 border-2 border-gray-200 rounded-lg focus:outline-none focus:border-silloun-green">
+            </div>
+
+            <!-- Email -->
+            <div>
+              <label class="block text-sm font-medium text-gray-700 mb-2">Email *</label>
+              <input type="email" name="email" value="<%= @producer[:email] %>" 
+                     class="w-full px-4 py-3 border-2 border-gray-200 rounded-lg focus:outline-none focus:border-silloun-green">
+            </div>
+
+            <!-- Phone -->
+            <div>
+              <label class="block text-sm font-medium text-gray-700 mb-2">Téléphone *</label>
+              <input type="tel" name="phone" value="<%= @producer[:phone] %>" 
+                     class="w-full px-4 py-3 border-2 border-gray-200 rounded-lg focus:outline-none focus:border-silloun-green"
+                     placeholder="06 12 34 56 78">
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Address -->
+      <div class="bg-white rounded-xl shadow-sm border border-gray-100 overflow-hidden">
+        <div class="p-6 border-b border-gray-100">
+          <h2 class="font-piepie text-xl text-silloun-green">ADRESSE DE LA FERME</h2>
+        </div>
+        <div class="p-6 space-y-6">
+          <div class="grid md:grid-cols-2 gap-6">
+            <!-- Address -->
+            <div class="md:col-span-2">
+              <label class="block text-sm font-medium text-gray-700 mb-2">Adresse *</label>
+              <input type="text" name="address" value="<%= @producer[:address] %>" 
+                     class="w-full px-4 py-3 border-2 border-gray-200 rounded-lg focus:outline-none focus:border-silloun-green">
+            </div>
+
+            <!-- Postal Code -->
+            <div>
+              <label class="block text-sm font-medium text-gray-700 mb-2">Code postal *</label>
+              <input type="text" name="postal_code" value="<%= @producer[:postal_code] %>" 
+                     class="w-full px-4 py-3 border-2 border-gray-200 rounded-lg focus:outline-none focus:border-silloun-green"
+                     maxlength="5">
+            </div>
+
+            <!-- City -->
+            <div>
+              <label class="block text-sm font-medium text-gray-700 mb-2">Ville *</label>
+              <input type="text" name="city" value="<%= @producer[:city] %>" 
+                     class="w-full px-4 py-3 border-2 border-gray-200 rounded-lg focus:outline-none focus:border-silloun-green">
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Legal Info -->
+      <div class="bg-white rounded-xl shadow-sm border border-gray-100 overflow-hidden">
+        <div class="p-6 border-b border-gray-100">
+          <h2 class="font-piepie text-xl text-silloun-green">INFORMATIONS LÉGALES</h2>
+        </div>
+        <div class="p-6">
+          <div>
+            <label class="block text-sm font-medium text-gray-700 mb-2">SIRET</label>
+            <input type="text" name="siret" value="<%= @producer[:siret] %>" 
+                   class="w-full px-4 py-3 border-2 border-gray-200 rounded-lg bg-gray-50 cursor-not-allowed" 
+                   disabled>
+            <p class="text-sm text-gray-500 mt-2">
+              <svg class="w-4 h-4 inline mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+              </svg>
+              Le SIRET ne peut pas être modifié. Contactez le support si nécessaire.
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Sidebar -->
+    <div class="space-y-6">
+      <!-- Save Actions -->
+      <div class="bg-white rounded-xl shadow-sm border border-gray-100 p-6 sticky top-4">
+        <h3 class="font-semibold text-gray-800 mb-4">Actions</h3>
+        <div class="space-y-3">
+          <button type="submit" class="btn-silloun-primary w-full">
+            <svg class="w-5 h-5 mr-2 inline" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+            </svg>
+            Enregistrer les modifications
+          </button>
+          <%= link_to "Annuler", mockups_producer_profile_path, class: "btn-silloun-outline w-full text-center block" %>
+        </div>
+      </div>
+
+      <!-- Tips -->
+      <div class="bg-blue-50 rounded-xl p-6">
+        <h3 class="font-semibold text-blue-800 mb-3">💡 Conseils</h3>
+        <ul class="space-y-2 text-sm text-blue-700">
+          <li class="flex items-start">
+            <svg class="w-4 h-4 mr-2 mt-0.5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+            </svg>
+            Une belle photo augmente la confiance des clients
+          </li>
+          <li class="flex items-start">
+            <svg class="w-4 h-4 mr-2 mt-0.5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+            </svg>
+            Racontez votre histoire dans la description
+          </li>
+          <li class="flex items-start">
+            <svg class="w-4 h-4 mr-2 mt-0.5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+            </svg>
+            Gardez vos coordonnées à jour pour les clients
+          </li>
+        </ul>
+      </div>
+
+      <!-- Security -->
+      <div class="bg-white rounded-xl shadow-sm border border-gray-100 p-6">
+        <h3 class="font-semibold text-gray-800 mb-4">Sécurité</h3>
+        <a href="#" class="flex items-center text-gray-600 hover:text-silloun-green transition">
+          <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 7a2 2 0 012 2m4 0a6 6 0 01-7.743 5.743L11 17H9v2H7v2H4a1 1 0 01-1-1v-2.586a1 1 0 01.293-.707l5.964-5.964A6 6 0 1121 9z"></path>
+          </svg>
+          Changer mon mot de passe
+        </a>
+      </div>
+    </div>
+  </div>
+<% end %>

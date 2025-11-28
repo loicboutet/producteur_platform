@@ -3,13 +3,13 @@
 one:
   user: one
   total_amount: 9.99
-  platform_fee: 9.99
-  status: MyString
-  stripe_payment_intent_id: MyString
+  platform_fee: 0.99
+  status: pending
+  stripe_payment_intent_id: pi_test_order_group_one
 
 two:
   user: two
-  total_amount: 9.99
-  platform_fee: 9.99
-  status: MyString
-  stripe_payment_intent_id: MyString
+  total_amount: 19.99
+  platform_fee: 1.99
+  status: completed
+  stripe_payment_intent_id: pi_test_order_group_two

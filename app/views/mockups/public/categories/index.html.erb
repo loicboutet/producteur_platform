@@ -1,0 +1,129 @@
+<% content_for(:title, "Catégories - Silloun") %>
+
+<!-- Hero Section -->
+<section class="bg-silloun-green py-12">
+  <div class="max-w-7xl mx-auto px-4">
+    <div class="text-center">
+      <p class="font-marydale text-silloun-yellow text-2xl mb-2">Explorez</p>
+      <h1 class="font-piepie text-silloun-yellow text-4xl md:text-5xl mb-4">NOS CATÉGORIES</h1>
+      <p class="text-white/80 max-w-2xl mx-auto">
+        Découvrez tous les produits de nos producteurs locaux, classés par catégorie.
+        Du champ à votre assiette, en circuit court.
+      </p>
+    </div>
+  </div>
+</section>
+
+<!-- Categories Grid -->
+<section class="py-12 bg-gray-50">
+  <div class="max-w-7xl mx-auto px-4">
+    <div class="grid grid-cols-2 md:grid-cols-3 gap-6">
+      <% @categories.each do |category| %>
+        <%= link_to mockups_public_category_path(slug: category[:slug]), 
+            class: "group bg-white rounded-2xl shadow-md hover:shadow-xl transition-all duration-300 overflow-hidden" do %>
+          <!-- Category Image/Icon -->
+          <div class="h-40 bg-gradient-to-br from-silloun-green to-silloun-green/80 flex items-center justify-center relative">
+            <span class="text-7xl group-hover:scale-110 transition-transform duration-300"><%= category[:icon] %></span>
+            
+            <!-- Product count badge -->
+            <div class="absolute top-3 right-3 bg-silloun-yellow text-silloun-green text-xs font-bold px-2 py-1 rounded-full">
+              <%= category[:products_count] %> produits
+            </div>
+          </div>
+          
+          <!-- Category Info -->
+          <div class="p-5">
+            <h3 class="font-piepie text-silloun-green text-lg group-hover:text-silloun-green/80 transition">
+              <%= category[:name] %>
+            </h3>
+            <p class="text-gray-500 text-sm mt-1 flex items-center">
+              <svg class="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"></path>
+              </svg>
+              Découvrir
+            </p>
+          </div>
+        <% end %>
+      <% end %>
+    </div>
+  </div>
+</section>
+
+<!-- Additional Info Section -->
+<section class="py-12 bg-white">
+  <div class="max-w-7xl mx-auto px-4">
+    <div class="bg-silloun-yellow rounded-3xl p-8 md:p-12">
+      <div class="grid md:grid-cols-2 gap-8 items-center">
+        <div>
+          <p class="font-marydale text-silloun-green text-2xl mb-2">Qualité garantie</p>
+          <h2 class="font-piepie text-silloun-green text-3xl mb-4">PRODUITS LOCAUX & DE SAISON</h2>
+          <p class="text-silloun-green/80 mb-6">
+            Tous nos produits sont sélectionnés auprès de producteurs locaux engagés.
+            Retrouvez le vrai goût des aliments cultivés avec passion, près de chez vous.
+          </p>
+          
+          <ul class="space-y-3">
+            <li class="flex items-center text-silloun-green">
+              <svg class="w-5 h-5 mr-3 text-silloun-green" fill="currentColor" viewBox="0 0 20 20">
+                <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"></path>
+              </svg>
+              <span class="font-medium">Circuit court, sans intermédiaire</span>
+            </li>
+            <li class="flex items-center text-silloun-green">
+              <svg class="w-5 h-5 mr-3 text-silloun-green" fill="currentColor" viewBox="0 0 20 20">
+                <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"></path>
+              </svg>
+              <span class="font-medium">Producteurs à moins de 50km</span>
+            </li>
+            <li class="flex items-center text-silloun-green">
+              <svg class="w-5 h-5 mr-3 text-silloun-green" fill="currentColor" viewBox="0 0 20 20">
+                <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"></path>
+              </svg>
+              <span class="font-medium">Rémunération juste des agriculteurs</span>
+            </li>
+          </ul>
+        </div>
+        
+        <div class="hidden md:flex justify-center">
+          <div class="relative">
+            <!-- Yellow frame with crown -->
+            <div class="border-8 border-silloun-green w-64 h-72 rounded-lg relative">
+              <div class="absolute -top-8 left-1/2 transform -translate-x-1/2">
+                <%= silloun_chapeau(variant: :vert, size: 35, class_name: "w-16 h-auto") %>
+              </div>
+              <div class="absolute inset-0 bg-gray-200 m-2 rounded flex items-center justify-center">
+                <span class="text-gray-400 text-sm text-center px-4">📷 Photo panier de légumes frais</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Stats Section -->
+<section class="py-12 bg-silloun-green">
+  <div class="max-w-7xl mx-auto px-4">
+    <div class="grid grid-cols-2 md:grid-cols-4 gap-6 text-center">
+      <div>
+        <p class="font-piepie text-silloun-yellow text-4xl md:text-5xl">
+          <%= @categories.sum { |c| c[:products_count] } %>+
+        </p>
+        <p class="text-white mt-2">Produits disponibles</p>
+      </div>
+      <div>
+        <p class="font-piepie text-silloun-yellow text-4xl md:text-5xl"><%= @categories.size %></p>
+        <p class="text-white mt-2">Catégories</p>
+      </div>
+      <div>
+        <p class="font-piepie text-silloun-yellow text-4xl md:text-5xl">45+</p>
+        <p class="text-white mt-2">Producteurs partenaires</p>
+      </div>
+      <div>
+        <p class="font-piepie text-silloun-yellow text-4xl md:text-5xl">100%</p>
+        <p class="text-white mt-2">Local & Français</p>
+      </div>
+    </div>
+  </div>
+</section>

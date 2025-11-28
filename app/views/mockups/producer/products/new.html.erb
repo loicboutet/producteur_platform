@@ -1,0 +1,179 @@
+<% content_for(:title, "Nouveau produit - Espace Producteur") %>
+
+<!-- Header -->
+<div class="mb-8">
+  <div class="flex items-center mb-4">
+    <%= link_to mockups_producer_products_path, class: "text-gray-500 hover:text-silloun-green transition mr-2" do %>
+      <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path>
+      </svg>
+    <% end %>
+    <h1 class="font-piepie text-3xl md:text-4xl text-silloun-green">NOUVEAU PRODUIT</h1>
+  </div>
+  <p class="text-gray-600">Ajoutez un nouveau produit à votre catalogue</p>
+</div>
+
+<%= form_with url: mockups_producer_products_path, method: :post, local: true, class: "space-y-8" do |f| %>
+  <div class="grid lg:grid-cols-3 gap-8">
+    <!-- Main Form -->
+    <div class="lg:col-span-2 space-y-6">
+      <!-- Basic Info -->
+      <div class="bg-white rounded-xl shadow-sm border border-gray-100 overflow-hidden">
+        <div class="p-6 border-b border-gray-100">
+          <h2 class="font-piepie text-xl text-silloun-green">INFORMATIONS GÉNÉRALES</h2>
+        </div>
+        <div class="p-6 space-y-6">
+          <!-- Name -->
+          <div>
+            <label class="block text-sm font-medium text-gray-700 mb-2">Nom du produit *</label>
+            <input type="text" name="name" 
+                   class="w-full px-4 py-3 border-2 border-gray-200 rounded-lg focus:outline-none focus:border-silloun-green" 
+                   placeholder="Ex: Tomates Bio">
+          </div>
+
+          <!-- Description -->
+          <div>
+            <label class="block text-sm font-medium text-gray-700 mb-2">Description *</label>
+            <textarea name="description" rows="4" 
+                      class="w-full px-4 py-3 border-2 border-gray-200 rounded-lg focus:outline-none focus:border-silloun-green resize-none"
+                      placeholder="Décrivez votre produit, son origine, ses qualités..."></textarea>
+          </div>
+
+          <!-- Category -->
+          <div>
+            <label class="block text-sm font-medium text-gray-700 mb-2">Catégorie *</label>
+            <select name="category" class="w-full px-4 py-3 border-2 border-gray-200 rounded-lg focus:outline-none focus:border-silloun-green bg-white">
+              <option value="">Sélectionnez une catégorie</option>
+              <% @categories.each do |category| %>
+                <option value="<%= category[:id] %>"><%= category[:icon] %> <%= category[:name] %></option>
+              <% end %>
+            </select>
+          </div>
+        </div>
+      </div>
+
+      <!-- Pricing -->
+      <div class="bg-white rounded-xl shadow-sm border border-gray-100 overflow-hidden">
+        <div class="p-6 border-b border-gray-100">
+          <h2 class="font-piepie text-xl text-silloun-green">PRIX ET STOCK</h2>
+        </div>
+        <div class="p-6 space-y-6">
+          <div class="grid md:grid-cols-2 gap-6">
+            <!-- Price -->
+            <div>
+              <label class="block text-sm font-medium text-gray-700 mb-2">Prix *</label>
+              <div class="relative">
+                <input type="number" name="price" step="0.01" min="0"
+                       class="w-full px-4 py-3 pr-12 border-2 border-gray-200 rounded-lg focus:outline-none focus:border-silloun-green" 
+                       placeholder="0.00">
+                <span class="absolute right-4 top-1/2 transform -translate-y-1/2 text-gray-500">€</span>
+              </div>
+            </div>
+
+            <!-- Unit -->
+            <div>
+              <label class="block text-sm font-medium text-gray-700 mb-2">Unité *</label>
+              <select name="unit" class="w-full px-4 py-3 border-2 border-gray-200 rounded-lg focus:outline-none focus:border-silloun-green bg-white">
+                <option value="kg">Kilogramme (kg)</option>
+                <option value="piece">Pièce</option>
+                <option value="lot">Lot</option>
+                <option value="barquette">Barquette</option>
+                <option value="bouteille">Bouteille</option>
+                <option value="pot">Pot</option>
+                <option value="douzaine">Douzaine</option>
+              </select>
+            </div>
+
+            <!-- Stock -->
+            <div>
+              <label class="block text-sm font-medium text-gray-700 mb-2">Stock disponible *</label>
+              <input type="number" name="stock" min="0"
+                     class="w-full px-4 py-3 border-2 border-gray-200 rounded-lg focus:outline-none focus:border-silloun-green" 
+                     placeholder="0">
+            </div>
+
+            <!-- Low Stock Alert -->
+            <div>
+              <label class="block text-sm font-medium text-gray-700 mb-2">Alerte stock faible</label>
+              <input type="number" name="low_stock_alert" min="0"
+                     class="w-full px-4 py-3 border-2 border-gray-200 rounded-lg focus:outline-none focus:border-silloun-green" 
+                     placeholder="10">
+              <p class="text-sm text-gray-500 mt-1">Recevez une alerte en dessous de ce seuil</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Images -->
+      <div class="bg-white rounded-xl shadow-sm border border-gray-100 overflow-hidden">
+        <div class="p-6 border-b border-gray-100">
+          <h2 class="font-piepie text-xl text-silloun-green">PHOTOS</h2>
+        </div>
+        <div class="p-6">
+          <div class="border-2 border-dashed border-gray-300 rounded-xl p-8 text-center hover:border-silloun-green transition cursor-pointer">
+            <svg class="w-12 h-12 mx-auto text-gray-400 mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"></path>
+            </svg>
+            <label class="cursor-pointer">
+              <span class="text-silloun-green font-semibold hover:underline">Cliquez pour ajouter des photos</span>
+              <input type="file" class="hidden" accept="image/*" multiple>
+            </label>
+            <p class="text-sm text-gray-500 mt-2">ou glissez-déposez vos images ici</p>
+            <p class="text-xs text-gray-400 mt-1">PNG, JPG jusqu'à 5 Mo (max 5 photos)</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Sidebar -->
+    <div class="space-y-6">
+      <!-- Save Actions -->
+      <div class="bg-white rounded-xl shadow-sm border border-gray-100 p-6 sticky top-4">
+        <h3 class="font-semibold text-gray-800 mb-4">Publication</h3>
+        
+        <!-- Status -->
+        <div class="mb-4">
+          <label class="flex items-center">
+            <input type="checkbox" name="available" checked class="w-5 h-5 border-gray-300 rounded accent-green-700 mr-3">
+            <span class="text-gray-700">Produit disponible à la vente</span>
+          </label>
+        </div>
+        
+        <div class="space-y-3">
+          <button type="submit" class="btn-silloun-primary w-full">
+            <svg class="w-5 h-5 mr-2 inline" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+            </svg>
+            Créer le produit
+          </button>
+          <%= link_to "Annuler", mockups_producer_products_path, class: "btn-silloun-outline w-full text-center block" %>
+        </div>
+      </div>
+
+      <!-- Tips -->
+      <div class="bg-silloun-yellow rounded-xl p-6">
+        <h3 class="font-semibold text-silloun-green mb-3">💡 Conseils pour bien vendre</h3>
+        <ul class="space-y-2 text-sm text-silloun-green">
+          <li class="flex items-start">
+            <svg class="w-4 h-4 mr-2 mt-0.5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+            </svg>
+            Des photos de qualité font vendre 3x plus
+          </li>
+          <li class="flex items-start">
+            <svg class="w-4 h-4 mr-2 mt-0.5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+            </svg>
+            Une description détaillée rassure les clients
+          </li>
+          <li class="flex items-start">
+            <svg class="w-4 h-4 mr-2 mt-0.5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+            </svg>
+            Maintenez vos stocks à jour
+          </li>
+        </ul>
+      </div>
+    </div>
+  </div>
+<% end %>

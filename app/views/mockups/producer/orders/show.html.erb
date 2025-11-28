@@ -1,0 +1,223 @@
+<% content_for(:title, "Commande #{@order[:reference]} - Espace Producteur") %>
+
+<!-- Header -->
+<div class="flex flex-col md:flex-row md:items-center md:justify-between mb-8">
+  <div class="flex items-center">
+    <%= link_to mockups_producer_orders_path, class: "text-gray-500 hover:text-silloun-green transition mr-3" do %>
+      <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path>
+      </svg>
+    <% end %>
+    <div>
+      <div class="flex items-center space-x-3">
+        <h1 class="font-piepie text-3xl md:text-4xl text-silloun-green"><%= @order[:reference] %></h1>
+        <% status_colors = {
+          "new" => "bg-blue-100 text-blue-800",
+          "preparing" => "bg-yellow-100 text-yellow-800",
+          "ready" => "bg-green-100 text-green-800",
+          "picked_up" => "bg-gray-100 text-gray-600"
+        } %>
+        <span class="inline-flex items-center px-3 py-1 rounded-full text-sm font-medium <%= status_colors[@order[:status]] %>">
+          <%= @order[:status_label] %>
+        </span>
+      </div>
+      <p class="text-gray-600">Passée <%= time_ago_in_words(@order[:created_at]) %></p>
+    </div>
+  </div>
+  
+  <!-- Actions -->
+  <div class="flex items-center space-x-3 mt-4 md:mt-0">
+    <% case @order[:status] %>
+    <% when "new" %>
+      <button class="btn-silloun-primary inline-flex items-center">
+        <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"></path>
+        </svg>
+        Commencer la préparation
+      </button>
+    <% when "preparing" %>
+      <button class="bg-green-600 hover:bg-green-700 text-white font-bold py-3 px-6 rounded-xl transition inline-flex items-center">
+        <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+        </svg>
+        Marquer comme prête
+      </button>
+    <% when "ready" %>
+      <button class="btn-silloun-primary inline-flex items-center">
+        <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+        </svg>
+        Confirmer le retrait
+      </button>
+    <% end %>
+  </div>
+</div>
+
+<div class="grid lg:grid-cols-3 gap-8">
+  <!-- Main Content -->
+  <div class="lg:col-span-2 space-y-6">
+    <!-- Order Timeline -->
+    <div class="bg-white rounded-xl shadow-sm border border-gray-100 p-6">
+      <h2 class="font-piepie text-xl text-silloun-green mb-6">SUIVI DE LA COMMANDE</h2>
+      <div class="flex items-center justify-between">
+        <% steps = [
+          { status: "new", label: "Nouvelle", icon: "📥" },
+          { status: "preparing", label: "Préparation", icon: "📦" },
+          { status: "ready", label: "Prête", icon: "✅" },
+          { status: "picked_up", label: "Retirée", icon: "🎉" }
+        ] %>
+        <% current_step = steps.find_index { |s| s[:status] == @order[:status] } %>
+        
+        <% steps.each_with_index do |step, index| %>
+          <div class="flex flex-col items-center flex-1">
+            <div class="w-10 h-10 rounded-full flex items-center justify-center text-lg
+                        <%= index <= current_step ? 'bg-silloun-green text-white' : 'bg-gray-200 text-gray-400' %>">
+              <%= index <= current_step ? step[:icon] : (index + 1) %>
+            </div>
+            <span class="text-xs mt-2 text-center <%= index <= current_step ? 'text-silloun-green font-medium' : 'text-gray-400' %>">
+              <%= step[:label] %>
+            </span>
+          </div>
+          <% if index < steps.length - 1 %>
+            <div class="flex-1 h-1 mx-2 rounded <%= index < current_step ? 'bg-silloun-green' : 'bg-gray-200' %>"></div>
+          <% end %>
+        <% end %>
+      </div>
+    </div>
+
+    <!-- Order Items -->
+    <div class="bg-white rounded-xl shadow-sm border border-gray-100 overflow-hidden">
+      <div class="p-6 border-b border-gray-100">
+        <h2 class="font-piepie text-xl text-silloun-green">ARTICLES COMMANDÉS</h2>
+      </div>
+      <div class="divide-y divide-gray-100">
+        <% @order[:items].each do |item| %>
+          <div class="p-4 flex items-center">
+            <div class="w-16 h-16 bg-gray-100 rounded-lg overflow-hidden mr-4 flex-shrink-0">
+              <%= image_tag "pictures/vobs.studio_httpss.mj.run2yoSBUleddg_Photo_dun_ensemble_de_lg_2c75fed6-bb89-496e-85c3-71561aae6c38_1.png", alt: item[:name], class: "w-full h-full object-cover" %>
+            </div>
+            <div class="flex-1">
+              <p class="font-medium text-gray-900"><%= item[:name] %></p>
+              <p class="text-sm text-gray-500"><%= item[:quantity] %> × <%= number_to_currency(item[:price], unit: "€", format: "%n %u") %> / <%= item[:unit] %></p>
+            </div>
+            <div class="text-right">
+              <p class="font-bold text-gray-900"><%= number_to_currency(item[:subtotal], unit: "€", format: "%n %u") %></p>
+            </div>
+          </div>
+        <% end %>
+      </div>
+      
+      <!-- Total -->
+      <div class="p-6 bg-gray-50 border-t border-gray-100">
+        <div class="flex items-center justify-between">
+          <span class="font-semibold text-gray-700">Total de la commande</span>
+          <span class="text-2xl font-bold text-silloun-green"><%= number_to_currency(@order[:total], unit: "€", format: "%n %u") %></span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Preparation Checklist -->
+    <% if @order[:status] == "preparing" %>
+      <div class="bg-silloun-yellow rounded-xl p-6">
+        <h3 class="font-piepie text-lg text-silloun-green mb-4">CHECKLIST PRÉPARATION</h3>
+        <div class="space-y-3">
+          <% @order[:items].each do |item| %>
+            <label class="flex items-center p-3 bg-white rounded-lg cursor-pointer hover:bg-gray-50 transition">
+              <input type="checkbox" class="w-5 h-5 border-gray-300 rounded accent-green-700 mr-3">
+              <span class="flex-1"><%= item[:quantity] %> × <%= item[:name] %></span>
+            </label>
+          <% end %>
+        </div>
+      </div>
+    <% end %>
+  </div>
+
+  <!-- Sidebar -->
+  <div class="space-y-6">
+    <!-- Customer Info -->
+    <div class="bg-white rounded-xl shadow-sm border border-gray-100 p-6">
+      <h3 class="font-piepie text-lg text-silloun-green mb-4">CLIENT</h3>
+      <div class="flex items-center mb-4">
+        <div class="w-12 h-12 rounded-full bg-silloun-yellow flex items-center justify-center mr-3">
+          <span class="text-silloun-green font-bold"><%= @order[:customer][:name].split.map(&:first).join %></span>
+        </div>
+        <div>
+          <p class="font-semibold text-gray-900"><%= @order[:customer][:name] %></p>
+          <p class="text-sm text-gray-500">Client depuis 6 mois</p>
+        </div>
+      </div>
+      <div class="space-y-3 pt-4 border-t border-gray-100">
+        <a href="mailto:<%= @order[:customer][:email] %>" class="flex items-center text-gray-600 hover:text-silloun-green transition">
+          <svg class="w-5 h-5 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"></path>
+          </svg>
+          <%= @order[:customer][:email] %>
+        </a>
+        <a href="tel:<%= @order[:customer][:phone] %>" class="flex items-center text-gray-600 hover:text-silloun-green transition">
+          <svg class="w-5 h-5 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"></path>
+          </svg>
+          <%= @order[:customer][:phone] %>
+        </a>
+      </div>
+    </div>
+
+    <!-- Pickup Info -->
+    <div class="bg-white rounded-xl shadow-sm border border-gray-100 p-6">
+      <h3 class="font-piepie text-lg text-silloun-green mb-4">RETRAIT</h3>
+      <div class="flex items-start mb-4">
+        <% if @order[:pickup_point][:type] == "farm" %>
+          <div class="w-10 h-10 bg-silloun-green rounded-lg flex items-center justify-center mr-3 flex-shrink-0">
+            <svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"></path>
+            </svg>
+          </div>
+        <% else %>
+          <div class="w-10 h-10 bg-blue-500 rounded-lg flex items-center justify-center mr-3 flex-shrink-0">
+            <svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"></path>
+            </svg>
+          </div>
+        <% end %>
+        <div>
+          <p class="font-semibold text-gray-900"><%= @order[:pickup_point][:name] %></p>
+          <p class="text-sm text-gray-500"><%= @order[:pickup_point][:type] == "farm" ? "Retrait à la ferme" : "Retrait au marché" %></p>
+        </div>
+      </div>
+      
+      <div class="bg-gray-50 rounded-lg p-4">
+        <div class="flex items-center mb-2">
+          <svg class="w-5 h-5 text-gray-400 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"></path>
+          </svg>
+          <span class="font-medium text-gray-900"><%= @order[:pickup_point][:date].strftime("%A %d %B %Y") %></span>
+        </div>
+        <div class="flex items-center">
+          <svg class="w-5 h-5 text-gray-400 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+          </svg>
+          <span class="text-gray-600"><%= @order[:pickup_point][:time] %></span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Print -->
+    <div class="bg-white rounded-xl shadow-sm border border-gray-100 p-6">
+      <button class="btn-silloun-outline w-full inline-flex items-center justify-center">
+        <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 17h2a2 2 0 002-2v-4a2 2 0 00-2-2H5a2 2 0 00-2 2v4a2 2 0 002 2h2m2 4h6a2 2 0 002-2v-4a2 2 0 00-2-2H9a2 2 0 00-2 2v4a2 2 0 002 2zm8-12V5a2 2 0 00-2-2H9a2 2 0 00-2 2v4h10z"></path>
+        </svg>
+        Imprimer le bon
+      </button>
+    </div>
+
+    <!-- Help -->
+    <div class="bg-blue-50 rounded-xl p-6">
+      <h4 class="font-semibold text-blue-800 mb-2">Besoin d'aide ?</h4>
+      <p class="text-sm text-blue-700 mb-3">Contactez notre équipe support en cas de problème avec cette commande.</p>
+      <a href="#" class="text-blue-600 hover:text-blue-800 font-medium text-sm">
+        Contacter le support →
+      </a>
+    </div>
+  </div>
+</div>

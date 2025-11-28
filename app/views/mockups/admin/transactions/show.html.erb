@@ -1,0 +1,100 @@
+<% content_for :title, "Transaction #{@transaction[:reference]} - Admin Silloun" %>
+
+<div class="max-w-3xl mx-auto space-y-6">
+  <!-- Breadcrumb -->
+  <div class="flex items-center space-x-2 text-sm">
+    <%= link_to "Transactions", mockups_admin_transactions_path, class: "text-purple-600 hover:text-purple-700" %>
+    <svg class="w-4 h-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
+    </svg>
+    <span class="text-gray-900 font-medium"><%= @transaction[:reference] %></span>
+  </div>
+
+  <div class="bg-white rounded-xl shadow-sm border border-gray-100">
+    <div class="p-6 border-b border-gray-100">
+      <div class="flex items-start justify-between">
+        <div>
+          <h1 class="font-piepie text-2xl text-gray-900"><%= @transaction[:reference] %></h1>
+          <p class="text-gray-500 font-mono text-sm"><%= @transaction[:stripe_id] %></p>
+        </div>
+        <% if @transaction[:status] == "completed" %>
+          <span class="inline-flex items-center px-3 py-1 rounded-full text-sm font-medium bg-green-100 text-green-700">
+            Complété
+          </span>
+        <% else %>
+          <span class="inline-flex items-center px-3 py-1 rounded-full text-sm font-medium bg-yellow-100 text-yellow-700">
+            En cours
+          </span>
+        <% end %>
+      </div>
+    </div>
+
+    <div class="p-6 space-y-6">
+      <!-- Amount breakdown -->
+      <div class="bg-gray-50 rounded-xl p-6">
+        <div class="grid grid-cols-3 gap-4 text-center">
+          <div>
+            <p class="text-sm text-gray-500">Montant total</p>
+            <p class="text-2xl font-bold <%= @transaction[:amount] < 0 ? 'text-red-600' : 'text-gray-900' %>">
+              <%= number_to_currency(@transaction[:amount], unit: "€", format: "%n %u") %>
+            </p>
+          </div>
+          <div>
+            <p class="text-sm text-gray-500">Commission (8%)</p>
+            <p class="text-2xl font-bold text-purple-600">
+              <%= number_to_currency(@transaction[:commission], unit: "€", format: "%n %u") %>
+            </p>
+          </div>
+          <div>
+            <p class="text-sm text-gray-500">Net producteur</p>
+            <p class="text-2xl font-bold text-green-600">
+              <%= number_to_currency(@transaction[:producer_amount], unit: "€", format: "%n %u") %>
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Details -->
+      <div class="grid md:grid-cols-2 gap-6">
+        <div>
+          <h3 class="font-semibold text-gray-900 mb-4">Informations</h3>
+          <dl class="space-y-3 text-sm">
+            <div class="flex justify-between">
+              <dt class="text-gray-500">Type</dt>
+              <dd class="font-medium">
+                <% if @transaction[:type] == "payment" %>
+                  <span class="text-green-600">Paiement</span>
+                <% else %>
+                  <span class="text-red-600">Remboursement</span>
+                <% end %>
+              </dd>
+            </div>
+            <div class="flex justify-between">
+              <dt class="text-gray-500">Commande</dt>
+              <dd class="font-medium text-gray-900"><%= @transaction[:order_reference] %></dd>
+            </div>
+            <div class="flex justify-between">
+              <dt class="text-gray-500">Date</dt>
+              <dd class="font-medium text-gray-900"><%= @transaction[:created_at].strftime("%d/%m/%Y à %H:%M") %></dd>
+            </div>
+          </dl>
+        </div>
+        <div>
+          <h3 class="font-semibold text-gray-900 mb-4">Producteur</h3>
+          <p class="font-medium text-gray-900"><%= @transaction[:producer_name] %></p>
+          <%= link_to "Voir le profil →", mockups_admin_producer_path(1), class: "text-sm text-purple-600 hover:text-purple-700" %>
+        </div>
+      </div>
+
+      <!-- Stripe Link -->
+      <div class="pt-6 border-t border-gray-100">
+        <a href="#" class="inline-flex items-center text-sm text-purple-600 hover:text-purple-700">
+          <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"></path>
+          </svg>
+          Voir sur Stripe Dashboard
+        </a>
+      </div>
+    </div>
+  </div>
+</div>

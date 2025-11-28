@@ -1,0 +1,132 @@
+<% content_for(:title) { "Mon panier - Silloun" } %>
+
+<section class="py-8">
+  <div class="max-w-4xl mx-auto px-4">
+    <!-- Breadcrumb -->
+    <nav class="text-sm text-gray-500 mb-6">
+      <%= link_to "Accueil", mockups_public_home_index_path, class: "hover:text-silloun-green" %> 
+      <span class="mx-2">/</span>
+      <span class="text-silloun-green">Mon panier</span>
+    </nav>
+
+    <h1 class="font-piepie text-silloun-green text-3xl mb-8">MON PANIER</h1>
+
+    <% if @cart_items.empty? %>
+      <!-- Empty Cart -->
+      <div class="bg-white rounded-2xl shadow-sm p-12 text-center">
+        <div class="w-24 h-24 bg-gray-100 rounded-full flex items-center justify-center mx-auto mb-6">
+          <svg class="w-12 h-12 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z"></path>
+          </svg>
+        </div>
+        <h2 class="text-xl font-semibold text-gray-700 mb-2">Votre panier est vide</h2>
+        <p class="text-gray-500 mb-6">Découvrez les produits de nos producteurs locaux</p>
+        <%= link_to "Voir les produits", mockups_public_products_path, class: "btn-silloun-primary" %>
+      </div>
+    <% else %>
+      <div class="grid lg:grid-cols-3 gap-8">
+        <!-- Cart Items -->
+        <div class="lg:col-span-2 space-y-6">
+          <% @cart_by_producer.each do |producer_id, items| %>
+            <div class="bg-white rounded-2xl shadow-sm overflow-hidden">
+              <!-- Producer Header -->
+              <div class="bg-silloun-green px-6 py-4 flex items-center">
+                <div class="w-10 h-10 bg-silloun-yellow rounded-full flex items-center justify-center mr-3">
+                  <span class="text-silloun-green font-bold text-lg">🌱</span>
+                </div>
+                <div>
+                  <p class="text-white font-semibold"><%= items.first[:producer][:name] %></p>
+                  <p class="text-white/70 text-sm"><%= items.length %> article<%= 's' if items.length > 1 %></p>
+                </div>
+              </div>
+
+              <!-- Items -->
+              <div class="divide-y divide-gray-100">
+                <% items.each do |item| %>
+                  <div class="p-4 flex items-center">
+                    <!-- Product Image -->
+                    <div class="w-20 h-20 bg-gray-100 rounded-lg overflow-hidden flex-shrink-0 mr-4">
+                      <%= image_tag item[:product][:image], alt: item[:product][:name], class: "w-full h-full object-cover" %>
+                    </div>
+
+                    <!-- Product Info -->
+                    <div class="flex-1 min-w-0">
+                      <h3 class="font-semibold text-silloun-green truncate"><%= item[:product][:name] %></h3>
+                      <p class="text-gray-500 text-sm"><%= number_to_currency(item[:product][:price], unit: "€", format: "%n %u") %> / <%= item[:product][:unit] %></p>
+                    </div>
+
+                    <!-- Quantity -->
+                    <div class="flex items-center border border-gray-200 rounded-lg mx-4">
+                      <button class="px-3 py-2 text-silloun-green hover:bg-gray-100 transition">
+                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20 12H4"></path>
+                        </svg>
+                      </button>
+                      <span class="px-3 py-2 text-center min-w-[40px]"><%= item[:quantity] %></span>
+                      <button class="px-3 py-2 text-silloun-green hover:bg-gray-100 transition">
+                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"></path>
+                        </svg>
+                      </button>
+                    </div>
+
+                    <!-- Subtotal -->
+                    <div class="text-right w-24 flex-shrink-0">
+                      <p class="font-bold text-silloun-green"><%= number_to_currency(item[:subtotal], unit: "€", format: "%n %u") %></p>
+                    </div>
+
+                    <!-- Remove -->
+                    <button class="ml-4 text-gray-400 hover:text-red-500 transition">
+                      <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"></path>
+                      </svg>
+                    </button>
+                  </div>
+                <% end %>
+              </div>
+            </div>
+          <% end %>
+        </div>
+
+        <!-- Order Summary -->
+        <div class="lg:col-span-1">
+          <div class="bg-white rounded-2xl shadow-sm p-6 sticky top-24">
+            <h2 class="font-piepie text-silloun-green text-xl mb-6">RÉCAPITULATIF</h2>
+
+            <div class="space-y-3 mb-6">
+              <div class="flex justify-between text-gray-600">
+                <span>Sous-total</span>
+                <span><%= number_to_currency(@cart_total, unit: "€", format: "%n %u") %></span>
+              </div>
+              <div class="flex justify-between text-gray-600">
+                <span>Frais de service</span>
+                <span class="text-green-600">Offerts</span>
+              </div>
+              <hr class="my-4">
+              <div class="flex justify-between font-bold text-lg">
+                <span class="text-silloun-green">Total</span>
+                <span class="text-silloun-green"><%= number_to_currency(@cart_total, unit: "€", format: "%n %u") %></span>
+              </div>
+            </div>
+
+            <p class="text-gray-500 text-sm mb-6">
+              <svg class="w-4 h-4 inline mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+              </svg>
+              Retrait en click & collect uniquement
+            </p>
+
+            <%= link_to mockups_public_checkout_path, class: "w-full btn-silloun-primary py-3 flex items-center justify-center" do %>
+              Valider mon panier
+              <svg class="w-5 h-5 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"></path>
+              </svg>
+            <% end %>
+
+            <%= link_to "Continuer mes achats", mockups_public_products_path, class: "block text-center text-silloun-green hover:underline mt-4 text-sm" %>
+          </div>
+        </div>
+      </div>
+    <% end %>
+  </div>
+</section>

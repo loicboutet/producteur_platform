@@ -1,0 +1,169 @@
+<% content_for :title, "Finances - Admin Silloun" %>
+
+<div class="space-y-6">
+  <!-- Header -->
+  <div class="flex flex-col md:flex-row md:items-center md:justify-between">
+    <div>
+      <h1 class="font-piepie text-3xl text-gray-900">FINANCES</h1>
+      <p class="text-gray-600 mt-1">Vue d'ensemble financière de la plateforme</p>
+    </div>
+    <div class="mt-4 md:mt-0 flex items-center space-x-3">
+      <select class="px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500">
+        <option>Ce mois</option>
+        <option>Mois dernier</option>
+        <option>Ce trimestre</option>
+        <option>Cette année</option>
+      </select>
+      <button class="px-4 py-2 bg-purple-600 text-white rounded-lg hover:bg-purple-700 transition font-medium">
+        Exporter
+      </button>
+    </div>
+  </div>
+
+  <!-- Main Stats -->
+  <div class="grid md:grid-cols-3 gap-6">
+    <!-- CA Total -->
+    <div class="bg-gradient-to-br from-green-500 to-green-600 rounded-xl p-6 text-white">
+      <div class="flex items-center justify-between mb-4">
+        <div class="p-3 bg-white/20 rounded-lg">
+          <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+          </svg>
+        </div>
+        <span class="text-white/80 text-sm">+12.5% vs mois dernier</span>
+      </div>
+      <p class="text-4xl font-bold"><%= number_to_currency(@stats[:monthly_revenue], unit: "€", format: "%n %u") %></p>
+      <p class="text-white/80 mt-1">Chiffre d'affaires du mois</p>
+    </div>
+
+    <!-- Commissions -->
+    <div class="bg-gradient-to-br from-purple-500 to-purple-600 rounded-xl p-6 text-white">
+      <div class="flex items-center justify-between mb-4">
+        <div class="p-3 bg-white/20 rounded-lg">
+          <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 7h6m0 10v-3m-3 3h.01M9 17h.01M9 14h.01M12 14h.01M15 11h.01M12 11h.01M9 11h.01M7 21h10a2 2 0 002-2V5a2 2 0 00-2-2H7a2 2 0 00-2 2v14a2 2 0 002 2z"></path>
+          </svg>
+        </div>
+        <span class="text-white/80 text-sm"><%= @stats[:commission_rate] %>% de commission</span>
+      </div>
+      <p class="text-4xl font-bold"><%= number_to_currency(@stats[:commission_earned], unit: "€", format: "%n %u") %></p>
+      <p class="text-white/80 mt-1">Commissions perçues</p>
+    </div>
+
+    <!-- CA Total Plateforme -->
+    <div class="bg-gradient-to-br from-gray-700 to-gray-800 rounded-xl p-6 text-white">
+      <div class="flex items-center justify-between mb-4">
+        <div class="p-3 bg-white/20 rounded-lg">
+          <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6"></path>
+          </svg>
+        </div>
+        <span class="text-white/80 text-sm">Depuis le lancement</span>
+      </div>
+      <p class="text-4xl font-bold"><%= number_to_currency(@stats[:total_revenue], unit: "€", format: "%n %u") %></p>
+      <p class="text-white/80 mt-1">CA total plateforme</p>
+    </div>
+  </div>
+
+  <!-- Charts Placeholder -->
+  <div class="grid lg:grid-cols-2 gap-6">
+    <div class="bg-white rounded-xl shadow-sm border border-gray-100 p-6">
+      <h3 class="font-semibold text-gray-900 mb-4">Évolution du CA</h3>
+      <div class="h-64 bg-gray-50 rounded-lg flex items-center justify-center">
+        <div class="text-center text-gray-400">
+          <svg class="w-12 h-12 mx-auto mb-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"></path>
+          </svg>
+          <p class="text-sm">Graphique d'évolution</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="bg-white rounded-xl shadow-sm border border-gray-100 p-6">
+      <h3 class="font-semibold text-gray-900 mb-4">Répartition par producteur</h3>
+      <div class="h-64 bg-gray-50 rounded-lg flex items-center justify-center">
+        <div class="text-center text-gray-400">
+          <svg class="w-12 h-12 mx-auto mb-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 3.055A9.001 9.001 0 1020.945 13H11V3.055z"></path>
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.488 9H15V3.512A9.025 9.025 0 0120.488 9z"></path>
+          </svg>
+          <p class="text-sm">Graphique circulaire</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Top Producers -->
+  <div class="bg-white rounded-xl shadow-sm border border-gray-100">
+    <div class="p-6 border-b border-gray-100">
+      <h3 class="font-semibold text-gray-900">Top producteurs ce mois</h3>
+    </div>
+    <div class="divide-y divide-gray-100">
+      <% [
+        { name: "Ferme du Soleil", sales: 4520, orders: 45, rank: 1 },
+        { name: "Les Jardins de Pierre", sales: 2340, orders: 28, rank: 2 },
+        { name: "Élevage Lefèvre", sales: 1890, orders: 22, rank: 3 },
+        { name: "Ferme Bio du Limousin", sales: 1456, orders: 18, rank: 4 },
+        { name: "La Ferme aux Abeilles", sales: 980, orders: 12, rank: 5 }
+      ].each do |producer| %>
+        <div class="p-4 flex items-center justify-between hover:bg-gray-50">
+          <div class="flex items-center space-x-4">
+            <div class="w-8 h-8 rounded-full flex items-center justify-center <%= producer[:rank] <= 3 ? 'bg-silloun-yellow text-silloun-green' : 'bg-gray-100 text-gray-600' %> font-bold text-sm">
+              <%= producer[:rank] %>
+            </div>
+            <div>
+              <p class="font-medium text-gray-900"><%= producer[:name] %></p>
+              <p class="text-sm text-gray-500"><%= producer[:orders] %> commandes</p>
+            </div>
+          </div>
+          <div class="text-right">
+            <p class="font-bold text-gray-900"><%= number_to_currency(producer[:sales], unit: "€", format: "%n %u") %></p>
+            <p class="text-sm text-purple-600"><%= number_to_currency(producer[:sales] * 0.08, unit: "€", format: "%n %u") %> commission</p>
+          </div>
+        </div>
+      <% end %>
+    </div>
+  </div>
+
+  <!-- Recent Transactions -->
+  <div class="bg-white rounded-xl shadow-sm border border-gray-100">
+    <div class="p-6 border-b border-gray-100 flex items-center justify-between">
+      <h3 class="font-semibold text-gray-900">Transactions récentes</h3>
+      <%= link_to "Voir tout →", mockups_admin_transactions_path, class: "text-sm text-purple-600 hover:text-purple-700" %>
+    </div>
+    <div class="overflow-x-auto">
+      <table class="w-full">
+        <thead class="bg-gray-50">
+          <tr>
+            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Référence</th>
+            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Producteur</th>
+            <th class="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase">Montant</th>
+            <th class="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase">Commission</th>
+            <th class="px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase">Statut</th>
+          </tr>
+        </thead>
+        <tbody class="divide-y divide-gray-100">
+          <% @recent_transactions.first(5).each do |tx| %>
+            <tr class="hover:bg-gray-50">
+              <td class="px-6 py-4 font-mono text-sm text-gray-900"><%= tx[:reference] %></td>
+              <td class="px-6 py-4 text-sm text-gray-500"><%= tx[:producer_name] %></td>
+              <td class="px-6 py-4 text-right font-medium <%= tx[:amount] < 0 ? 'text-red-600' : 'text-gray-900' %>">
+                <%= number_to_currency(tx[:amount], unit: "€", format: "%n %u") %>
+              </td>
+              <td class="px-6 py-4 text-right text-purple-600 font-medium">
+                <%= number_to_currency(tx[:commission], unit: "€", format: "%n %u") %>
+              </td>
+              <td class="px-6 py-4 text-center">
+                <% if tx[:status] == "completed" %>
+                  <span class="inline-flex items-center px-2 py-0.5 rounded-full text-xs font-medium bg-green-100 text-green-700">✓</span>
+                <% else %>
+                  <span class="inline-flex items-center px-2 py-0.5 rounded-full text-xs font-medium bg-yellow-100 text-yellow-700">⏳</span>
+                <% end %>
+              </td>
+            </tr>
+          <% end %>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>

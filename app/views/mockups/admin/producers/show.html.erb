@@ -1,0 +1,237 @@
+<% content_for :title, "#{@producer[:farm_name]} - Admin Silloun" %>
+
+<div class="space-y-6">
+  <!-- Breadcrumb & Actions -->
+  <div class="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
+    <div class="flex items-center space-x-2 text-sm">
+      <%= link_to "Producteurs", mockups_admin_producers_path, class: "text-purple-600 hover:text-purple-700" %>
+      <svg class="w-4 h-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
+      </svg>
+      <span class="text-gray-900 font-medium"><%= @producer[:farm_name] %></span>
+    </div>
+    
+    <div class="flex items-center space-x-3">
+      <% if @producer[:status] == "pending" %>
+        <button class="px-4 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700 transition font-medium">
+          ✓ Valider le producteur
+        </button>
+        <button class="px-4 py-2 bg-red-600 text-white rounded-lg hover:bg-red-700 transition font-medium">
+          ✗ Refuser
+        </button>
+      <% elsif @producer[:status] == "active" %>
+        <button class="px-4 py-2 bg-red-100 text-red-700 rounded-lg hover:bg-red-200 transition font-medium">
+          Suspendre le compte
+        </button>
+      <% else %>
+        <button class="px-4 py-2 bg-green-100 text-green-700 rounded-lg hover:bg-green-200 transition font-medium">
+          Réactiver le compte
+        </button>
+      <% end %>
+      
+      <%= link_to edit_mockups_admin_producer_path(@producer[:id]), class: "px-4 py-2 bg-purple-600 text-white rounded-lg hover:bg-purple-700 transition font-medium" do %>
+        Modifier
+      <% end %>
+    </div>
+  </div>
+
+  <!-- Status Banner -->
+  <% if @producer[:status] == "pending" %>
+    <div class="bg-orange-50 border border-orange-200 rounded-xl p-4">
+      <div class="flex items-center">
+        <svg class="w-6 h-6 text-orange-500 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+        </svg>
+        <div>
+          <p class="font-medium text-orange-800">Ce producteur attend votre validation</p>
+          <p class="text-sm text-orange-600">Demande soumise <%= time_ago_in_words(@producer[:created_at]) %></p>
+        </div>
+      </div>
+    </div>
+  <% elsif @producer[:status] == "suspended" %>
+    <div class="bg-red-50 border border-red-200 rounded-xl p-4">
+      <div class="flex items-center">
+        <svg class="w-6 h-6 text-red-500 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M18.364 18.364A9 9 0 005.636 5.636m12.728 12.728A9 9 0 015.636 5.636m12.728 12.728L5.636 5.636"></path>
+        </svg>
+        <div>
+          <p class="font-medium text-red-800">Ce compte est actuellement suspendu</p>
+          <p class="text-sm text-red-600">Les produits et commandes sont désactivés</p>
+        </div>
+      </div>
+    </div>
+  <% end %>
+
+  <!-- Producer Header -->
+  <div class="bg-white rounded-xl shadow-sm border border-gray-100 p-6">
+    <div class="flex flex-col md:flex-row md:items-start gap-6">
+      <!-- Avatar -->
+      <div class="flex-shrink-0">
+        <div class="w-24 h-24 bg-silloun-green rounded-xl flex items-center justify-center">
+          <span class="text-white font-bold text-3xl"><%= @producer[:name].split.map(&:first).join.upcase %></span>
+        </div>
+      </div>
+      
+      <!-- Info -->
+      <div class="flex-1">
+        <div class="flex items-start justify-between">
+          <div>
+            <h1 class="font-piepie text-2xl text-gray-900"><%= @producer[:farm_name] %></h1>
+            <p class="text-gray-600 mt-1"><%= @producer[:name] %></p>
+          </div>
+          <% status_styles = {
+            "active" => "bg-green-100 text-green-700",
+            "pending" => "bg-orange-100 text-orange-700",
+            "suspended" => "bg-red-100 text-red-700"
+          } %>
+          <span class="inline-flex items-center px-3 py-1 rounded-full text-sm font-medium <%= status_styles[@producer[:status]] %>">
+            <%= @producer[:status] == 'active' ? 'Actif' : (@producer[:status] == 'pending' ? 'En attente' : 'Suspendu') %>
+          </span>
+        </div>
+        
+        <div class="grid grid-cols-2 md:grid-cols-4 gap-4 mt-6">
+          <div>
+            <p class="text-sm text-gray-500">Email</p>
+            <p class="font-medium text-gray-900"><%= @producer[:email] %></p>
+          </div>
+          <div>
+            <p class="text-sm text-gray-500">Ville</p>
+            <p class="font-medium text-gray-900"><%= @producer[:city] %></p>
+          </div>
+          <div>
+            <p class="text-sm text-gray-500">Inscrit le</p>
+            <p class="font-medium text-gray-900"><%= @producer[:created_at].strftime("%d/%m/%Y") %></p>
+          </div>
+          <div>
+            <p class="text-sm text-gray-500">Stripe Connect</p>
+            <p class="font-medium <%= @producer[:stripe_connected] ? 'text-green-600' : 'text-orange-600' %>">
+              <%= @producer[:stripe_connected] ? '✓ Connecté' : '✗ Non connecté' %>
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Stats Cards -->
+  <div class="grid grid-cols-2 lg:grid-cols-4 gap-4">
+    <div class="bg-white rounded-xl p-6 shadow-sm border border-gray-100">
+      <div class="flex items-center justify-between">
+        <div class="p-3 bg-blue-100 rounded-lg">
+          <svg class="w-6 h-6 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4"></path>
+          </svg>
+        </div>
+      </div>
+      <div class="mt-4">
+        <p class="text-2xl font-bold text-gray-900"><%= @producer[:products_count] %></p>
+        <p class="text-sm text-gray-500">Produits</p>
+      </div>
+    </div>
+
+    <div class="bg-white rounded-xl p-6 shadow-sm border border-gray-100">
+      <div class="flex items-center justify-between">
+        <div class="p-3 bg-purple-100 rounded-lg">
+          <svg class="w-6 h-6 text-purple-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z"></path>
+          </svg>
+        </div>
+      </div>
+      <div class="mt-4">
+        <p class="text-2xl font-bold text-gray-900"><%= @producer[:orders_count] %></p>
+        <p class="text-sm text-gray-500">Commandes</p>
+      </div>
+    </div>
+
+    <div class="bg-white rounded-xl p-6 shadow-sm border border-gray-100">
+      <div class="flex items-center justify-between">
+        <div class="p-3 bg-green-100 rounded-lg">
+          <svg class="w-6 h-6 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+          </svg>
+        </div>
+      </div>
+      <div class="mt-4">
+        <p class="text-2xl font-bold text-gray-900"><%= number_to_currency(@producer[:total_sales], unit: "€", format: "%n %u") %></p>
+        <p class="text-sm text-gray-500">CA Total</p>
+      </div>
+    </div>
+
+    <div class="bg-white rounded-xl p-6 shadow-sm border border-gray-100">
+      <div class="flex items-center justify-between">
+        <div class="p-3 bg-silloun-yellow rounded-lg">
+          <svg class="w-6 h-6 text-silloun-green" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 7h6m0 10v-3m-3 3h.01M9 17h.01M9 14h.01M12 14h.01M15 11h.01M12 11h.01M9 11h.01M7 21h10a2 2 0 002-2V5a2 2 0 00-2-2H7a2 2 0 00-2 2v14a2 2 0 002 2z"></path>
+          </svg>
+        </div>
+      </div>
+      <div class="mt-4">
+        <p class="text-2xl font-bold text-gray-900"><%= number_to_currency(@producer[:total_sales] * 0.08, unit: "€", format: "%n %u") %></p>
+        <p class="text-sm text-gray-500">Commissions générées</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Recent Orders & Products -->
+  <div class="grid lg:grid-cols-2 gap-6">
+    <!-- Recent Orders -->
+    <div class="bg-white rounded-xl shadow-sm border border-gray-100">
+      <div class="p-6 border-b border-gray-100">
+        <h2 class="font-semibold text-gray-900">Dernières commandes</h2>
+      </div>
+      <div class="divide-y divide-gray-100">
+        <% @recent_orders.first(5).each do |order| %>
+          <div class="p-4 hover:bg-gray-50">
+            <div class="flex items-center justify-between">
+              <div>
+                <p class="font-medium text-gray-900"><%= order[:reference] %></p>
+                <p class="text-sm text-gray-500"><%= order[:customer_name] %></p>
+              </div>
+              <div class="text-right">
+                <p class="font-medium text-gray-900"><%= number_to_currency(order[:total], unit: "€", format: "%n %u") %></p>
+                <% status_colors = { "new" => "text-blue-600", "paid" => "text-green-600", "ready" => "text-orange-600", "picked_up" => "text-gray-600" } %>
+                <p class="text-sm <%= status_colors[order[:status]] %>"><%= order[:status].humanize %></p>
+              </div>
+            </div>
+          </div>
+        <% end %>
+        
+        <% if @recent_orders.empty? %>
+          <div class="p-8 text-center text-gray-500">
+            Aucune commande pour ce producteur
+          </div>
+        <% end %>
+      </div>
+    </div>
+
+    <!-- Products -->
+    <div class="bg-white rounded-xl shadow-sm border border-gray-100">
+      <div class="p-6 border-b border-gray-100">
+        <h2 class="font-semibold text-gray-900">Produits en ligne</h2>
+      </div>
+      <div class="divide-y divide-gray-100">
+        <% @recent_products.each do |product| %>
+          <div class="p-4 hover:bg-gray-50">
+            <div class="flex items-center justify-between">
+              <div class="flex items-center space-x-3">
+                <div class="w-10 h-10 bg-gray-100 rounded-lg flex items-center justify-center">
+                  <span class="text-lg">🥬</span>
+                </div>
+                <div>
+                  <p class="font-medium text-gray-900"><%= product[:name] %></p>
+                  <p class="text-sm text-gray-500"><%= product[:category] %></p>
+                </div>
+              </div>
+              <div class="text-right">
+                <p class="font-medium text-gray-900"><%= number_to_currency(product[:price], unit: "€", format: "%n %u") %>/<%= product[:unit] %></p>
+                <p class="text-sm <%= product[:stock] > 0 ? 'text-green-600' : 'text-red-600' %>">
+                  Stock: <%= product[:stock] %>
+                </p>
+              </div>
+            </div>
+          </div>
+        <% end %>
+      </div>
+    </div>
+  </div>
+</div>

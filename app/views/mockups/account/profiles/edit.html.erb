@@ -1,0 +1,91 @@
+<% content_for(:title, "Modifier mon profil - Silloun") %>
+
+<div class="max-w-2xl">
+  <!-- Back Link -->
+  <div class="mb-4">
+    <%= link_to mockups_account_profile_path, class: "inline-flex items-center text-gray-600 hover:text-silloun-green transition" do %>
+      <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"></path>
+      </svg>
+      Retour au profil
+    <% end %>
+  </div>
+
+  <!-- Header -->
+  <div class="mb-6">
+    <h1 class="font-piepie text-silloun-green text-2xl">MODIFIER MON PROFIL</h1>
+    <p class="text-gray-500">Mettez à jour vos informations personnelles</p>
+  </div>
+
+  <%= form_with url: mockups_account_profile_path, method: :patch, class: "space-y-6" do %>
+    <!-- Personal Info -->
+    <div class="bg-white rounded-xl shadow-sm p-6">
+      <h2 class="font-semibold text-gray-800 mb-4">Informations personnelles</h2>
+      
+      <div class="grid md:grid-cols-2 gap-4">
+        <div>
+          <label class="block text-sm font-medium text-gray-700 mb-1">Prénom</label>
+          <input type="text" value="<%= @user[:first_name] %>" 
+                 class="w-full border rounded-lg px-4 py-2 focus:ring-silloun-green focus:border-silloun-green">
+        </div>
+        <div>
+          <label class="block text-sm font-medium text-gray-700 mb-1">Nom</label>
+          <input type="text" value="<%= @user[:last_name] %>" 
+                 class="w-full border rounded-lg px-4 py-2 focus:ring-silloun-green focus:border-silloun-green">
+        </div>
+      </div>
+    </div>
+
+    <!-- Contact Info -->
+    <div class="bg-white rounded-xl shadow-sm p-6">
+      <h2 class="font-semibold text-gray-800 mb-4">Coordonnées</h2>
+      
+      <div class="space-y-4">
+        <div>
+          <label class="block text-sm font-medium text-gray-700 mb-1">Email</label>
+          <input type="email" value="<%= @user[:email] %>" 
+                 class="w-full border rounded-lg px-4 py-2 focus:ring-silloun-green focus:border-silloun-green">
+        </div>
+        <div>
+          <label class="block text-sm font-medium text-gray-700 mb-1">Téléphone</label>
+          <input type="tel" value="<%= @user[:phone] %>" 
+                 class="w-full border rounded-lg px-4 py-2 focus:ring-silloun-green focus:border-silloun-green">
+        </div>
+      </div>
+    </div>
+
+    <!-- Address -->
+    <div class="bg-white rounded-xl shadow-sm p-6">
+      <h2 class="font-semibold text-gray-800 mb-4">Adresse</h2>
+      <p class="text-gray-500 text-sm mb-4">Utilisée pour trouver les producteurs près de chez vous</p>
+      
+      <div class="space-y-4">
+        <div>
+          <label class="block text-sm font-medium text-gray-700 mb-1">Adresse</label>
+          <input type="text" value="<%= @user[:address] %>" 
+                 class="w-full border rounded-lg px-4 py-2 focus:ring-silloun-green focus:border-silloun-green">
+        </div>
+        <div class="grid md:grid-cols-2 gap-4">
+          <div>
+            <label class="block text-sm font-medium text-gray-700 mb-1">Code postal</label>
+            <input type="text" value="<%= @user[:postal_code] %>" 
+                   class="w-full border rounded-lg px-4 py-2 focus:ring-silloun-green focus:border-silloun-green">
+          </div>
+          <div>
+            <label class="block text-sm font-medium text-gray-700 mb-1">Ville</label>
+            <input type="text" value="<%= @user[:city] %>" 
+                   class="w-full border rounded-lg px-4 py-2 focus:ring-silloun-green focus:border-silloun-green">
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Submit -->
+    <div class="flex items-center justify-end gap-4">
+      <%= link_to "Annuler", mockups_account_profile_path, class: "text-gray-600 hover:text-gray-800 transition" %>
+      <button type="submit" class="bg-silloun-yellow text-silloun-green font-bold px-8 py-3 rounded-full hover:bg-yellow-400 transition">
+        Enregistrer les modifications
+      </button>
+    </div>
+  <% end %>
+</div>

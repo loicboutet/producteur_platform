@@ -1,0 +1,665 @@
+<%# Style Guide Silloun - Vue Mockup %>
+
+<!-- Hero Section -->
+<header class="min-h-screen flex items-center pt-20 bg-silloun-green">
+  <div class="max-w-7xl mx-auto px-4 py-16 grid md:grid-cols-2 gap-12 items-center">
+    <div>
+      <p class="font-marydale text-3xl mb-4 text-silloun-yellow">Livre de marque</p>
+      <h1 class="font-piepie text-6xl md:text-8xl mb-6 text-silloun-yellow">SILLOUN</h1>
+      <p class="text-xl mb-8 text-silloun-yellow">La marketplace qui reconnecte producteurs et consommateurs</p>
+      <div class="flex items-center space-x-4 text-silloun-yellow opacity-80">
+        <span>Version 1</span>
+        <span>•</span>
+        <span><%= Date.today.strftime("%d/%m/%Y") %></span>
+      </div>
+    </div>
+    <div class="flex justify-center">
+      <%= silloun_logo(variant: :jaune, size: 200) %>
+    </div>
+  </div>
+</header>
+
+<!-- Brand Platform Section -->
+<section id="marque" class="py-20 bg-white">
+  <div class="max-w-7xl mx-auto px-4">
+    <h2 class="font-piepie text-5xl mb-16 text-silloun-green">PLATEFORME DE MARQUE</h2>
+    
+    <!-- Vision -->
+    <div class="grid md:grid-cols-2 gap-12 mb-20">
+      <div>
+        <h3 class="font-piepie text-3xl mb-6 text-silloun-green">VISION</h3>
+        <p class="font-semibold text-lg mb-4 text-silloun-green">Silloun est né d'une conviction forte :</p>
+        <p class="text-gray-700 text-lg mb-4">L'agriculture locale mérite d'être valorisée et les agriculteurs justement rémunérés.</p>
+        <p class="text-gray-600">Face à un système où trop d'agriculteurs français vivent sous le seuil de pauvreté, nous créons une alternative concrète et accessible.</p>
+      </div>
+      <div class="rounded-2xl h-64 overflow-hidden">
+        <%= image_tag "pictures/vobs.studio_Portrait_dune_agricultrice._Elle_porte_une_salopett_33ef692c-abe1-483a-89e1-28b000f76624.png", alt: "Productrice", class: "w-full h-full object-cover" %>
+      </div>
+    </div>
+    
+    <!-- Mission -->
+    <div class="grid md:grid-cols-2 gap-12 mb-20">
+      <div class="order-2 md:order-1 rounded-2xl h-64 overflow-hidden">
+        <%= image_tag "pictures/vobs.studio_httpss.mj.run2yoSBUleddg_Photo_dun_ensemble_de_lg_2c75fed6-bb89-496e-85c3-71561aae6c38_1.png", alt: "Légumes", class: "w-full h-full object-cover" %>
+      </div>
+      <div class="order-1 md:order-2">
+        <h3 class="font-piepie text-3xl mb-6 text-silloun-green">MISSION</h3>
+        <p class="text-gray-700 text-lg mb-4">Inverser la chaîne de valeur traditionnelle pour redonner aux agriculteurs le contrôle sur la commercialisation de leur production.</p>
+        <p class="text-gray-700 text-lg mb-4">Reconnecter les consommateurs aux producteurs locaux à travers une plateforme de click & collect simple, directe et humaine.</p>
+      </div>
+    </div>
+    
+    <!-- Essence -->
+    <div class="rounded-3xl p-12 mb-20 bg-silloun-yellow">
+      <h3 class="font-piepie text-3xl mb-4 text-silloun-green">ESSENCE DE MARQUE</h3>
+      <p class="font-marydale text-5xl mb-4 text-silloun-green">Franchement local</p>
+      <p class="text-lg text-silloun-green">Une authenticité assumée qui valorise le local sans artifice, avec pragmatisme et bon sens paysan.</p>
+    </div>
+    
+    <!-- Values -->
+    <div class="mb-20">
+      <h3 class="font-piepie text-3xl mb-8 text-silloun-green">NOS VALEURS</h3>
+      <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
+        <div class="rounded-2xl p-6 bg-silloun-green">
+          <h4 class="font-marydale text-2xl mb-3 text-silloun-yellow">Franchise</h4>
+          <p class="text-white text-sm">Nous montrons l'agriculture telle qu'elle est, sans filtre ni romantisation.</p>
+        </div>
+        <div class="rounded-2xl p-6 bg-silloun-green">
+          <h4 class="font-marydale text-2xl mb-3 text-silloun-yellow">Proximité</h4>
+          <p class="text-white text-sm">Le lien direct entre producteur et consommateur. Pas d'intermédiaire superflu.</p>
+        </div>
+        <div class="rounded-2xl p-6 bg-silloun-green">
+          <h4 class="font-marydale text-2xl mb-3 text-silloun-yellow">Accessibilité</h4>
+          <p class="text-white text-sm">Pour tous les consommateurs du quotidien. Des produits de qualité à prix juste.</p>
+        </div>
+        <div class="rounded-2xl p-6 bg-silloun-green">
+          <h4 class="font-marydale text-2xl mb-3 text-silloun-yellow">Pragmatisme</h4>
+          <p class="text-white text-sm">Des solutions concrètes qui marchent. L'efficacité avant l'innovation.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="section-divider"></div>
+
+<!-- Logo Section -->
+<section id="logo" class="py-20 bg-gray-50">
+  <div class="max-w-7xl mx-auto px-4">
+    <h2 class="font-piepie text-5xl mb-6 text-silloun-green">LOGO & SYMBOLE</h2>
+    <p class="text-gray-600 text-lg mb-16 max-w-2xl">Un emblème qui sort de terre. Le logo Silloun se compose de deux éléments indissociables.</p>
+    
+    <!-- Logo Elements -->
+    <div class="grid md:grid-cols-2 gap-12 mb-20">
+      <div>
+        <h3 class="font-piepie text-2xl mb-4 text-silloun-green">LA TYPOGRAPHIE</h3>
+        <p class="text-gray-600 mb-8">Bold, massive, ancrée dans la terre, elle donne au logo tout son impact.</p>
+        
+        <h3 class="font-piepie text-2xl mb-4 text-silloun-green">LE CHAPEAU / COURONNE</h3>
+        <p class="text-gray-600 mb-4">Élément distinctif qui symbolise la pousse, la croissance et la valorisation du travail agricole.</p>
+        
+        <div class="mt-8">
+          <p class="text-sm text-gray-500 mb-2">Le chapeau seul :</p>
+          <div class="flex space-x-4 items-end">
+            <%= silloun_chapeau(variant: :vert_jaune, size: 40) %>
+            <%= silloun_chapeau(variant: :vert, size: 40) %>
+            <span class="bg-gray-800 p-2 rounded inline-block">
+              <%= silloun_chapeau(variant: :blanc, size: 30) %>
+            </span>
+          </div>
+        </div>
+      </div>
+      
+      <!-- Logo Display -->
+      <div class="rounded-3xl p-12 flex items-center justify-center bg-silloun-green">
+        <%= silloun_logo(variant: :jaune, size: 150) %>
+      </div>
+    </div>
+    
+    <!-- Logo Variations -->
+    <h3 class="font-piepie text-3xl mb-8 text-silloun-green">VARIATIONS DU LOGO</h3>
+    <div class="grid grid-cols-2 md:grid-cols-4 gap-6 mb-20">
+      <!-- Sur jaune -->
+      <div class="rounded-2xl p-8 flex items-center justify-center h-40 bg-silloun-yellow">
+        <%= silloun_logo(variant: :vert, size: 80) %>
+      </div>
+      
+      <!-- Sur vert -->
+      <div class="rounded-2xl p-8 flex items-center justify-center h-40 bg-silloun-green">
+        <%= silloun_logo(variant: :jaune, size: 80) %>
+      </div>
+      
+      <!-- Sur noir -->
+      <div class="bg-black rounded-2xl p-8 flex items-center justify-center h-40">
+        <%= silloun_logo(variant: :blanc, size: 80) %>
+      </div>
+      
+      <!-- Sur blanc -->
+      <div class="bg-white border-2 border-gray-200 rounded-2xl p-8 flex items-center justify-center h-40">
+        <%= silloun_logo(variant: :vert, size: 80) %>
+      </div>
+    </div>
+    
+    <!-- Cadres -->
+    <h3 class="font-piepie text-3xl mb-8 text-silloun-green">CADRES SIGNATURE</h3>
+    <p class="text-gray-600 mb-8">Le cadre jaune est un élément signature de l'identité pour mettre en valeur les producteurs.</p>
+    <div class="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-7 gap-4 mb-20">
+      <div class="text-center">
+        <%= silloun_cadre(type: :horizontal, class_name: "h-20 w-auto") %>
+        <p class="text-xs text-gray-500 mt-2">Horizontal</p>
+      </div>
+      <div class="text-center">
+        <%= silloun_cadre(type: :carre_xl, class_name: "h-24 w-auto") %>
+        <p class="text-xs text-gray-500 mt-2">Carré XL</p>
+      </div>
+      <div class="text-center">
+        <%= silloun_cadre(type: :carre_m, class_name: "h-20 w-auto") %>
+        <p class="text-xs text-gray-500 mt-2">Carré M</p>
+      </div>
+      <div class="text-center">
+        <%= silloun_cadre(type: :carre_s, class_name: "h-16 w-auto") %>
+        <p class="text-xs text-gray-500 mt-2">Carré S</p>
+      </div>
+      <div class="text-center">
+        <%= silloun_cadre(type: :vertical_xl, class_name: "h-24 w-auto") %>
+        <p class="text-xs text-gray-500 mt-2">Vertical XL</p>
+      </div>
+      <div class="text-center">
+        <%= silloun_cadre(type: :vertical_m, class_name: "h-20 w-auto") %>
+        <p class="text-xs text-gray-500 mt-2">Vertical M</p>
+      </div>
+      <div class="text-center">
+        <%= silloun_cadre(type: :vertical_s, class_name: "h-16 w-auto") %>
+        <p class="text-xs text-gray-500 mt-2">Vertical S</p>
+      </div>
+    </div>
+    
+    <!-- Usage Rules -->
+    <div class="grid md:grid-cols-2 gap-12">
+      <div class="bg-green-50 border-2 border-silloun-green rounded-2xl p-8">
+        <h4 class="font-piepie text-2xl mb-6 text-silloun-green">C'EST OUI !</h4>
+        <ul class="space-y-3 text-silloun-green">
+          <li class="flex items-center"><span class="mr-3">✓</span>Toujours associer logo et chapeau</li>
+          <li class="flex items-center"><span class="mr-3">✓</span>Maintenir les proportions du cadre jaune</li>
+          <li class="flex items-center"><span class="mr-3">✓</span>Privilégier les photos authentiques</li>
+          <li class="flex items-center"><span class="mr-3">✓</span>Utiliser le jaune pour les éléments d'action</li>
+        </ul>
+      </div>
+      <div class="bg-red-50 border-2 border-red-500 rounded-2xl p-8">
+        <h4 class="font-piepie text-red-600 text-2xl mb-6">C'EST NON !</h4>
+        <ul class="space-y-3 text-red-600">
+          <li class="flex items-center"><span class="mr-3">✗</span>Ne pas déformer le logo</li>
+          <li class="flex items-center"><span class="mr-3">✗</span>Ne pas changer les couleurs</li>
+          <li class="flex items-center"><span class="mr-3">✗</span>Ne pas sur-retoucher les photos</li>
+          <li class="flex items-center"><span class="mr-3">✗</span>Ne pas utiliser de stock photos génériques</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="section-divider"></div>
+
+<!-- Colors Section -->
+<section id="couleurs" class="py-20 bg-white">
+  <div class="max-w-7xl mx-auto px-4">
+    <h2 class="font-piepie text-5xl mb-6 text-silloun-green">UNIVERS COLORIMÉTRIQUE</h2>
+    <p class="text-gray-600 text-lg mb-16 max-w-2xl">Deux couleurs principales qui incarnent l'énergie et l'authenticité de la marque.</p>
+    
+    <!-- Main Colors -->
+    <div class="grid md:grid-cols-2 gap-8 mb-16">
+      <!-- Yellow -->
+      <div class="color-swatch">
+        <div class="rounded-t-3xl h-64 flex items-end p-8 bg-silloun-yellow">
+          <div>
+            <h3 class="font-piepie text-3xl text-silloun-green">JAUNE SILLOUN</h3>
+            <p class="text-silloun-green opacity-80">L'énergie, l'optimisme, la visibilité</p>
+          </div>
+        </div>
+        <div class="bg-gray-100 rounded-b-3xl p-6">
+          <div class="grid grid-cols-2 gap-4 text-sm">
+            <div>
+              <p class="text-gray-500">HEX</p>
+              <p class="font-mono font-bold">#FBE216</p>
+            </div>
+            <div>
+              <p class="text-gray-500">RGB</p>
+              <p class="font-mono font-bold">251 - 226 - 22</p>
+            </div>
+            <div>
+              <p class="text-gray-500">CMJN</p>
+              <p class="font-mono font-bold">5 - 5 - 100 - 0</p>
+            </div>
+            <div>
+              <p class="text-gray-500">Tailwind</p>
+              <p class="font-mono font-bold text-xs">bg-silloun-yellow</p>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <!-- Green -->
+      <div class="color-swatch">
+        <div class="rounded-t-3xl h-64 flex items-end p-8 bg-silloun-green">
+          <div>
+            <h3 class="font-piepie text-3xl text-silloun-yellow">VERT SILLOUN</h3>
+            <p class="text-silloun-yellow opacity-80">L'agriculture, l'authenticité, la nature</p>
+          </div>
+        </div>
+        <div class="bg-gray-100 rounded-b-3xl p-6">
+          <div class="grid grid-cols-2 gap-4 text-sm">
+            <div>
+              <p class="text-gray-500">HEX</p>
+              <p class="font-mono font-bold">#005D46</p>
+            </div>
+            <div>
+              <p class="text-gray-500">RGB</p>
+              <p class="font-mono font-bold">0 - 93 - 70</p>
+            </div>
+            <div>
+              <p class="text-gray-500">CMJN</p>
+              <p class="font-mono font-bold">90 - 36 - 75 - 32</p>
+            </div>
+            <div>
+              <p class="text-gray-500">Tailwind</p>
+              <p class="font-mono font-bold text-xs">bg-silloun-green</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    
+    <!-- Tailwind Config -->
+    <div class="bg-gray-900 rounded-2xl p-6 mb-16">
+      <h4 class="font-bold mb-4 text-silloun-yellow">Configuration Tailwind CSS</h4>
+      <pre class="text-green-400 text-sm overflow-x-auto"><code>// tailwind.config.js
+module.exports = {
+  theme: {
+    extend: {
+      colors: {
+        'silloun': {
+          'yellow': '#FBE216',
+          'green': '#005D46',
+        }
+      }
+    }
+  }
+}</code></pre>
+    </div>
+    
+    <!-- Color Usage -->
+    <div class="bg-gray-50 rounded-3xl p-8">
+      <h3 class="font-piepie text-2xl mb-6 text-silloun-green">USAGE DES COULEURS</h3>
+      <div class="grid md:grid-cols-3 gap-6">
+        <div class="flex items-start space-x-4">
+          <div class="w-12 h-12 rounded-lg flex-shrink-0 bg-silloun-yellow"></div>
+          <div>
+            <p class="font-semibold text-silloun-green">Jaune</p>
+            <p class="text-gray-600 text-sm">CTA, boutons primaires, éléments d'attention, cadres photos</p>
+          </div>
+        </div>
+        <div class="flex items-start space-x-4">
+          <div class="w-12 h-12 rounded-lg flex-shrink-0 bg-silloun-green"></div>
+          <div>
+            <p class="font-semibold text-silloun-green">Vert</p>
+            <p class="text-gray-600 text-sm">Headers, footer, texte principal, ancrage, fond hero</p>
+          </div>
+        </div>
+        <div class="flex items-start space-x-4">
+          <div class="w-12 h-12 bg-white border-2 border-gray-200 rounded-lg flex-shrink-0"></div>
+          <div>
+            <p class="font-semibold text-silloun-green">Blanc</p>
+            <p class="text-gray-600 text-sm">Fond de page, cartes, espaces de respiration</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="section-divider"></div>
+
+<!-- Typography Section -->
+<section id="typographie" class="py-20 bg-silloun-green">
+  <div class="max-w-7xl mx-auto px-4">
+    <h2 class="font-piepie text-5xl mb-16 text-silloun-yellow">TYPOGRAPHIE</h2>
+    
+    <div class="grid md:grid-cols-3 gap-8 mb-16">
+      <!-- PIEPIE - Titles -->
+      <div class="bg-white rounded-3xl p-8">
+        <p class="text-sm font-semibold mb-4 text-silloun-green">Titres</p>
+        <h3 class="font-piepie text-4xl mb-6 text-silloun-green">PIEPIE</h3>
+        <p class="text-gray-600 text-sm mb-4">(Simulé avec Montserrat Black)</p>
+        <div class="font-piepie text-xl mb-6 text-silloun-green">
+          ABCDEFGHIJKLM<br>
+          NOPQRSTUVWXYZ<br>
+          0123456789
+        </div>
+        <p class="font-piepie text-sm text-silloun-green">FRANCHEMENT LOCAL</p>
+      </div>
+      
+      <!-- Marydale - Contrast -->
+      <div class="bg-white rounded-3xl p-8">
+        <p class="text-sm font-semibold mb-4 text-silloun-green">Accroches</p>
+        <h3 class="font-marydale text-4xl mb-6 text-silloun-green">Marydale</h3>
+        <p class="text-gray-600 text-sm mb-4">(Script cursive)</p>
+        <div class="font-marydale text-xl mb-6 text-silloun-green">
+          Aa Bb Cc Dd Ee<br>
+          Ff Gg Hh Ii Jj Kk<br>
+          0123456789
+        </div>
+        <p class="font-marydale text-lg text-silloun-green">Franchement local</p>
+      </div>
+      
+      <!-- Montserrat - Body -->
+      <div class="bg-white rounded-3xl p-8">
+        <p class="text-sm font-semibold mb-4 text-silloun-green">Corps de texte</p>
+        <h3 class="text-4xl font-bold mb-6 text-silloun-green">Montserrat</h3>
+        <p class="text-gray-600 text-sm mb-4">(Google Fonts)</p>
+        <div class="text-lg mb-6 text-silloun-green">
+          Aa Bb Cc Dd Ee<br>
+          Ff Gg Hh Ii Jj Kk<br>
+          0123456789
+        </div>
+        <p class="text-sm text-silloun-green">Franchement local</p>
+      </div>
+    </div>
+    
+    <!-- Typography Hierarchy -->
+    <div class="bg-white rounded-3xl p-8">
+      <h3 class="font-piepie text-2xl mb-8 text-silloun-green">HIÉRARCHIE TYPOGRAPHIQUE</h3>
+      <div class="space-y-6">
+        <div class="flex items-baseline justify-between border-b border-gray-200 pb-4">
+          <span class="font-piepie text-5xl text-silloun-green">TITRE H1</span>
+          <span class="text-gray-500 text-sm">font-piepie text-5xl</span>
+        </div>
+        <div class="flex items-baseline justify-between border-b border-gray-200 pb-4">
+          <span class="font-piepie text-4xl text-silloun-green">TITRE H2</span>
+          <span class="text-gray-500 text-sm">font-piepie text-4xl</span>
+        </div>
+        <div class="flex items-baseline justify-between border-b border-gray-200 pb-4">
+          <span class="font-piepie text-2xl text-silloun-green">TITRE H3</span>
+          <span class="text-gray-500 text-sm">font-piepie text-2xl</span>
+        </div>
+        <div class="flex items-baseline justify-between border-b border-gray-200 pb-4">
+          <span class="font-marydale text-3xl text-silloun-green">Sous-titre / Accroche</span>
+          <span class="text-gray-500 text-sm">font-marydale text-3xl</span>
+        </div>
+        <div class="flex items-baseline justify-between border-b border-gray-200 pb-4">
+          <span class="text-lg text-silloun-green">Corps de texte</span>
+          <span class="text-gray-500 text-sm">text-lg (Montserrat)</span>
+        </div>
+        <div class="flex items-baseline justify-between">
+          <span class="text-gray-600 text-sm">Légende / Note</span>
+          <span class="text-gray-500 text-sm">text-sm text-gray-600</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="section-divider"></div>
+
+<!-- Components Section -->
+<section id="composants" class="py-20 bg-white">
+  <div class="max-w-7xl mx-auto px-4">
+    <h2 class="font-piepie text-5xl mb-6 text-silloun-green">COMPOSANTS UI</h2>
+    <p class="text-gray-600 text-lg mb-16 max-w-2xl">Éléments d'interface réutilisables respectant la charte graphique.</p>
+    
+    <!-- Buttons -->
+    <div class="mb-20">
+      <h3 class="font-piepie text-3xl mb-8 text-silloun-green">BOUTONS</h3>
+      <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
+        <!-- Primary -->
+        <div class="text-center">
+          <button class="btn-silloun-primary w-full">
+            Bouton primaire
+          </button>
+          <p class="text-gray-500 text-sm mt-2">btn-silloun-primary</p>
+        </div>
+        
+        <!-- Secondary -->
+        <div class="text-center">
+          <button class="btn-silloun-secondary w-full">
+            Bouton secondaire
+          </button>
+          <p class="text-gray-500 text-sm mt-2">btn-silloun-secondary</p>
+        </div>
+        
+        <!-- Outline -->
+        <div class="text-center">
+          <button class="btn-silloun-outline w-full">
+            Bouton outline
+          </button>
+          <p class="text-gray-500 text-sm mt-2">btn-silloun-outline</p>
+        </div>
+        
+        <!-- Ghost -->
+        <div class="text-center">
+          <button class="font-bold py-3 px-6 transition w-full underline text-silloun-green">
+            Lien texte
+          </button>
+          <p class="text-gray-500 text-sm mt-2">Text link</p>
+        </div>
+      </div>
+    </div>
+    
+    <!-- Cards -->
+    <div class="mb-20">
+      <h3 class="font-piepie text-3xl mb-8 text-silloun-green">CARTES</h3>
+      <div class="grid md:grid-cols-3 gap-6">
+        <!-- Product Card -->
+        <div class="bg-white rounded-2xl shadow-lg overflow-hidden border border-gray-100">
+          <div class="h-48 overflow-hidden">
+            <%= image_tag "pictures/vobs.studio_httpss.mj.run2yoSBUleddg_Photo_dun_ensemble_de_lg_2c75fed6-bb89-496e-85c3-71561aae6c38_1.png", alt: "Légumes", class: "w-full h-full object-cover" %>
+          </div>
+          <div class="p-6">
+            <p class="text-gray-500 text-sm mb-1">Ferme du Soleil</p>
+            <h4 class="font-bold text-lg mb-2 text-silloun-green">Tomates Bio</h4>
+            <p class="text-gray-600 text-sm mb-4">Tomates cultivées sans pesticides, récoltées à maturité.</p>
+            <div class="flex items-center justify-between">
+              <span class="font-bold text-xl text-silloun-green">4,50 €</span>
+              <button class="btn-silloun-primary text-sm py-2 px-4">
+                Ajouter
+              </button>
+            </div>
+          </div>
+        </div>
+        
+        <!-- Producer Card -->
+        <div class="bg-white rounded-2xl shadow-lg overflow-hidden border border-gray-100">
+          <div class="h-48 relative overflow-hidden bg-silloun-green">
+            <div class="absolute inset-4 border-4 border-silloun-yellow flex items-center justify-center overflow-hidden">
+              <%= image_tag "pictures/vobs.studio_Portrait_dune_agricultrice._Elle_porte_une_salopett_33ef692c-abe1-483a-89e1-28b000f76624.png", alt: "Productrice", class: "w-full h-full object-cover" %>
+            </div>
+          </div>
+          <div class="p-6 text-center">
+            <h4 class="font-piepie text-xl mb-1 text-silloun-green">MARIE</h4>
+            <p class="font-marydale text-gray-600 mb-2">Maraîchère en Limousin</p>
+            <p class="text-gray-500 text-sm mb-4">12 produits • 2.3 km</p>
+            <button class="btn-silloun-outline text-sm py-2 px-4 w-full">
+              Voir la ferme
+            </button>
+          </div>
+        </div>
+        
+        <!-- Market Card -->
+        <div class="bg-white rounded-2xl shadow-lg overflow-hidden border border-gray-100">
+          <div class="h-48 flex items-center justify-center bg-gradient-to-br from-silloun-green to-[#007d5e]">
+            <div class="text-center text-white">
+              <svg class="w-12 h-12 mx-auto mb-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"></path>
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"></path>
+              </svg>
+              <p class="font-marydale text-xl text-silloun-yellow">Marché</p>
+            </div>
+          </div>
+          <div class="p-6">
+            <h4 class="font-bold text-lg mb-1 text-silloun-green">Marché de Limoges</h4>
+            <p class="text-gray-600 text-sm mb-2">Place de la Motte</p>
+            <p class="text-gray-500 text-sm mb-4">Sam. 8h-13h • 8 producteurs</p>
+            <button class="btn-silloun-secondary text-sm py-2 px-4 w-full">
+              Voir les producteurs
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+    
+    <!-- Alerts -->
+    <div class="mb-20">
+      <h3 class="font-piepie text-3xl mb-8 text-silloun-green">ALERTES & NOTIFICATIONS</h3>
+      <div class="space-y-4">
+        <div class="p-4 rounded-lg flex items-center bg-silloun-yellow text-silloun-green">
+          <span class="font-bold mr-2">ℹ️</span>
+          <span>Information : Nouveau producteur ajouté : Ferme du Soleil est maintenant disponible</span>
+        </div>
+        <div class="bg-green-100 text-green-800 p-4 rounded-lg flex items-center">
+          <span class="font-bold mr-2">✅</span>
+          <span>Succès : Votre commande a bien été enregistrée !</span>
+        </div>
+        <div class="bg-red-100 text-red-800 p-4 rounded-lg flex items-center">
+          <span class="font-bold mr-2">⚠️</span>
+          <span>Erreur : Ce produit n'est plus disponible en stock.</span>
+        </div>
+      </div>
+    </div>
+    
+    <!-- Form Elements -->
+    <div>
+      <h3 class="font-piepie text-3xl mb-8 text-silloun-green">FORMULAIRES</h3>
+      <div class="grid md:grid-cols-2 gap-8">
+        <div class="space-y-4">
+          <!-- Text Input -->
+          <div>
+            <label class="block font-semibold mb-2 text-silloun-green">Champ texte</label>
+            <input type="text" placeholder="Votre email" class="w-full px-4 py-3 border-2 border-gray-200 rounded-lg focus:outline-none focus:border-silloun-green">
+          </div>
+          
+          <!-- Search -->
+          <div>
+            <label class="block font-semibold mb-2 text-silloun-green">Recherche avec CTA</label>
+            <div class="flex">
+              <input type="text" placeholder="Saisissez votre ville" class="flex-1 px-4 py-3 border-2 border-r-0 border-gray-200 rounded-l-full focus:outline-none focus:border-silloun-green">
+              <button class="bg-silloun-yellow text-silloun-green font-bold px-6 py-3 rounded-r-full">
+                Localiser
+              </button>
+            </div>
+          </div>
+        </div>
+        
+        <div class="space-y-4">
+          <!-- Select -->
+          <div>
+            <label class="block font-semibold mb-2 text-silloun-green">Sélection</label>
+            <select class="w-full px-4 py-3 border-2 border-gray-200 rounded-lg focus:outline-none focus:border-silloun-green bg-white">
+              <option>Choisir une catégorie</option>
+              <option>Fruits & Légumes</option>
+              <option>Produits laitiers</option>
+              <option>Viandes</option>
+            </select>
+          </div>
+          
+          <!-- Checkbox -->
+          <div>
+            <label class="block font-semibold mb-2 text-silloun-green">Options</label>
+            <div class="space-y-2">
+              <label class="flex items-center">
+                <input type="checkbox" class="w-5 h-5 border-gray-300 rounded accent-green-700">
+                <span class="ml-2 text-gray-700">Bio uniquement</span>
+              </label>
+              <label class="flex items-center">
+                <input type="checkbox" class="w-5 h-5 border-gray-300 rounded accent-green-700" checked>
+                <span class="ml-2 text-gray-700">Disponible aujourd'hui</span>
+              </label>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="section-divider"></div>
+
+<!-- Applications Section -->
+<section id="applications" class="py-20 bg-silloun-yellow">
+  <div class="max-w-7xl mx-auto px-4">
+    <h2 class="font-piepie text-5xl mb-16 text-silloun-green">APPLICATIONS</h2>
+    
+    <!-- Website Preview -->
+    <div class="mb-20">
+      <h3 class="font-piepie text-3xl mb-8 text-silloun-green">APERÇU SITE WEB</h3>
+      <div class="rounded-3xl overflow-hidden shadow-2xl bg-silloun-green">
+        <!-- Browser Bar -->
+        <div class="bg-gray-800 px-4 py-3 flex items-center space-x-2">
+          <div class="w-3 h-3 rounded-full bg-red-500"></div>
+          <div class="w-3 h-3 rounded-full bg-yellow-500"></div>
+          <div class="w-3 h-3 rounded-full bg-green-500"></div>
+          <div class="flex-1 ml-4">
+            <div class="bg-gray-700 rounded px-3 py-1 text-gray-400 text-sm max-w-md">silloun.fr</div>
+          </div>
+        </div>
+        <!-- Website Content -->
+        <div class="p-8">
+          <div class="flex items-center justify-between mb-8">
+            <%= silloun_logo(variant: :jaune, size: 40) %>
+            <div class="flex items-center space-x-4">
+              <span class="text-white text-sm">Je suis pro</span>
+              <button class="bg-white text-silloun-green px-4 py-2 rounded-full text-sm font-semibold">Mon compte</button>
+              <button class="bg-silloun-yellow text-silloun-green px-4 py-2 rounded-full text-sm font-semibold">🛒 0,00 € (0)</button>
+            </div>
+          </div>
+          <div class="bg-silloun-yellow text-silloun-green text-center py-2 text-sm font-semibold rounded mb-8">
+            Achetez directement chez vos producteurs locaux
+          </div>
+          <div class="grid md:grid-cols-2 gap-8 items-center">
+            <div>
+              <p class="font-marydale text-3xl mb-2 text-silloun-yellow">Découvrez</p>
+              <h1 class="font-piepie text-4xl mb-4 text-silloun-yellow">LES AGRICULTEURS PRÈS DE CHEZ VOUS</h1>
+              <p class="text-white mb-6">Commandez vos produits et collectez directement à la ferme</p>
+              <div class="flex">
+                <input type="text" placeholder="Saisissez votre ville" class="px-4 py-3 rounded-l-full flex-1 text-gray-700">
+                <button class="bg-silloun-yellow text-silloun-green font-semibold px-6 py-3 rounded-r-full">Localisez-moi</button>
+              </div>
+            </div>
+            <div class="h-64 rounded-2xl overflow-hidden">
+              <%= image_tag "pictures/vobs.studio_httpss.mj.run7lD_qg4KZkk_Photo_dun_agriculteur_gr_3f20c55e-4652-48ef-9294-7cb82160678c_0.png", alt: "Agriculteur", class: "w-full h-full object-cover" %>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    
+    <!-- App Icon -->
+    <div>
+      <h3 class="font-piepie text-3xl mb-8 text-silloun-green">ICÔNE APPLICATION</h3>
+      <div class="flex items-center space-x-8">
+        <div class="rounded-3xl w-24 h-24 flex items-center justify-center shadow-lg border-4 border-white bg-silloun-yellow">
+          <%= silloun_chapeau(variant: :vert, size: 50) %>
+        </div>
+        <div>
+          <p class="font-piepie text-2xl text-silloun-green">SILLOUN</p>
+          <p class="text-silloun-green">Le click & collect direct producteur</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Conclusion -->
+<section class="py-20 bg-silloun-green">
+  <div class="max-w-4xl mx-auto px-4 text-center">
+    <h2 class="font-piepie text-5xl mb-8 text-silloun-yellow">CONCLUSION</h2>
+    <p class="font-marydale text-4xl mb-8 text-silloun-yellow">
+      Parce que l'agriculture, c'est pas loin.<br>
+      C'est juste à côté !
+    </p>
+    <p class="text-white text-lg mb-8">
+      Silloun n'est pas qu'une marketplace. C'est un mouvement de reconnexion entre deux mondes qui se sont éloignés.
+    </p>
+    <div class="mt-12">
+      <%= link_to "← Retour aux Mockups", mockups_index_path, class: "btn-silloun-primary inline-block" %>
+    </div>
+  </div>
+</section>

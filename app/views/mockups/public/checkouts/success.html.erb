@@ -1,0 +1,116 @@
+<% content_for(:title) { "Commande confirmée - Silloun" } %>
+
+<section class="py-12 bg-gray-50 min-h-screen">
+  <div class="max-w-2xl mx-auto px-4">
+    <!-- Success Icon -->
+    <div class="text-center mb-8">
+      <div class="w-20 h-20 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-6">
+        <svg class="w-10 h-10 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+        </svg>
+      </div>
+      <h1 class="font-piepie text-silloun-green text-3xl mb-2">COMMANDE CONFIRMÉE !</h1>
+      <p class="text-gray-600">Merci pour votre commande. Vous allez recevoir un email de confirmation.</p>
+    </div>
+
+    <!-- Order Details -->
+    <div class="bg-white rounded-2xl shadow-sm overflow-hidden mb-6">
+      <div class="bg-silloun-green px-6 py-4">
+        <div class="flex justify-between items-center text-white">
+          <div>
+            <p class="text-white/70 text-sm">Numéro de commande</p>
+            <p class="font-piepie text-xl"><%= @order[:reference] %></p>
+          </div>
+          <div class="text-right">
+            <p class="text-white/70 text-sm">Total payé</p>
+            <p class="font-bold text-xl text-silloun-yellow"><%= number_to_currency(@order[:total], unit: "€", format: "%n %u") %></p>
+          </div>
+        </div>
+      </div>
+
+      <div class="p-6">
+        <!-- Items -->
+        <h3 class="font-semibold text-silloun-green mb-4">Articles commandés</h3>
+        <div class="space-y-3 mb-6">
+          <% @order[:items].each do |item| %>
+            <div class="flex justify-between items-center text-sm">
+              <div>
+                <span class="font-medium"><%= item[:name] %></span>
+                <span class="text-gray-500">× <%= item[:quantity] %> <%= item[:unit] %></span>
+              </div>
+              <span><%= number_to_currency(item[:subtotal], unit: "€", format: "%n %u") %></span>
+            </div>
+          <% end %>
+        </div>
+
+        <!-- Pickup Info -->
+        <div class="bg-silloun-yellow/20 rounded-xl p-4">
+          <div class="flex items-start">
+            <div class="w-10 h-10 bg-silloun-green rounded-full flex items-center justify-center flex-shrink-0 mr-4">
+              <svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"></path>
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"></path>
+              </svg>
+            </div>
+            <div>
+              <p class="font-semibold text-silloun-green mb-1">Point de retrait</p>
+              <p class="font-medium"><%= @order[:pickup_point][:name] %></p>
+              <p class="text-sm text-gray-600"><%= @order[:pickup_point][:address] %></p>
+              <p class="text-sm text-silloun-green font-medium mt-2">
+                <svg class="w-4 h-4 inline mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                </svg>
+                <%= @order[:pickup_point][:hours] %>
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Next Steps -->
+    <div class="bg-white rounded-2xl shadow-sm p-6 mb-6">
+      <h3 class="font-piepie text-silloun-green text-lg mb-4">PROCHAINES ÉTAPES</h3>
+      <div class="space-y-4">
+        <div class="flex items-start">
+          <div class="w-8 h-8 bg-silloun-yellow rounded-full flex items-center justify-center flex-shrink-0 mr-4 text-silloun-green font-bold">1</div>
+          <div>
+            <p class="font-medium text-silloun-green">Email de confirmation</p>
+            <p class="text-sm text-gray-600">Vous allez recevoir un email avec les détails de votre commande.</p>
+          </div>
+        </div>
+        <div class="flex items-start">
+          <div class="w-8 h-8 bg-silloun-yellow rounded-full flex items-center justify-center flex-shrink-0 mr-4 text-silloun-green font-bold">2</div>
+          <div>
+            <p class="font-medium text-silloun-green">Préparation par le producteur</p>
+            <p class="text-sm text-gray-600">Le producteur prépare votre commande avec soin.</p>
+          </div>
+        </div>
+        <div class="flex items-start">
+          <div class="w-8 h-8 bg-silloun-yellow rounded-full flex items-center justify-center flex-shrink-0 mr-4 text-silloun-green font-bold">3</div>
+          <div>
+            <p class="font-medium text-silloun-green">Notification "Prêt à retirer"</p>
+            <p class="text-sm text-gray-600">Vous serez notifié(e) quand votre commande sera prête.</p>
+          </div>
+        </div>
+        <div class="flex items-start">
+          <div class="w-8 h-8 bg-silloun-green rounded-full flex items-center justify-center flex-shrink-0 mr-4 text-white font-bold">4</div>
+          <div>
+            <p class="font-medium text-silloun-green">Retrait au point de collecte</p>
+            <p class="text-sm text-gray-600">Rendez-vous au point de retrait pour récupérer vos produits frais !</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Actions -->
+    <div class="flex flex-col sm:flex-row gap-4">
+      <%= link_to mockups_public_home_index_path, class: "flex-1 btn-silloun-outline py-3 text-center" do %>
+        Continuer mes achats
+      <% end %>
+      <%= link_to "#", class: "flex-1 btn-silloun-primary py-3 text-center" do %>
+        Voir mes commandes
+      <% end %>
+    </div>
+  </div>
+</section>

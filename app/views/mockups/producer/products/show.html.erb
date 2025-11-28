@@ -1,0 +1,155 @@
+<% content_for(:title, "#{@product[:name]} - Espace Producteur") %>
+
+<!-- Header -->
+<div class="flex flex-col md:flex-row md:items-center md:justify-between mb-8">
+  <div class="flex items-center">
+    <%= link_to mockups_producer_products_path, class: "text-gray-500 hover:text-silloun-green transition mr-3" do %>
+      <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path>
+      </svg>
+    <% end %>
+    <div>
+      <h1 class="font-piepie text-3xl md:text-4xl text-silloun-green"><%= @product[:name].upcase %></h1>
+      <p class="text-gray-600">Détails du produit</p>
+    </div>
+  </div>
+  <div class="flex items-center space-x-3 mt-4 md:mt-0">
+    <%= link_to mockups_public_product_path(@product[:id]), class: "btn-silloun-outline inline-flex items-center", target: "_blank" do %>
+      <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path>
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"></path>
+      </svg>
+      Voir page publique
+    <% end %>
+    <%= link_to edit_mockups_producer_product_path(@product[:id]), class: "btn-silloun-primary inline-flex items-center" do %>
+      <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"></path>
+      </svg>
+      Modifier
+    <% end %>
+  </div>
+</div>
+
+<div class="grid lg:grid-cols-3 gap-8">
+  <!-- Main Content -->
+  <div class="lg:col-span-2 space-y-6">
+    <!-- Product Card -->
+    <div class="bg-white rounded-xl shadow-sm border border-gray-100 overflow-hidden">
+      <div class="grid md:grid-cols-2">
+        <!-- Image -->
+        <div class="aspect-square bg-gray-100">
+          <%= image_tag @product[:image], alt: @product[:name], class: "w-full h-full object-cover" %>
+        </div>
+        
+        <!-- Details -->
+        <div class="p-6">
+          <div class="flex items-center justify-between mb-4">
+            <span class="inline-flex items-center px-3 py-1 rounded-full text-sm font-medium bg-gray-100 text-gray-800">
+              <%= @product[:category] %>
+            </span>
+            <% if @product[:available] %>
+              <span class="inline-flex items-center px-3 py-1 rounded-full text-sm font-medium bg-green-100 text-green-800">
+                <span class="w-2 h-2 bg-green-500 rounded-full mr-2"></span>
+                Actif
+              </span>
+            <% else %>
+              <span class="inline-flex items-center px-3 py-1 rounded-full text-sm font-medium bg-red-100 text-red-800">
+                <span class="w-2 h-2 bg-red-500 rounded-full mr-2"></span>
+                Inactif
+              </span>
+            <% end %>
+          </div>
+          
+          <h2 class="font-piepie text-2xl text-silloun-green mb-2"><%= @product[:name].upcase %></h2>
+          <p class="text-gray-600 mb-6"><%= @product[:description] %></p>
+          
+          <div class="border-t border-gray-100 pt-4 space-y-3">
+            <div class="flex items-center justify-between">
+              <span class="text-gray-500">Prix</span>
+              <span class="text-2xl font-bold text-silloun-green">
+                <%= number_to_currency(@product[:price], unit: "€", format: "%n %u") %>
+                <span class="text-base font-normal text-gray-500">/ <%= @product[:unit] %></span>
+              </span>
+            </div>
+            <div class="flex items-center justify-between">
+              <span class="text-gray-500">Stock</span>
+              <% if @product[:stock] == 0 %>
+                <span class="text-red-600 font-bold"><%= @product[:stock] %> unités (rupture)</span>
+              <% elsif @product[:stock] <= 10 %>
+                <span class="text-orange-600 font-bold"><%= @product[:stock] %> unités (stock faible)</span>
+              <% else %>
+                <span class="text-gray-900 font-bold"><%= @product[:stock] %> unités</span>
+              <% end %>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Sales Stats -->
+    <div class="bg-white rounded-xl shadow-sm border border-gray-100 overflow-hidden">
+      <div class="p-6 border-b border-gray-100">
+        <h2 class="font-piepie text-xl text-silloun-green">STATISTIQUES DE VENTE</h2>
+      </div>
+      <div class="p-6">
+        <div class="grid grid-cols-3 gap-6">
+          <div class="text-center">
+            <p class="text-3xl font-bold text-silloun-green"><%= @product[:sales_count] %></p>
+            <p class="text-sm text-gray-500">Ventes totales</p>
+          </div>
+          <div class="text-center">
+            <p class="text-3xl font-bold text-silloun-green"><%= number_to_currency(@product[:sales_count] * @product[:price], unit: "€", format: "%n %u") %></p>
+            <p class="text-sm text-gray-500">CA généré</p>
+          </div>
+          <div class="text-center">
+            <p class="text-3xl font-bold text-silloun-green"><%= @product[:created_at].strftime("%d/%m/%Y") %></p>
+            <p class="text-sm text-gray-500">Date création</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Sidebar -->
+  <div class="space-y-6">
+    <!-- Quick Actions -->
+    <div class="bg-white rounded-xl shadow-sm border border-gray-100 p-6">
+      <h3 class="font-piepie text-lg text-silloun-green mb-4">ACTIONS RAPIDES</h3>
+      <div class="space-y-3">
+        <!-- Update Stock -->
+        <div>
+          <label class="block text-sm font-medium text-gray-700 mb-2">Modifier le stock</label>
+          <div class="flex">
+            <input type="number" value="<%= @product[:stock] %>" 
+                   class="flex-1 px-4 py-2 border-2 border-gray-200 rounded-l-lg focus:outline-none focus:border-silloun-green">
+            <button class="bg-silloun-green text-white px-4 py-2 rounded-r-lg font-semibold hover:bg-green-700 transition">
+              Mettre à jour
+            </button>
+          </div>
+        </div>
+        
+        <!-- Toggle Status -->
+        <div class="pt-3 border-t border-gray-100">
+          <% if @product[:available] %>
+            <button class="w-full py-2 px-4 border-2 border-red-500 text-red-500 rounded-lg font-semibold hover:bg-red-50 transition">
+              Désactiver le produit
+            </button>
+          <% else %>
+            <button class="w-full py-2 px-4 bg-green-500 text-white rounded-lg font-semibold hover:bg-green-600 transition">
+              Activer le produit
+            </button>
+          <% end %>
+        </div>
+      </div>
+    </div>
+
+    <!-- Danger Zone -->
+    <div class="bg-white rounded-xl shadow-sm border border-red-200 p-6">
+      <h3 class="font-semibold text-red-600 mb-4">Zone de danger</h3>
+      <p class="text-sm text-gray-600 mb-4">Supprimer définitivement ce produit. Cette action est irréversible.</p>
+      <button class="w-full py-2 px-4 bg-red-600 text-white rounded-lg font-semibold hover:bg-red-700 transition">
+        Supprimer le produit
+      </button>
+    </div>
+  </div>
+</div>

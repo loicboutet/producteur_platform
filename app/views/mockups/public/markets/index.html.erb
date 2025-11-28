@@ -1,0 +1,246 @@
+<% content_for(:title, "Les Marchés - Silloun") %>
+
+<!-- Hero Section -->
+<section class="bg-silloun-green py-12">
+  <div class="max-w-7xl mx-auto px-4">
+    <div class="text-center max-w-3xl mx-auto">
+      <p class="font-marydale text-silloun-yellow text-2xl mb-2">Retrouvez vos producteurs</p>
+      <h1 class="font-piepie text-silloun-yellow text-4xl md:text-5xl mb-4">SUR LES MARCHÉS</h1>
+      <p class="text-white/80 mb-8">
+        Découvrez les marchés près de chez vous où nos producteurs partenaires 
+        vendent leurs produits. Commandez en ligne et récupérez au marché !
+      </p>
+      
+      <!-- Location search -->
+      <div class="flex flex-col sm:flex-row bg-white rounded-full overflow-hidden shadow-lg max-w-xl mx-auto">
+        <div class="flex items-center px-4 py-3 sm:py-0">
+          <svg class="w-5 h-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"></path>
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"></path>
+          </svg>
+        </div>
+        <input type="text" placeholder="Votre ville ou code postal" class="flex-1 px-4 py-3 focus:outline-none text-center sm:text-left">
+        <button class="bg-silloun-yellow text-silloun-green font-semibold px-6 py-3 hover:bg-yellow-400 transition w-full sm:w-auto">
+          Trouver un marché
+        </button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Map Section -->
+<section class="py-8 bg-gray-100">
+  <div class="max-w-7xl mx-auto px-4">
+    <!-- Map Placeholder -->
+    <div class="bg-white rounded-2xl shadow-sm overflow-hidden">
+      <div class="h-80 bg-gray-200 flex items-center justify-center relative">
+        <!-- Fake map background -->
+        <div class="absolute inset-0 opacity-30" style="background: linear-gradient(45deg, #e0e0e0 25%, transparent 25%), linear-gradient(-45deg, #e0e0e0 25%, transparent 25%), linear-gradient(45deg, transparent 75%, #e0e0e0 75%), linear-gradient(-45deg, transparent 75%, #e0e0e0 75%); background-size: 20px 20px;"></div>
+        
+        <!-- Map markers (fake) -->
+        <% @markets.each_with_index do |market, index| %>
+          <div class="absolute" style="top: <%= 30 + (index * 15) %>%; left: <%= 25 + (index * 20) %>%;">
+            <div class="relative">
+              <div class="w-10 h-10 bg-silloun-green rounded-full flex items-center justify-center shadow-lg cursor-pointer hover:scale-110 transition">
+                <svg class="w-5 h-5 text-silloun-yellow" fill="currentColor" viewBox="0 0 20 20">
+                  <path fill-rule="evenodd" d="M5.05 4.05a7 7 0 119.9 9.9L10 18.9l-4.95-4.95a7 7 0 010-9.9zM10 11a2 2 0 100-4 2 2 0 000 4z" clip-rule="evenodd"></path>
+                </svg>
+              </div>
+              <div class="absolute -bottom-1 left-1/2 transform -translate-x-1/2 w-2 h-2 bg-silloun-green rotate-45"></div>
+            </div>
+          </div>
+        <% end %>
+        
+        <div class="text-center z-10 bg-white/90 px-6 py-4 rounded-lg">
+          <svg class="w-12 h-12 text-gray-400 mx-auto mb-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 20l-5.447-2.724A1 1 0 013 16.382V5.618a1 1 0 011.447-.894L9 7m0 13l6-3m-6 3V7m6 10l4.553 2.276A1 1 0 0021 18.382V7.618a1 1 0 00-.553-.894L15 4m0 13V4m0 0L9 7"></path>
+          </svg>
+          <p class="text-gray-600 font-medium">Carte interactive</p>
+          <p class="text-gray-400 text-sm">Cliquez sur un marqueur pour voir le marché</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Filters & Markets List -->
+<section class="py-8 bg-gray-50">
+  <div class="max-w-7xl mx-auto px-4">
+    <!-- Filters Bar -->
+    <div class="bg-white rounded-xl shadow-sm p-4 mb-6 flex flex-wrap gap-4 items-center justify-between">
+      <div class="flex flex-wrap gap-3">
+        <!-- Distance Filter -->
+        <select class="border rounded-lg px-4 py-2 text-sm focus:ring-silloun-green focus:border-silloun-green">
+          <option>Distance : Tous</option>
+          <option>< 5 km</option>
+          <option>< 10 km</option>
+          <option>< 25 km</option>
+        </select>
+        
+        <!-- Day Filter -->
+        <select class="border rounded-lg px-4 py-2 text-sm focus:ring-silloun-green focus:border-silloun-green">
+          <option>Jour : Tous</option>
+          <option>Lundi</option>
+          <option>Mardi</option>
+          <option>Mercredi</option>
+          <option>Jeudi</option>
+          <option>Vendredi</option>
+          <option>Samedi</option>
+          <option>Dimanche</option>
+        </select>
+        
+        <!-- Today filter -->
+        <label class="flex items-center space-x-2 cursor-pointer bg-silloun-yellow/20 px-4 py-2 rounded-lg">
+          <input type="checkbox" class="text-silloun-green focus:ring-silloun-green rounded">
+          <span class="text-sm font-medium text-silloun-green">Ouverts aujourd'hui</span>
+        </label>
+      </div>
+      
+      <p class="text-gray-500 text-sm">
+        <span class="font-semibold text-silloun-green"><%= @markets.size %></span> marchés trouvés
+      </p>
+    </div>
+    
+    <!-- Markets List -->
+    <div class="space-y-4">
+      <% @markets.each do |market| %>
+        <%= link_to mockups_public_market_path(market[:id]), class: "block bg-white rounded-xl shadow-sm hover:shadow-lg transition-all duration-300 overflow-hidden group" do %>
+          <div class="flex flex-col md:flex-row">
+            <!-- Market Image -->
+            <div class="md:w-1/4 aspect-video md:aspect-auto bg-gray-200 relative overflow-hidden">
+              <div class="absolute inset-0 flex items-center justify-center">
+                <span class="text-6xl">🏪</span>
+              </div>
+              <!-- Distance badge -->
+              <div class="absolute bottom-3 left-3 bg-white/95 backdrop-blur px-3 py-1 rounded-full shadow">
+                <span class="text-sm font-semibold text-silloun-green flex items-center">
+                  <svg class="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"></path>
+                  </svg>
+                  <%= market[:distance] %> km
+                </span>
+              </div>
+            </div>
+            
+            <!-- Market Info -->
+            <div class="flex-1 p-6">
+              <div class="flex flex-wrap items-start justify-between gap-4">
+                <div>
+                  <h3 class="font-piepie text-silloun-green text-xl group-hover:text-silloun-green/80 transition">
+                    <%= market[:name].upcase %>
+                  </h3>
+                  <p class="text-gray-600 mt-1"><%= market[:city] %></p>
+                </div>
+                
+                <!-- Days badges -->
+                <div class="flex flex-wrap gap-2">
+                  <% market[:days].each do |day| %>
+                    <span class="bg-silloun-yellow text-silloun-green px-3 py-1 rounded-full text-sm font-semibold">
+                      <%= day %>
+                    </span>
+                  <% end %>
+                </div>
+              </div>
+              
+              <div class="flex flex-wrap items-center gap-6 mt-4 text-sm text-gray-500">
+                <span class="flex items-center">
+                  <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                  </svg>
+                  <%= market[:hours] %>
+                </span>
+                <span class="flex items-center">
+                  <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0z"></path>
+                  </svg>
+                  <span class="font-semibold text-silloun-green"><%= market[:producers_count] %></span> producteurs
+                </span>
+              </div>
+              
+              <!-- CTA -->
+              <div class="mt-4 flex items-center text-silloun-green font-semibold group-hover:translate-x-2 transition-transform">
+                Voir les producteurs
+                <svg class="w-5 h-5 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"></path>
+                </svg>
+              </div>
+            </div>
+          </div>
+        <% end %>
+      <% end %>
+    </div>
+    
+    <!-- Load More -->
+    <div class="text-center mt-10">
+      <button class="bg-silloun-green text-white font-semibold px-8 py-3 rounded-full hover:bg-silloun-green/90 transition inline-flex items-center">
+        Voir plus de marchés
+        <svg class="w-5 h-5 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+        </svg>
+      </button>
+    </div>
+  </div>
+</section>
+
+<!-- How it works -->
+<section class="py-12 bg-white">
+  <div class="max-w-7xl mx-auto px-4">
+    <div class="text-center mb-10">
+      <p class="font-marydale text-silloun-green text-xl mb-2">Comment ça marche ?</p>
+      <h2 class="font-piepie text-silloun-green text-3xl">COMMANDEZ & RÉCUPÉREZ AU MARCHÉ</h2>
+    </div>
+    
+    <div class="grid md:grid-cols-3 gap-8">
+      <!-- Step 1 -->
+      <div class="text-center">
+        <div class="w-16 h-16 bg-silloun-yellow rounded-full flex items-center justify-center mx-auto mb-4">
+          <span class="font-piepie text-silloun-green text-2xl">1</span>
+        </div>
+        <h3 class="font-semibold text-silloun-green text-lg mb-2">Choisissez vos produits</h3>
+        <p class="text-gray-600 text-sm">
+          Parcourez les produits des producteurs présents sur le marché de votre choix
+        </p>
+      </div>
+      
+      <!-- Step 2 -->
+      <div class="text-center">
+        <div class="w-16 h-16 bg-silloun-yellow rounded-full flex items-center justify-center mx-auto mb-4">
+          <span class="font-piepie text-silloun-green text-2xl">2</span>
+        </div>
+        <h3 class="font-semibold text-silloun-green text-lg mb-2">Commandez en ligne</h3>
+        <p class="text-gray-600 text-sm">
+          Payez en toute sécurité et choisissez le jour de retrait au marché
+        </p>
+      </div>
+      
+      <!-- Step 3 -->
+      <div class="text-center">
+        <div class="w-16 h-16 bg-silloun-yellow rounded-full flex items-center justify-center mx-auto mb-4">
+          <span class="font-piepie text-silloun-green text-2xl">3</span>
+        </div>
+        <h3 class="font-semibold text-silloun-green text-lg mb-2">Récupérez au marché</h3>
+        <p class="text-gray-600 text-sm">
+          Rendez-vous sur le stand du producteur avec votre confirmation de commande
+        </p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA Section -->
+<section class="py-12 bg-silloun-green">
+  <div class="max-w-4xl mx-auto px-4 text-center">
+    <p class="font-marydale text-silloun-yellow text-2xl mb-2">Vous êtes producteur ?</p>
+    <h2 class="font-piepie text-silloun-yellow text-3xl mb-4">INSCRIVEZ-VOUS SUR UN MARCHÉ</h2>
+    <p class="text-white/80 mb-6">
+      Gérez votre présence sur les marchés et recevez des commandes en click & collect
+    </p>
+    <%= link_to mockups_public_become_producer_index_path, 
+        class: "inline-flex items-center bg-silloun-yellow text-silloun-green font-semibold px-8 py-3 rounded-full hover:bg-yellow-400 transition" do %>
+      Rejoindre Silloun
+      <svg class="w-5 h-5 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"></path>
+      </svg>
+    <% end %>
+  </div>
+</section>

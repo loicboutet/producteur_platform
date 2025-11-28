@@ -1,0 +1,93 @@
+<% content_for :title, "Modifier #{@producer[:farm_name]} - Admin Silloun" %>
+
+<div class="max-w-4xl mx-auto space-y-6">
+  <!-- Breadcrumb -->
+  <div class="flex items-center space-x-2 text-sm">
+    <%= link_to "Producteurs", mockups_admin_producers_path, class: "text-purple-600 hover:text-purple-700" %>
+    <svg class="w-4 h-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
+    </svg>
+    <%= link_to @producer[:farm_name], mockups_admin_producer_path(@producer[:id]), class: "text-purple-600 hover:text-purple-700" %>
+    <svg class="w-4 h-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
+    </svg>
+    <span class="text-gray-900 font-medium">Modifier</span>
+  </div>
+
+  <div class="bg-white rounded-xl shadow-sm border border-gray-100">
+    <div class="p-6 border-b border-gray-100">
+      <h1 class="font-piepie text-2xl text-gray-900">MODIFIER LE PRODUCTEUR</h1>
+      <p class="text-gray-600 mt-1">Modifier les informations de <%= @producer[:farm_name] %></p>
+    </div>
+
+    <form class="p-6 space-y-6">
+      <!-- Status -->
+      <div>
+        <label class="block text-sm font-medium text-gray-700 mb-2">Statut du compte</label>
+        <div class="flex flex-wrap gap-3">
+          <label class="flex items-center px-4 py-2 border rounded-lg cursor-pointer <%= @producer[:status] == 'active' ? 'border-green-500 bg-green-50' : 'border-gray-300' %>">
+            <input type="radio" name="status" value="active" <%= @producer[:status] == 'active' ? 'checked' : '' %> class="mr-2">
+            <span class="text-sm font-medium <%= @producer[:status] == 'active' ? 'text-green-700' : 'text-gray-700' %>">Actif</span>
+          </label>
+          <label class="flex items-center px-4 py-2 border rounded-lg cursor-pointer <%= @producer[:status] == 'pending' ? 'border-orange-500 bg-orange-50' : 'border-gray-300' %>">
+            <input type="radio" name="status" value="pending" <%= @producer[:status] == 'pending' ? 'checked' : '' %> class="mr-2">
+            <span class="text-sm font-medium <%= @producer[:status] == 'pending' ? 'text-orange-700' : 'text-gray-700' %>">En attente</span>
+          </label>
+          <label class="flex items-center px-4 py-2 border rounded-lg cursor-pointer <%= @producer[:status] == 'suspended' ? 'border-red-500 bg-red-50' : 'border-gray-300' %>">
+            <input type="radio" name="status" value="suspended" <%= @producer[:status] == 'suspended' ? 'checked' : '' %> class="mr-2">
+            <span class="text-sm font-medium <%= @producer[:status] == 'suspended' ? 'text-red-700' : 'text-gray-700' %>">Suspendu</span>
+          </label>
+        </div>
+      </div>
+
+      <div class="border-t border-gray-100 pt-6">
+        <h3 class="font-semibold text-gray-900 mb-4">Informations de la ferme</h3>
+        <div class="grid md:grid-cols-2 gap-4">
+          <div>
+            <label class="block text-sm font-medium text-gray-700 mb-1">Nom de la ferme</label>
+            <input type="text" value="<%= @producer[:farm_name] %>" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent">
+          </div>
+          <div>
+            <label class="block text-sm font-medium text-gray-700 mb-1">Nom du responsable</label>
+            <input type="text" value="<%= @producer[:name] %>" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent">
+          </div>
+        </div>
+      </div>
+
+      <div class="border-t border-gray-100 pt-6">
+        <h3 class="font-semibold text-gray-900 mb-4">Coordonnées</h3>
+        <div class="grid md:grid-cols-2 gap-4">
+          <div>
+            <label class="block text-sm font-medium text-gray-700 mb-1">Email</label>
+            <input type="email" value="<%= @producer[:email] %>" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent">
+          </div>
+          <div>
+            <label class="block text-sm font-medium text-gray-700 mb-1">Ville</label>
+            <input type="text" value="<%= @producer[:city] %>" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent">
+          </div>
+        </div>
+      </div>
+
+      <div class="border-t border-gray-100 pt-6">
+        <h3 class="font-semibold text-gray-900 mb-4">Commission personnalisée</h3>
+        <div class="max-w-xs">
+          <label class="block text-sm font-medium text-gray-700 mb-1">Taux de commission (%)</label>
+          <input type="number" value="8" step="0.1" min="0" max="100" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent">
+          <p class="text-xs text-gray-500 mt-1">Laissez vide pour appliquer le taux par défaut (8%)</p>
+        </div>
+      </div>
+
+      <div class="border-t border-gray-100 pt-6">
+        <h3 class="font-semibold text-gray-900 mb-4">Notes administratives</h3>
+        <textarea rows="4" placeholder="Notes internes sur ce producteur..." class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent"></textarea>
+      </div>
+
+      <div class="flex items-center justify-end space-x-3 pt-6 border-t border-gray-100">
+        <%= link_to "Annuler", mockups_admin_producer_path(@producer[:id]), class: "px-6 py-2 border border-gray-300 rounded-lg text-gray-700 hover:bg-gray-50 transition" %>
+        <button type="submit" class="px-6 py-2 bg-purple-600 text-white rounded-lg hover:bg-purple-700 transition font-medium">
+          Enregistrer les modifications
+        </button>
+      </div>
+    </form>
+  </div>
+</div>

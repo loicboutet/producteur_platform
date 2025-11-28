@@ -1,0 +1,118 @@
+<% content_for(:title) { "Paiement - Silloun" } %>
+
+<section class="py-8 bg-gray-50 min-h-screen">
+  <div class="max-w-2xl mx-auto px-4">
+    <!-- Progress Steps -->
+    <div class="flex items-center justify-center mb-8">
+      <div class="flex items-center">
+        <div class="flex items-center">
+          <div class="w-8 h-8 bg-silloun-green text-white rounded-full flex items-center justify-center font-bold text-sm">✓</div>
+          <span class="ml-2 text-silloun-green font-medium">Panier</span>
+        </div>
+        <div class="w-16 h-1 bg-silloun-green mx-4"></div>
+        <div class="flex items-center">
+          <div class="w-8 h-8 bg-silloun-green text-white rounded-full flex items-center justify-center font-bold text-sm">✓</div>
+          <span class="ml-2 text-silloun-green font-medium">Retrait</span>
+        </div>
+        <div class="w-16 h-1 bg-silloun-green mx-4"></div>
+        <div class="flex items-center">
+          <div class="w-8 h-8 bg-silloun-yellow text-silloun-green rounded-full flex items-center justify-center font-bold text-sm">3</div>
+          <span class="ml-2 text-silloun-green font-medium">Paiement</span>
+        </div>
+      </div>
+    </div>
+
+    <h1 class="font-piepie text-silloun-green text-3xl mb-8 text-center">PAIEMENT SÉCURISÉ</h1>
+
+    <div class="bg-white rounded-2xl shadow-sm overflow-hidden">
+      <!-- Order Summary -->
+      <div class="bg-silloun-green px-6 py-4">
+        <div class="flex justify-between items-center text-white">
+          <span>Total à payer</span>
+          <span class="font-piepie text-2xl text-silloun-yellow"><%= number_to_currency(@order_total, unit: "€", format: "%n %u") %></span>
+        </div>
+      </div>
+
+      <div class="p-6">
+        <!-- Card Form (Mockup) -->
+        <div class="space-y-4">
+          <div>
+            <label class="block text-sm font-medium text-gray-700 mb-1">Numéro de carte</label>
+            <div class="relative">
+              <input type="text" 
+                     class="w-full px-4 py-3 border border-gray-200 rounded-lg focus:outline-none focus:border-silloun-green pl-12" 
+                     placeholder="4242 4242 4242 4242"
+                     value="4242 4242 4242 4242">
+              <svg class="w-8 h-8 absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400" viewBox="0 0 24 24" fill="currentColor">
+                <path d="M4 4h16a2 2 0 012 2v12a2 2 0 01-2 2H4a2 2 0 01-2-2V6a2 2 0 012-2zm0 4v10h16V8H4zm2 2h4v2H6v-2zm6 0h6v2h-6v-2z"/>
+              </svg>
+            </div>
+          </div>
+
+          <div class="grid grid-cols-2 gap-4">
+            <div>
+              <label class="block text-sm font-medium text-gray-700 mb-1">Date d'expiration</label>
+              <input type="text" 
+                     class="w-full px-4 py-3 border border-gray-200 rounded-lg focus:outline-none focus:border-silloun-green" 
+                     placeholder="MM/AA"
+                     value="12/25">
+            </div>
+            <div>
+              <label class="block text-sm font-medium text-gray-700 mb-1">Code CVC</label>
+              <input type="text" 
+                     class="w-full px-4 py-3 border border-gray-200 rounded-lg focus:outline-none focus:border-silloun-green" 
+                     placeholder="123"
+                     value="123">
+            </div>
+          </div>
+
+          <div>
+            <label class="block text-sm font-medium text-gray-700 mb-1">Nom sur la carte</label>
+            <input type="text" 
+                   class="w-full px-4 py-3 border border-gray-200 rounded-lg focus:outline-none focus:border-silloun-green" 
+                   placeholder="JEAN DUPONT"
+                   value="JEAN DUPONT">
+          </div>
+        </div>
+
+        <!-- Security badges -->
+        <div class="flex items-center justify-center space-x-4 mt-6 py-4 border-t border-gray-100">
+          <div class="flex items-center text-gray-500 text-sm">
+            <svg class="w-5 h-5 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"></path>
+            </svg>
+            SSL Sécurisé
+          </div>
+          <div class="text-gray-400">|</div>
+          <div class="flex items-center text-gray-500 text-sm">
+            <span class="font-bold text-blue-600 mr-1">stripe</span>
+            Powered
+          </div>
+        </div>
+
+        <%= link_to success_mockups_public_checkout_path, class: "w-full btn-silloun-primary py-4 flex items-center justify-center mt-4" do %>
+          <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"></path>
+          </svg>
+          Payer <%= number_to_currency(@order_total, unit: "€", format: "%n %u") %>
+        <% end %>
+
+        <p class="text-center text-gray-400 text-xs mt-4">
+          En cliquant sur "Payer", vous acceptez nos 
+          <a href="#" class="underline">CGV</a> et 
+          <a href="#" class="underline">politique de confidentialité</a>.
+        </p>
+      </div>
+    </div>
+
+    <!-- Back link -->
+    <div class="text-center mt-6">
+      <%= link_to mockups_public_checkout_path, class: "text-silloun-green hover:underline inline-flex items-center" do %>
+        <svg class="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path>
+        </svg>
+        Retour au choix de retrait
+      <% end %>
+    </div>
+  </div>
+</section>

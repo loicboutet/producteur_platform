@@ -1,0 +1,112 @@
+<% content_for :title, "Modifier la configuration - Admin Silloun" %>
+
+<div class="max-w-4xl mx-auto space-y-6">
+  <!-- Breadcrumb -->
+  <div class="flex items-center space-x-2 text-sm">
+    <%= link_to "Configuration", mockups_admin_settings_path, class: "text-purple-600 hover:text-purple-700" %>
+    <svg class="w-4 h-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
+    </svg>
+    <span class="text-gray-900 font-medium">Modifier</span>
+  </div>
+
+  <form class="space-y-6">
+    <!-- Commission Settings -->
+    <div class="bg-white rounded-xl shadow-sm border border-gray-100">
+      <div class="p-6 border-b border-gray-100">
+        <h2 class="font-semibold text-gray-900">Commission & Paiements</h2>
+      </div>
+      <div class="p-6 space-y-6">
+        <div class="grid md:grid-cols-2 gap-6">
+          <div>
+            <label class="block text-sm font-medium text-gray-700 mb-1">Taux de commission (%)</label>
+            <input type="number" value="<%= @settings[:commission_rate] %>" step="0.1" min="0" max="100" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500">
+            <p class="text-xs text-gray-500 mt-1">Pourcentage prélevé sur chaque vente</p>
+          </div>
+          <div>
+            <label class="block text-sm font-medium text-gray-700 mb-1">Montant minimum de commande (€)</label>
+            <input type="number" value="<%= @settings[:min_order_amount] %>" step="0.5" min="0" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500">
+            <p class="text-xs text-gray-500 mt-1">Panier minimum pour pouvoir commander</p>
+          </div>
+        </div>
+        
+        <div>
+          <label class="block text-sm font-medium text-gray-700 mb-2">Mode Stripe</label>
+          <div class="flex gap-4">
+            <label class="flex items-center px-4 py-3 border rounded-lg cursor-pointer <%= @settings[:stripe_mode] == 'test' ? 'border-orange-500 bg-orange-50' : 'border-gray-300' %>">
+              <input type="radio" name="stripe_mode" value="test" <%= @settings[:stripe_mode] == 'test' ? 'checked' : '' %> class="mr-3 text-purple-600">
+              <div>
+                <p class="font-medium text-gray-900">Mode Test</p>
+                <p class="text-xs text-gray-500">Pour le développement</p>
+              </div>
+            </label>
+            <label class="flex items-center px-4 py-3 border rounded-lg cursor-pointer <%= @settings[:stripe_mode] == 'live' ? 'border-green-500 bg-green-50' : 'border-gray-300' %>">
+              <input type="radio" name="stripe_mode" value="live" <%= @settings[:stripe_mode] == 'live' ? 'checked' : '' %> class="mr-3 text-purple-600">
+              <div>
+                <p class="font-medium text-gray-900">Mode Production</p>
+                <p class="text-xs text-gray-500">Paiements réels</p>
+              </div>
+            </label>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Geographic Settings -->
+    <div class="bg-white rounded-xl shadow-sm border border-gray-100">
+      <div class="p-6 border-b border-gray-100">
+        <h2 class="font-semibold text-gray-900">Paramètres géographiques</h2>
+      </div>
+      <div class="p-6">
+        <div class="max-w-xs">
+          <label class="block text-sm font-medium text-gray-700 mb-1">Rayon maximum de recherche (km)</label>
+          <input type="number" value="<%= @settings[:max_pickup_radius] %>" min="1" max="200" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500">
+          <p class="text-xs text-gray-500 mt-1">Distance max pour afficher les producteurs</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Contact Settings -->
+    <div class="bg-white rounded-xl shadow-sm border border-gray-100">
+      <div class="p-6 border-b border-gray-100">
+        <h2 class="font-semibold text-gray-900">Contact & Support</h2>
+      </div>
+      <div class="p-6 space-y-4">
+        <div class="grid md:grid-cols-2 gap-6">
+          <div>
+            <label class="block text-sm font-medium text-gray-700 mb-1">Email de contact</label>
+            <input type="email" value="<%= @settings[:contact_email] %>" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500">
+          </div>
+          <div>
+            <label class="block text-sm font-medium text-gray-700 mb-1">Téléphone support</label>
+            <input type="tel" value="<%= @settings[:support_phone] %>" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500">
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Email Notifications Settings -->
+    <div class="bg-white rounded-xl shadow-sm border border-gray-100">
+      <div class="p-6 border-b border-gray-100">
+        <h2 class="font-semibold text-gray-900">Emails transactionnels</h2>
+      </div>
+      <div class="p-6 space-y-4">
+        <label class="flex items-center justify-between py-3 cursor-pointer">
+          <div>
+            <p class="font-medium text-gray-900">Notifications email</p>
+            <p class="text-sm text-gray-500">Envoyer des emails de confirmation et suivi</p>
+          </div>
+          <input type="checkbox" <%= @settings[:email_notifications] ? 'checked' : '' %> class="w-5 h-5 text-purple-600 border-gray-300 rounded focus:ring-purple-500">
+        </label>
+      </div>
+    </div>
+
+    <!-- Actions -->
+    <div class="flex items-center justify-end space-x-3">
+      <%= link_to "Annuler", mockups_admin_settings_path, class: "px-6 py-2 border border-gray-300 rounded-lg text-gray-700 hover:bg-gray-50 transition" %>
+      <button type="submit" class="px-6 py-2 bg-purple-600 text-white rounded-lg hover:bg-purple-700 transition font-medium">
+        Enregistrer les modifications
+      </button>
+    </div>
+  </form>
+</div>

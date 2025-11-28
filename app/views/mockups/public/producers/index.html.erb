@@ -1,0 +1,212 @@
+<% content_for(:title, "Nos Producteurs - Silloun") %>
+
+<!-- Hero Section -->
+<section class="bg-silloun-green py-12">
+  <div class="max-w-7xl mx-auto px-4">
+    <div class="grid md:grid-cols-2 gap-8 items-center">
+      <div>
+        <p class="font-marydale text-silloun-yellow text-2xl mb-2">Rencontrez</p>
+        <h1 class="font-piepie text-silloun-yellow text-4xl md:text-5xl mb-4">NOS PRODUCTEURS</h1>
+        <p class="text-white/80 mb-6">
+          Des femmes et des hommes passionnés qui cultivent, élèvent et transforment 
+          avec amour des produits d'exception, près de chez vous.
+        </p>
+        
+        <!-- Location search -->
+        <div class="flex bg-white rounded-full overflow-hidden shadow-lg max-w-md">
+          <div class="flex items-center px-4">
+            <svg class="w-5 h-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"></path>
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"></path>
+            </svg>
+          </div>
+          <input type="text" placeholder="Votre ville ou code postal" class="flex-1 py-3 focus:outline-none">
+          <button class="bg-silloun-yellow text-silloun-green font-semibold px-6 py-3 hover:bg-yellow-400 transition">
+            Localiser
+          </button>
+        </div>
+      </div>
+      
+      <div class="hidden md:flex justify-center">
+        <!-- Map placeholder -->
+        <div class="bg-white/10 rounded-2xl w-full h-64 flex items-center justify-center border-2 border-dashed border-white/30">
+          <div class="text-center">
+            <svg class="w-12 h-12 text-white/50 mx-auto mb-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 20l-5.447-2.724A1 1 0 013 16.382V5.618a1 1 0 011.447-.894L9 7m0 13l6-3m-6 3V7m6 10l4.553 2.276A1 1 0 0021 18.382V7.618a1 1 0 00-.553-.894L15 4m0 13V4m0 0L9 7"></path>
+            </svg>
+            <span class="text-white/50 text-sm">Carte interactive</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Stats bar -->
+<section class="bg-silloun-yellow py-4">
+  <div class="max-w-7xl mx-auto px-4">
+    <div class="flex flex-wrap justify-center md:justify-between items-center gap-4 text-silloun-green">
+      <div class="flex items-center space-x-2">
+        <span class="font-piepie text-2xl"><%= @producers.size %>+</span>
+        <span class="text-sm">Producteurs près de vous</span>
+      </div>
+      <div class="hidden md:block h-6 w-px bg-silloun-green/30"></div>
+      <div class="flex items-center space-x-2">
+        <span class="font-piepie text-2xl">100%</span>
+        <span class="text-sm">Producteurs vérifiés</span>
+      </div>
+      <div class="hidden md:block h-6 w-px bg-silloun-green/30"></div>
+      <div class="flex items-center space-x-2">
+        <span class="font-piepie text-2xl">< 50km</span>
+        <span class="text-sm">De chez vous</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Filters & Producers List -->
+<section class="py-8 bg-gray-50">
+  <div class="max-w-7xl mx-auto px-4">
+    <!-- Filters Bar -->
+    <div class="bg-white rounded-xl shadow-sm p-4 mb-6 flex flex-wrap gap-4 items-center justify-between">
+      <div class="flex flex-wrap gap-3">
+        <!-- Distance Filter -->
+        <select class="border rounded-lg px-4 py-2 text-sm focus:ring-silloun-green focus:border-silloun-green">
+          <option>Distance : Tous</option>
+          <option>< 5 km</option>
+          <option>< 10 km</option>
+          <option>< 25 km</option>
+          <option>< 50 km</option>
+        </select>
+        
+        <!-- Specialty Filter -->
+        <select class="border rounded-lg px-4 py-2 text-sm focus:ring-silloun-green focus:border-silloun-green">
+          <option>Spécialité : Toutes</option>
+          <option>Maraîcher</option>
+          <option>Arboriculteur</option>
+          <option>Éleveur</option>
+          <option>Fromager</option>
+          <option>Apiculteur</option>
+          <option>Viticulteur</option>
+        </select>
+        
+        <!-- Availability Filter -->
+        <label class="flex items-center space-x-2 cursor-pointer">
+          <input type="checkbox" class="text-silloun-green focus:ring-silloun-green rounded">
+          <span class="text-sm">Ouverts aujourd'hui</span>
+        </label>
+      </div>
+      
+      <!-- View Toggle -->
+      <div class="flex items-center space-x-3">
+        <span class="text-sm text-gray-500">Affichage :</span>
+        <div class="flex border rounded-lg overflow-hidden">
+          <button class="px-3 py-2 bg-silloun-green text-white" title="Grille">
+            <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
+              <path d="M5 3a2 2 0 00-2 2v2a2 2 0 002 2h2a2 2 0 002-2V5a2 2 0 00-2-2H5zM5 11a2 2 0 00-2 2v2a2 2 0 002 2h2a2 2 0 002-2v-2a2 2 0 00-2-2H5zM11 5a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2V5zM11 13a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2v-2z"></path>
+            </svg>
+          </button>
+          <button class="px-3 py-2 bg-gray-100 text-gray-600 hover:bg-gray-200" title="Carte">
+            <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
+              <path fill-rule="evenodd" d="M12 1.586l-4 4v12.828l4-4V1.586zM3.707 3.293A1 1 0 002 4v10a1 1 0 00.293.707L6 18.414V5.586L3.707 3.293zM17.707 5.293L14 1.586v12.828l2.293 2.293A1 1 0 0018 16V6a1 1 0 00-.293-.707z" clip-rule="evenodd"></path>
+            </svg>
+          </button>
+        </div>
+      </div>
+    </div>
+    
+    <!-- Producers Grid -->
+    <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+      <% @producers.each do |producer| %>
+        <%= link_to mockups_public_producer_path(producer[:id]), class: "group bg-white rounded-2xl shadow-sm hover:shadow-xl transition-all duration-300 overflow-hidden" do %>
+          <!-- Producer Image with Yellow Frame -->
+          <div class="relative">
+            <div class="aspect-[4/3] bg-gray-200 overflow-hidden">
+              <%= image_tag producer[:image], 
+                  class: "w-full h-full object-cover group-hover:scale-105 transition-transform duration-500",
+                  alt: producer[:name] %>
+            </div>
+            
+            <!-- Yellow Frame Overlay -->
+            <div class="absolute inset-4 border-4 border-silloun-yellow pointer-events-none">
+              <!-- Crown -->
+              <div class="absolute -top-6 left-1/2 transform -translate-x-1/2">
+                <%= silloun_chapeau(variant: :vert_jaune, size: 24, class_name: "w-10 h-auto") %>
+              </div>
+            </div>
+            
+            <!-- Distance Badge -->
+            <div class="absolute bottom-6 right-6 bg-white/95 backdrop-blur px-3 py-1 rounded-full shadow">
+              <span class="text-sm font-semibold text-silloun-green flex items-center">
+                <svg class="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"></path>
+                </svg>
+                <%= producer[:distance] %> km
+              </span>
+            </div>
+            
+            <!-- Verified Badge -->
+            <% if producer[:verified] %>
+              <div class="absolute top-6 left-6 bg-silloun-green text-white px-2 py-1 rounded-full text-xs font-semibold flex items-center">
+                <svg class="w-3 h-3 mr-1" fill="currentColor" viewBox="0 0 20 20">
+                  <path fill-rule="evenodd" d="M6.267 3.455a3.066 3.066 0 001.745-.723 3.066 3.066 0 013.976 0 3.066 3.066 0 001.745.723 3.066 3.066 0 012.812 2.812c.051.643.304 1.254.723 1.745a3.066 3.066 0 010 3.976 3.066 3.066 0 00-.723 1.745 3.066 3.066 0 01-2.812 2.812 3.066 3.066 0 00-1.745.723 3.066 3.066 0 01-3.976 0 3.066 3.066 0 00-1.745-.723 3.066 3.066 0 01-2.812-2.812 3.066 3.066 0 00-.723-1.745 3.066 3.066 0 010-3.976 3.066 3.066 0 00.723-1.745 3.066 3.066 0 012.812-2.812zm7.44 5.252a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"></path>
+                </svg>
+                Vérifié
+              </div>
+            <% end %>
+          </div>
+          
+          <!-- Producer Info -->
+          <div class="p-5">
+            <p class="text-sm text-silloun-yellow font-marydale text-lg"><%= producer[:specialty] %></p>
+            <h3 class="font-piepie text-silloun-green text-xl mt-1 group-hover:text-silloun-green/80">
+              <%= producer[:farm_name].upcase %>
+            </h3>
+            <p class="text-gray-600 text-sm mt-1"><%= producer[:name] %> • <%= producer[:city] %></p>
+            
+            <div class="flex items-center justify-between mt-4 pt-4 border-t border-gray-100">
+              <span class="text-sm text-gray-500">
+                <span class="font-semibold text-silloun-green"><%= producer[:products_count] %></span> produits
+              </span>
+              <span class="text-silloun-green font-semibold text-sm flex items-center group-hover:translate-x-1 transition-transform">
+                Découvrir
+                <svg class="w-4 h-4 ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
+                </svg>
+              </span>
+            </div>
+          </div>
+        <% end %>
+      <% end %>
+    </div>
+    
+    <!-- Load More -->
+    <div class="text-center mt-10">
+      <button class="bg-silloun-green text-white font-semibold px-8 py-3 rounded-full hover:bg-silloun-green/90 transition inline-flex items-center">
+        Voir plus de producteurs
+        <svg class="w-5 h-5 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+        </svg>
+      </button>
+    </div>
+  </div>
+</section>
+
+<!-- Become Producer CTA -->
+<section class="py-12 bg-silloun-yellow">
+  <div class="max-w-4xl mx-auto px-4 text-center">
+    <p class="font-marydale text-silloun-green text-2xl mb-2">Vous êtes producteur ?</p>
+    <h2 class="font-piepie text-silloun-green text-3xl md:text-4xl mb-4">REJOIGNEZ SILLOUN</h2>
+    <p class="text-silloun-green/80 mb-6 max-w-2xl mx-auto">
+      Vendez vos produits en direct aux consommateurs de votre région. 
+      Inscription gratuite, commission juste, paiements sécurisés.
+    </p>
+    <%= link_to mockups_public_become_producer_index_path, 
+        class: "inline-flex items-center bg-silloun-green text-white font-semibold px-8 py-3 rounded-full hover:bg-silloun-green/90 transition" do %>
+      Devenir producteur
+      <svg class="w-5 h-5 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"></path>
+      </svg>
+    <% end %>
+  </div>
+</section>

@@ -51,15 +51,72 @@ Rails.application.routes.draw do
     end
   end
 
-  # Mockups routes (keeping for reference)
+  # ===========================================
+  # MOCKUPS ROUTES
+  # ===========================================
+
   namespace :mockups do
+    # Index and Styleguide
     get :index
-    get :user_dashboard
-    get :user_profile
-    get :user_settings
-    get :admin_dashboard
-    get :admin_users
-    get :admin_analytics
+    get :styleguide
+
+    # ===========================================
+    # STRUCTURED MOCKUPS BY USER JOURNEY
+    # ===========================================
+
+    # Public (visitor) pages
+    namespace :public do
+      resources :home, only: [ :index ]
+      resources :products, only: [ :index, :show ]
+      resources :categories, only: [ :index, :show ], param: :slug
+      resources :producers, only: [ :index, :show ]
+      resources :markets, only: [ :index, :show ]
+      resource :cart, only: [ :show ]
+      resource :checkout, only: [ :show ] do
+        get :payment
+        get :success
+      end
+      resources :become_producer, only: [ :index, :create ] do
+        collection do
+          get :pending
+        end
+      end
+    end
+
+    # Account (logged-in customer) pages
+    namespace :account do
+      resource :dashboard, only: [ :show ]
+      resource :profile, only: [ :show, :edit, :update ]
+      resources :orders, only: [ :index, :show ]
+    end
+
+    # Producer pages
+    namespace :producer do
+      resource :dashboard, only: [ :show ]
+      resource :profile, only: [ :show, :edit, :update ]
+      resource :stats, only: [ :show ]
+      resources :products
+      resources :orders, only: [ :index, :show ]
+      resources :pickup_points, only: [ :index, :edit, :update ]
+      resources :market_presences, only: [ :index, :new, :create, :edit, :update, :destroy ]
+      resource :stripe, only: [ :show ], controller: "stripe" do
+        get :connect
+      end
+    end
+
+    # Admin pages
+    namespace :admin do
+      resource :dashboard, only: [ :show ]
+      resources :producers, only: [ :index, :show, :edit, :update ]
+      resources :users, only: [ :index, :show, :edit, :update ]
+      resources :categories, only: [ :index, :new, :create, :edit, :update, :destroy ]
+      resources :markets
+      resources :products, only: [ :index, :show ]
+      resources :orders, only: [ :index, :show ]
+      resources :transactions, only: [ :index, :show ]
+      resource :finances, only: [ :show ]
+      resource :settings, only: [ :show, :edit, :update ]
+    end
   end
 
   # Health check

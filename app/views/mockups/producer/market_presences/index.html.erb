@@ -1,0 +1,144 @@
+<% content_for(:title, "Mes marchés - Espace Producteur") %>
+
+<!-- Header -->
+<div class="flex flex-col md:flex-row md:items-center md:justify-between mb-8">
+  <div>
+    <h1 class="font-piepie text-3xl md:text-4xl text-silloun-green mb-2">MES MARCHÉS</h1>
+    <p class="text-gray-600">Gérez votre présence sur les marchés locaux</p>
+  </div>
+  <%= link_to new_mockups_producer_market_presence_path, class: "btn-silloun-primary mt-4 md:mt-0 inline-flex items-center" do %>
+    <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"></path>
+    </svg>
+    S'inscrire à un marché
+  <% end %>
+</div>
+
+<!-- Current Markets -->
+<% if @market_presences.any? %>
+  <div class="space-y-4 mb-8">
+    <% @market_presences.each do |presence| %>
+      <div class="bg-white rounded-xl shadow-sm border border-gray-100 overflow-hidden">
+        <div class="p-6 flex flex-col md:flex-row md:items-center md:justify-between">
+          <div class="flex items-start space-x-4 mb-4 md:mb-0">
+            <div class="w-12 h-12 bg-blue-500 rounded-lg flex items-center justify-center flex-shrink-0">
+              <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"></path>
+              </svg>
+            </div>
+            <div>
+              <div class="flex items-center space-x-2 mb-1">
+                <h3 class="font-bold text-gray-900"><%= presence[:market][:name] %></h3>
+                <% if presence[:active] %>
+                  <span class="inline-flex items-center px-2 py-0.5 rounded-full text-xs font-medium bg-green-100 text-green-800">Actif</span>
+                <% else %>
+                  <span class="inline-flex items-center px-2 py-0.5 rounded-full text-xs font-medium bg-gray-100 text-gray-600">Inactif</span>
+                <% end %>
+              </div>
+              <p class="text-gray-600 text-sm"><%= presence[:market][:address] %>, <%= presence[:market][:city] %></p>
+              <div class="flex items-center space-x-4 mt-2 text-sm text-gray-500">
+                <span class="flex items-center">
+                  <svg class="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"></path>
+                  </svg>
+                  <%= presence[:day] %>
+                </span>
+                <span class="flex items-center">
+                  <svg class="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                  </svg>
+                  <%= presence[:start_time] %> - <%= presence[:end_time] %>
+                </span>
+                <% if presence[:stand_number].present? %>
+                  <span class="flex items-center">
+                    <svg class="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"></path>
+                    </svg>
+                    Stand <%= presence[:stand_number] %>
+                  </span>
+                <% end %>
+              </div>
+            </div>
+          </div>
+          
+          <div class="flex items-center space-x-2">
+            <%= link_to edit_mockups_producer_market_presence_path(presence[:id]), class: "btn-silloun-outline text-sm" do %>
+              Modifier
+            <% end %>
+            <button class="p-2 text-red-500 hover:bg-red-50 rounded-lg transition" title="Se désinscrire">
+              <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"></path>
+              </svg>
+            </button>
+          </div>
+        </div>
+      </div>
+    <% end %>
+  </div>
+<% else %>
+  <div class="bg-white rounded-xl shadow-sm border border-gray-100 p-12 text-center mb-8">
+    <svg class="w-16 h-16 mx-auto text-gray-300 mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"></path>
+    </svg>
+    <h3 class="text-lg font-semibold text-gray-900 mb-2">Aucune présence sur un marché</h3>
+    <p class="text-gray-600 mb-4">Inscrivez-vous sur des marchés locaux pour toucher plus de clients.</p>
+    <%= link_to new_mockups_producer_market_presence_path, class: "btn-silloun-primary inline-flex items-center" do %>
+      <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"></path>
+      </svg>
+      S'inscrire à un marché
+    <% end %>
+  </div>
+<% end %>
+
+<!-- Available Markets -->
+<div class="bg-white rounded-xl shadow-sm border border-gray-100 overflow-hidden">
+  <div class="p-6 border-b border-gray-100">
+    <h2 class="font-piepie text-xl text-silloun-green">MARCHÉS DISPONIBLES</h2>
+    <p class="text-gray-600 text-sm mt-1">Découvrez les marchés près de chez vous où vous pouvez vous inscrire</p>
+  </div>
+  <div class="divide-y divide-gray-100">
+    <% @available_markets.each do |market| %>
+      <% already_registered = @market_presences.any? { |p| p[:market][:id] == market[:id] } %>
+      <div class="p-4 flex items-center justify-between hover:bg-gray-50 transition">
+        <div class="flex items-center space-x-4">
+          <div class="w-10 h-10 bg-gray-100 rounded-lg flex items-center justify-center">
+            <svg class="w-5 h-5 text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"></path>
+            </svg>
+          </div>
+          <div>
+            <p class="font-medium text-gray-900"><%= market[:name] %></p>
+            <p class="text-sm text-gray-500"><%= market[:city] %> • <%= market[:days].join(", ") %> • <%= market[:hours] %></p>
+          </div>
+        </div>
+        <div class="flex items-center space-x-3">
+          <span class="text-sm text-gray-500"><%= market[:distance] %> km</span>
+          <% if already_registered %>
+            <span class="text-sm text-green-600 font-medium">✓ Inscrit</span>
+          <% else %>
+            <%= link_to new_mockups_producer_market_presence_path(market_id: market[:id]), class: "btn-silloun-outline text-sm" do %>
+              S'inscrire
+            <% end %>
+          <% end %>
+        </div>
+      </div>
+    <% end %>
+  </div>
+</div>
+
+<!-- Help -->
+<div class="mt-6 bg-blue-50 rounded-xl p-6">
+  <div class="flex items-start">
+    <svg class="w-6 h-6 text-blue-600 mr-3 flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+    </svg>
+    <div>
+      <h4 class="font-semibold text-blue-800 mb-1">Comment ça marche ?</h4>
+      <p class="text-sm text-blue-700">
+        Inscrivez-vous sur les marchés où vous êtes présent. Vos clients pourront alors choisir de récupérer leur commande 
+        sur ce marché lors de votre présence. Vous pouvez indiquer votre numéro de stand pour faciliter le retrait.
+      </p>
+    </div>
+  </div>
+</div>

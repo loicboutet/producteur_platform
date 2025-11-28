@@ -1,0 +1,104 @@
+<% content_for :title, "Utilisateurs - Admin Silloun" %>
+
+<div class="space-y-6">
+  <!-- Header -->
+  <div class="flex flex-col md:flex-row md:items-center md:justify-between">
+    <div>
+      <h1 class="font-piepie text-3xl text-gray-900">UTILISATEURS</h1>
+      <p class="text-gray-600 mt-1">Gérez les utilisateurs de la plateforme</p>
+    </div>
+  </div>
+
+  <!-- Filters -->
+  <div class="bg-white rounded-xl shadow-sm border border-gray-100 p-4">
+    <div class="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
+      <div class="flex flex-wrap gap-2">
+        <button class="px-4 py-2 bg-purple-600 text-white rounded-lg text-sm font-medium">
+          Tous <span class="ml-1 opacity-75">(<%= @users.count %>)</span>
+        </button>
+        <button class="px-4 py-2 bg-gray-100 text-gray-700 rounded-lg text-sm font-medium hover:bg-gray-200">
+          Clients <span class="ml-1 opacity-75">(<%= @users.count { |u| u[:role] == 'customer' } %>)</span>
+        </button>
+        <button class="px-4 py-2 bg-gray-100 text-gray-700 rounded-lg text-sm font-medium hover:bg-gray-200">
+          Admins <span class="ml-1 opacity-75">(<%= @users.count { |u| u[:role] == 'admin' } %>)</span>
+        </button>
+      </div>
+      <div class="relative">
+        <input type="text" placeholder="Rechercher un utilisateur..." class="pl-10 pr-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent w-64">
+        <svg class="w-5 h-5 text-gray-400 absolute left-3 top-2.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
+        </svg>
+      </div>
+    </div>
+  </div>
+
+  <!-- Users Table -->
+  <div class="bg-white rounded-xl shadow-sm border border-gray-100 overflow-hidden">
+    <div class="overflow-x-auto">
+      <table class="w-full">
+        <thead class="bg-gray-50">
+          <tr>
+            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Utilisateur</th>
+            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Rôle</th>
+            <th class="px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase">Commandes</th>
+            <th class="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase">Total dépensé</th>
+            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Dernière connexion</th>
+            <th class="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase">Actions</th>
+          </tr>
+        </thead>
+        <tbody class="divide-y divide-gray-100">
+          <% @users.each do |user| %>
+            <tr class="hover:bg-gray-50">
+              <td class="px-6 py-4">
+                <div class="flex items-center">
+                  <div class="w-10 h-10 rounded-full flex items-center justify-center flex-shrink-0 <%= user[:role] == 'admin' ? 'bg-purple-600' : 'bg-gray-200' %>">
+                    <span class="font-semibold text-sm <%= user[:role] == 'admin' ? 'text-white' : 'text-gray-600' %>">
+                      <%= user[:name].split.map(&:first).join.upcase %>
+                    </span>
+                  </div>
+                  <div class="ml-4">
+                    <p class="font-medium text-gray-900"><%= user[:name] %></p>
+                    <p class="text-sm text-gray-500"><%= user[:email] %></p>
+                  </div>
+                </div>
+              </td>
+              <td class="px-6 py-4">
+                <% if user[:role] == 'admin' %>
+                  <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-purple-100 text-purple-700">
+                    Admin
+                  </span>
+                <% else %>
+                  <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-gray-100 text-gray-700">
+                    Client
+                  </span>
+                <% end %>
+              </td>
+              <td class="px-6 py-4 text-center text-sm text-gray-900"><%= user[:orders_count] %></td>
+              <td class="px-6 py-4 text-right text-sm font-medium text-gray-900">
+                <%= number_to_currency(user[:total_spent], unit: "€", format: "%n %u") %>
+              </td>
+              <td class="px-6 py-4 text-sm text-gray-500">
+                <%= time_ago_in_words(user[:last_sign_in]) %>
+              </td>
+              <td class="px-6 py-4 text-right">
+                <div class="flex items-center justify-end space-x-2">
+                  <%= link_to mockups_admin_user_path(user[:id]), class: "p-2 text-gray-600 hover:text-purple-600 hover:bg-purple-50 rounded-lg" do %>
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path>
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"></path>
+                    </svg>
+                  <% end %>
+                  <%= link_to edit_mockups_admin_user_path(user[:id]), class: "p-2 text-gray-600 hover:text-purple-600 hover:bg-purple-50 rounded-lg" do %>
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"></path>
+                    </svg>
+                  <% end %>
+                </div>
+              </td>
+            </tr>
+          <% end %>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>

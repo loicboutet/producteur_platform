@@ -1,0 +1,293 @@
+<% content_for(:title) { "Silloun - Producteurs locaux près de chez vous" } %>
+
+<!-- Hero Section -->
+<section class="bg-silloun-green py-12 md:py-20">
+  <div class="max-w-7xl mx-auto px-4">
+    <div class="grid md:grid-cols-2 gap-8 items-center">
+      <div>
+        <p class="font-marydale text-silloun-yellow text-2xl md:text-3xl mb-2">Découvrez</p>
+        <h1 class="font-piepie text-silloun-yellow text-4xl md:text-5xl lg:text-6xl mb-6">
+          LES AGRICULTEURS<br>PRÈS DE CHEZ VOUS
+        </h1>
+        <p class="text-white text-lg mb-8">
+          Commandez vos produits fermiers et collectez directement à la ferme ou sur les marchés de votre région.
+        </p>
+        
+        <!-- Geolocation Search -->
+        <div class="flex flex-col sm:flex-row gap-3">
+          <div class="flex flex-1">
+            <div class="relative flex-1">
+              <svg class="absolute left-4 top-1/2 transform -translate-y-1/2 w-5 h-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"></path>
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"></path>
+              </svg>
+              <input type="text" 
+                     placeholder="Saisissez votre ville ou code postal" 
+                     class="w-full pl-12 pr-4 py-4 rounded-l-full sm:rounded-l-full sm:rounded-r-none rounded-r-full border-0 focus:outline-none focus:ring-2 focus:ring-silloun-yellow text-gray-700">
+            </div>
+            <button class="hidden sm:flex bg-silloun-yellow text-silloun-green font-bold px-8 py-4 rounded-r-full hover:bg-yellow-400 transition items-center">
+              <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
+              </svg>
+              Rechercher
+            </button>
+          </div>
+          <button class="sm:hidden bg-silloun-yellow text-silloun-green font-bold px-6 py-4 rounded-full hover:bg-yellow-400 transition">
+            Rechercher
+          </button>
+          <button class="flex items-center justify-center bg-white/20 text-white px-6 py-4 rounded-full hover:bg-white/30 transition">
+            <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"></path>
+            </svg>
+            Me localiser
+          </button>
+        </div>
+
+        <!-- Stats -->
+        <div class="grid grid-cols-3 gap-4 mt-10">
+          <div class="text-center">
+            <p class="font-piepie text-silloun-yellow text-3xl md:text-4xl">127</p>
+            <p class="text-white/80 text-sm">Producteurs</p>
+          </div>
+          <div class="text-center">
+            <p class="font-piepie text-silloun-yellow text-3xl md:text-4xl">850+</p>
+            <p class="text-white/80 text-sm">Produits</p>
+          </div>
+          <div class="text-center">
+            <p class="font-piepie text-silloun-yellow text-3xl md:text-4xl">45</p>
+            <p class="text-white/80 text-sm">Marchés</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Hero Image -->
+      <div class="relative hidden md:block pt-10">
+        <div class="relative">
+          <!-- Yellow frame effect -->
+          <div class="absolute -inset-4 border-4 border-silloun-yellow rounded-2xl"></div>
+          <!-- Crown/chapeau - positioned to sit on top of the frame -->
+          <div class="absolute -top-4 left-1/2 transform -translate-x-1/2 -translate-y-full z-10">
+            <%= silloun_chapeau(variant: :vert_jaune, size: 60) %>
+          </div>
+          <%= image_tag "pictures/vobs.studio_httpss.mj.run7lD_qg4KZkk_Photo_dun_agriculteur_gr_3f20c55e-4652-48ef-9294-7cb82160678c_0.png", 
+                        alt: "Producteur local", 
+                        class: "w-full h-80 object-cover rounded-xl" %>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Categories Section -->
+<section class="py-12 bg-white">
+  <div class="max-w-7xl mx-auto px-4">
+    <div class="flex justify-between items-center mb-8">
+      <h2 class="font-piepie text-silloun-green text-2xl md:text-3xl">NOS CATÉGORIES</h2>
+      <%= link_to mockups_public_categories_path, class: "text-silloun-green hover:text-silloun-yellow transition font-medium flex items-center" do %>
+        Tout voir
+        <svg class="w-4 h-4 ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
+        </svg>
+      <% end %>
+    </div>
+    
+    <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-4">
+      <% @categories.each do |category| %>
+        <%= link_to mockups_public_category_path(category[:slug]), class: "group" do %>
+          <div class="bg-gray-50 rounded-2xl p-6 text-center hover:bg-silloun-yellow hover:shadow-lg transition-all duration-300">
+            <span class="text-4xl mb-3 block"><%= category[:icon] %></span>
+            <h3 class="font-semibold text-silloun-green text-sm group-hover:text-silloun-green"><%= category[:name] %></h3>
+            <p class="text-gray-500 text-xs mt-1"><%= category[:products_count] %> produits</p>
+          </div>
+        <% end %>
+      <% end %>
+    </div>
+  </div>
+</section>
+
+<!-- Featured Products Section -->
+<section class="py-12 bg-gray-50">
+  <div class="max-w-7xl mx-auto px-4">
+    <div class="flex justify-between items-center mb-8">
+      <div>
+        <p class="font-marydale text-silloun-green text-xl">Frais du jour</p>
+        <h2 class="font-piepie text-silloun-green text-2xl md:text-3xl">PRODUITS À LA UNE</h2>
+      </div>
+      <%= link_to mockups_public_products_path, class: "btn-silloun-outline" do %>
+        Voir tous les produits
+      <% end %>
+    </div>
+    
+    <div class="grid grid-cols-2 lg:grid-cols-4 gap-4 md:gap-6">
+      <% @featured_products.each do |product| %>
+        <%= link_to mockups_public_product_path(product[:id]), class: "group" do %>
+          <div class="bg-white rounded-2xl shadow-sm overflow-hidden hover:shadow-xl transition-all duration-300 border border-gray-100">
+            <div class="relative h-40 md:h-48 overflow-hidden">
+              <%= image_tag product[:image], alt: product[:name], class: "w-full h-full object-cover group-hover:scale-105 transition-transform duration-300" %>
+              <span class="absolute top-3 left-3 bg-silloun-green text-white text-xs px-2 py-1 rounded-full">
+                <%= product[:category] %>
+              </span>
+            </div>
+            <div class="p-4">
+              <p class="text-gray-500 text-xs mb-1"><%= product[:producer] %></p>
+              <h3 class="font-semibold text-silloun-green mb-2 group-hover:text-silloun-green"><%= product[:name] %></h3>
+              <div class="flex items-center justify-between">
+                <span class="font-bold text-lg text-silloun-green"><%= number_to_currency(product[:price], unit: "€", format: "%n %u") %></span>
+                <span class="text-gray-400 text-sm">/ <%= product[:unit] %></span>
+              </div>
+            </div>
+          </div>
+        <% end %>
+      <% end %>
+    </div>
+  </div>
+</section>
+
+<!-- Featured Producers Section -->
+<section class="py-12 bg-white">
+  <div class="max-w-7xl mx-auto px-4">
+    <div class="flex justify-between items-center mb-8">
+      <div>
+        <p class="font-marydale text-silloun-green text-xl">À proximité</p>
+        <h2 class="font-piepie text-silloun-green text-2xl md:text-3xl">NOS PRODUCTEURS</h2>
+      </div>
+      <%= link_to mockups_public_producers_path, class: "btn-silloun-outline" do %>
+        Voir la carte
+      <% end %>
+    </div>
+    
+    <div class="grid md:grid-cols-3 gap-6 pt-6">
+      <% @featured_producers.each do |producer| %>
+        <%= link_to mockups_public_producer_path(producer[:id]), class: "group" do %>
+          <div class="relative bg-white rounded-2xl shadow-sm hover:shadow-xl transition-all duration-300 border border-gray-100">
+            <!-- Chapeau - positioned outside the card overflow -->
+            <div class="absolute -top-5 left-1/2 transform -translate-x-1/2 z-10">
+              <%= silloun_chapeau(variant: :vert_jaune, size: 35) %>
+            </div>
+            <!-- Producer photo with frame -->
+            <div class="h-48 relative bg-silloun-green rounded-t-2xl overflow-hidden">
+              <div class="absolute inset-4 border-4 border-silloun-yellow rounded-lg overflow-hidden">
+                <%= image_tag producer[:image], alt: producer[:name], class: "w-full h-full object-cover group-hover:scale-105 transition-transform duration-300" %>
+              </div>
+            </div>
+            <div class="p-6 text-center">
+              <h3 class="font-piepie text-xl text-silloun-green"><%= producer[:name].upcase %></h3>
+              <p class="font-marydale text-gray-600 text-lg"><%= producer[:specialty] %></p>
+              <p class="text-silloun-green font-semibold mt-1"><%= producer[:farm_name] %></p>
+              <div class="flex items-center justify-center space-x-4 mt-4 text-sm text-gray-500">
+                <span class="flex items-center">
+                  <svg class="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"></path>
+                  </svg>
+                  <%= producer[:distance] %> km
+                </span>
+                <span>•</span>
+                <span><%= producer[:products_count] %> produits</span>
+              </div>
+            </div>
+          </div>
+        <% end %>
+      <% end %>
+    </div>
+  </div>
+</section>
+
+<!-- Markets Section -->
+<section class="py-12 bg-silloun-yellow">
+  <div class="max-w-7xl mx-auto px-4">
+    <div class="flex justify-between items-center mb-8">
+      <div>
+        <p class="font-marydale text-silloun-green text-xl">Cette semaine</p>
+        <h2 class="font-piepie text-silloun-green text-2xl md:text-3xl">MARCHÉS À PROXIMITÉ</h2>
+      </div>
+      <%= link_to mockups_public_markets_path, class: "bg-silloun-green text-white font-semibold px-6 py-3 rounded-full hover:bg-green-700 transition" do %>
+        Voir tous les marchés
+      <% end %>
+    </div>
+    
+    <div class="grid md:grid-cols-3 gap-6">
+      <% @nearby_markets.each do |market| %>
+        <%= link_to mockups_public_market_path(market[:id]), class: "group" do %>
+          <div class="bg-white rounded-2xl p-6 hover:shadow-xl transition-all duration-300">
+            <div class="flex items-start justify-between mb-4">
+              <div class="bg-silloun-green text-white p-3 rounded-xl">
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"></path>
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"></path>
+                </svg>
+              </div>
+              <span class="text-silloun-green text-sm font-medium"><%= market[:distance] %> km</span>
+            </div>
+            <h3 class="font-bold text-lg text-silloun-green mb-1"><%= market[:name] %></h3>
+            <p class="text-gray-600 text-sm mb-3"><%= market[:city] %></p>
+            <div class="flex flex-wrap gap-2 mb-4">
+              <% market[:days].each do |day| %>
+                <span class="bg-silloun-yellow/50 text-silloun-green text-xs px-3 py-1 rounded-full font-medium">
+                  <%= day %>
+                </span>
+              <% end %>
+              <span class="text-gray-500 text-xs py-1"><%= market[:hours] %></span>
+            </div>
+            <p class="text-silloun-green font-semibold text-sm">
+              👨‍🌾 <%= market[:producers_count] %> producteurs présents
+            </p>
+          </div>
+        <% end %>
+      <% end %>
+    </div>
+  </div>
+</section>
+
+<!-- How it works Section -->
+<section class="py-16 bg-white">
+  <div class="max-w-7xl mx-auto px-4">
+    <div class="text-center mb-12">
+      <p class="font-marydale text-silloun-green text-xl">Simple comme bonjour</p>
+      <h2 class="font-piepie text-silloun-green text-3xl md:text-4xl">COMMENT ÇA MARCHE ?</h2>
+    </div>
+    
+    <div class="grid md:grid-cols-3 gap-8">
+      <div class="text-center">
+        <div class="w-20 h-20 bg-silloun-yellow rounded-full flex items-center justify-center mx-auto mb-6">
+          <span class="font-piepie text-silloun-green text-3xl">1</span>
+        </div>
+        <h3 class="font-piepie text-xl text-silloun-green mb-3">CHOISISSEZ</h3>
+        <p class="text-gray-600">Parcourez les produits des agriculteurs près de chez vous et ajoutez-les à votre panier.</p>
+      </div>
+      
+      <div class="text-center">
+        <div class="w-20 h-20 bg-silloun-yellow rounded-full flex items-center justify-center mx-auto mb-6">
+          <span class="font-piepie text-silloun-green text-3xl">2</span>
+        </div>
+        <h3 class="font-piepie text-xl text-silloun-green mb-3">COMMANDEZ</h3>
+        <p class="text-gray-600">Validez votre panier et choisissez votre point de retrait : ferme ou marché.</p>
+      </div>
+      
+      <div class="text-center">
+        <div class="w-20 h-20 bg-silloun-yellow rounded-full flex items-center justify-center mx-auto mb-6">
+          <span class="font-piepie text-silloun-green text-3xl">3</span>
+        </div>
+        <h3 class="font-piepie text-xl text-silloun-green mb-3">RÉCUPÉREZ</h3>
+        <p class="text-gray-600">Rendez-vous au point de retrait choisi pour récupérer vos produits frais !</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA Become Producer -->
+<section class="py-16 bg-silloun-green">
+  <div class="max-w-4xl mx-auto px-4 text-center">
+    <p class="font-marydale text-silloun-yellow text-2xl mb-2">Vous êtes agriculteur ?</p>
+    <h2 class="font-piepie text-silloun-yellow text-3xl md:text-4xl mb-6">REJOIGNEZ SILLOUN</h2>
+    <p class="text-white text-lg mb-8 max-w-2xl mx-auto">
+      Vendez vos produits en direct, fixez vos prix et gardez le contrôle sur votre activité. 
+      Inscription gratuite, commission transparente.
+    </p>
+    <%= link_to mockups_public_become_producer_index_path, class: "btn-silloun-primary text-lg px-8 py-4" do %>
+      Devenir producteur
+      <svg class="w-5 h-5 ml-2 inline" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"></path>
+      </svg>
+    <% end %>
+  </div>
+</section>

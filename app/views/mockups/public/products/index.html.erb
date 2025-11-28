@@ -1,0 +1,148 @@
+<% content_for(:title) { "Tous les produits - Silloun" } %>
+
+<!-- Page Header -->
+<section class="bg-silloun-green py-8">
+  <div class="max-w-7xl mx-auto px-4">
+    <nav class="text-sm text-white/60 mb-4">
+      <%= link_to "Accueil", mockups_public_home_index_path, class: "hover:text-silloun-yellow" %> 
+      <span class="mx-2">/</span>
+      <span class="text-white">Produits</span>
+    </nav>
+    <h1 class="font-piepie text-silloun-yellow text-3xl md:text-4xl">TOUS NOS PRODUITS</h1>
+    <p class="text-white/80 mt-2"><%= @products.length %> produits disponibles près de chez vous</p>
+  </div>
+</section>
+
+<!-- Filters & Products -->
+<section class="py-8">
+  <div class="max-w-7xl mx-auto px-4">
+    <div class="flex flex-col lg:flex-row gap-8">
+      
+      <!-- Sidebar Filters -->
+      <aside class="lg:w-64 flex-shrink-0">
+        <div class="bg-white rounded-2xl shadow-sm p-6 sticky top-24">
+          <h3 class="font-piepie text-silloun-green text-lg mb-4">FILTRES</h3>
+          
+          <!-- Categories -->
+          <div class="mb-6">
+            <h4 class="font-semibold text-silloun-green mb-3">Catégories</h4>
+            <div class="space-y-2">
+              <% @categories.each do |cat| %>
+                <label class="flex items-center cursor-pointer">
+                  <input type="checkbox" class="w-4 h-4 rounded border-gray-300 text-silloun-green focus:ring-silloun-green">
+                  <span class="ml-2 text-sm text-gray-700"><%= cat[:name] %></span>
+                  <span class="ml-auto text-xs text-gray-400">(<%= cat[:products_count] %>)</span>
+                </label>
+              <% end %>
+            </div>
+          </div>
+          
+          <!-- Distance -->
+          <div class="mb-6">
+            <h4 class="font-semibold text-silloun-green mb-3">Distance max</h4>
+            <select class="w-full px-3 py-2 border border-gray-200 rounded-lg focus:outline-none focus:border-silloun-green text-sm">
+              <option>5 km</option>
+              <option selected>10 km</option>
+              <option>20 km</option>
+              <option>50 km</option>
+            </select>
+          </div>
+          
+          <!-- Price Range -->
+          <div class="mb-6">
+            <h4 class="font-semibold text-silloun-green mb-3">Prix</h4>
+            <div class="flex items-center gap-2">
+              <input type="number" placeholder="Min" class="w-full px-3 py-2 border border-gray-200 rounded-lg text-sm">
+              <span class="text-gray-400">-</span>
+              <input type="number" placeholder="Max" class="w-full px-3 py-2 border border-gray-200 rounded-lg text-sm">
+            </div>
+          </div>
+          
+          <!-- Availability -->
+          <div class="mb-6">
+            <label class="flex items-center cursor-pointer">
+              <input type="checkbox" checked class="w-4 h-4 rounded border-gray-300 text-silloun-green focus:ring-silloun-green">
+              <span class="ml-2 text-sm text-gray-700">En stock uniquement</span>
+            </label>
+          </div>
+          
+          <button class="w-full btn-silloun-primary text-sm">
+            Appliquer les filtres
+          </button>
+        </div>
+      </aside>
+      
+      <!-- Products Grid -->
+      <div class="flex-1">
+        <!-- Sort -->
+        <div class="flex justify-between items-center mb-6">
+          <p class="text-gray-600 text-sm">
+            <span class="font-semibold"><%= @products.length %></span> produits trouvés
+          </p>
+          <select class="px-4 py-2 border border-gray-200 rounded-lg focus:outline-none focus:border-silloun-green text-sm">
+            <option>Trier par : Distance</option>
+            <option>Prix croissant</option>
+            <option>Prix décroissant</option>
+            <option>Nouveautés</option>
+          </select>
+        </div>
+        
+        <!-- Products -->
+        <div class="grid grid-cols-2 md:grid-cols-3 gap-4 md:gap-6">
+          <% @products.each do |product| %>
+            <%= link_to mockups_public_product_path(product[:id]), class: "group" do %>
+              <div class="bg-white rounded-2xl shadow-sm overflow-hidden hover:shadow-xl transition-all duration-300 border border-gray-100">
+                <div class="relative h-40 md:h-48 bg-gray-100 overflow-hidden">
+                  <%= image_tag "pictures/vobs.studio_httpss.mj.run2yoSBUleddg_Photo_dun_ensemble_de_lg_2c75fed6-bb89-496e-85c3-71561aae6c38_1.png", 
+                                alt: product[:name], 
+                                class: "w-full h-full object-cover group-hover:scale-105 transition-transform duration-300" %>
+                  <span class="absolute top-3 left-3 bg-silloun-green text-white text-xs px-2 py-1 rounded-full">
+                    <%= product[:category] %>
+                  </span>
+                  <% unless product[:available] %>
+                    <div class="absolute inset-0 bg-black/50 flex items-center justify-center">
+                      <span class="bg-red-500 text-white px-3 py-1 rounded-full text-sm font-medium">Rupture</span>
+                    </div>
+                  <% end %>
+                </div>
+                <div class="p-4">
+                  <div class="flex items-center text-xs text-gray-500 mb-1">
+                    <span><%= product[:producer] %></span>
+                    <span class="mx-2">•</span>
+                    <span><%= product[:distance] %> km</span>
+                  </div>
+                  <h3 class="font-semibold text-silloun-green mb-2 group-hover:text-silloun-green"><%= product[:name] %></h3>
+                  <div class="flex items-center justify-between">
+                    <span class="font-bold text-lg text-silloun-green"><%= number_to_currency(product[:price], unit: "€", format: "%n %u") %></span>
+                    <span class="text-gray-400 text-sm">/ <%= product[:unit] %></span>
+                  </div>
+                </div>
+              </div>
+            <% end %>
+          <% end %>
+        </div>
+        
+        <!-- Pagination -->
+        <div class="mt-8 flex justify-center">
+          <nav class="flex items-center space-x-2">
+            <span class="px-3 py-2 text-gray-400">
+              <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path>
+              </svg>
+            </span>
+            <span class="px-4 py-2 bg-silloun-green text-white rounded-lg font-medium">1</span>
+            <a href="#" class="px-4 py-2 text-gray-600 hover:bg-gray-100 rounded-lg">2</a>
+            <a href="#" class="px-4 py-2 text-gray-600 hover:bg-gray-100 rounded-lg">3</a>
+            <span class="px-2">...</span>
+            <a href="#" class="px-4 py-2 text-gray-600 hover:bg-gray-100 rounded-lg">12</a>
+            <a href="#" class="px-3 py-2 text-silloun-green hover:bg-gray-100 rounded-lg">
+              <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
+              </svg>
+            </a>
+          </nav>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

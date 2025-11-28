@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="fr">
+  <head>
+    <title><%= content_for(:title) || "Silloun - Marketplace Producteurs Locaux" %></title>
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="mobile-web-app-capable" content="yes">
+    <%= csrf_meta_tags %>
+    <%= csp_meta_tag %>
+
+    <%= yield :head %>
+
+    <link rel="icon" href="/icon.png" type="image/png">
+    <link rel="icon" href="/icon.svg" type="image/svg+xml">
+    <link rel="apple-touch-icon" href="/icon.png">
+
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;900&display=swap" rel="stylesheet">
+
+    <%= stylesheet_link_tag "tailwind", "inter-font", "data-turbo-track": "reload" %>
+    <%= stylesheet_link_tag :app, "data-turbo-track": "reload" %>
+    <%= javascript_importmap_tags %>
+
+    <style>
+      .font-piepie {
+        font-family: 'Montserrat', sans-serif;
+        font-weight: 900;
+        letter-spacing: -0.02em;
+        text-transform: uppercase;
+      }
+      
+      .font-marydale {
+        font-family: 'Brush Script MT', 'Segoe Script', cursive;
+        font-style: italic;
+      }
+      
+      html {
+        scroll-behavior: smooth;
+      }
+    </style>
+  </head>
+
+  <body class="bg-white min-h-screen flex flex-col">
+    <!-- Mockup indicator banner -->
+    <div class="bg-gray-800 text-white text-center py-1 text-xs">
+      🎨 Mode Mockup - <%= link_to "Retour à l'index", mockups_index_path, class: "underline hover:text-silloun-yellow" %>
+    </div>
+
+    <!-- Info Banner -->
+    <div class="bg-silloun-yellow text-silloun-green text-center py-2 text-sm font-semibold">
+      🚜 Achetez directement chez vos producteurs locaux en click & collect
+    </div>
+
+    <!-- Header / Navigation -->
+    <header class="bg-silloun-green sticky top-0 z-50 shadow-md">
+      <div class="max-w-7xl mx-auto px-4">
+        <div class="flex items-center justify-between h-16">
+          <!-- Logo -->
+          <%= link_to mockups_public_home_index_path, class: "flex items-center" do %>
+            <%= silloun_logo(variant: :jaune, size: 72) %>
+          <% end %>
+
+          <!-- Search Bar (Desktop) -->
+          <div class="hidden md:flex flex-1 max-w-xl mx-8">
+            <div class="flex w-full">
+              <input type="text" 
+                     placeholder="Rechercher un produit, un producteur..." 
+                     class="flex-1 px-4 py-2 rounded-l-full border-0 focus:outline-none focus:ring-2 focus:ring-silloun-yellow">
+              <button class="bg-silloun-yellow text-silloun-green font-semibold px-6 py-2 rounded-r-full hover:bg-yellow-400 transition">
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
+                </svg>
+              </button>
+            </div>
+          </div>
+
+          <!-- Navigation Links -->
+          <nav class="hidden lg:flex items-center space-x-6">
+            <%= link_to "Producteurs", mockups_public_producers_path, class: "text-white hover:text-silloun-yellow transition text-sm font-medium" %>
+            <%= link_to "Marchés", mockups_public_markets_path, class: "text-white hover:text-silloun-yellow transition text-sm font-medium" %>
+            <%= link_to "Catégories", mockups_public_categories_path, class: "text-white hover:text-silloun-yellow transition text-sm font-medium" %>
+          </nav>
+
+          <!-- Right side actions -->
+          <div class="flex items-center space-x-4">
+            <!-- Become Producer Link -->
+            <% if !content_for?(:hide_become_producer) %>
+              <%= link_to mockups_public_become_producer_index_path, class: "hidden md:block text-silloun-yellow hover:text-white transition text-sm" do %>
+                <span class="font-marydale text-base">Je suis producteur</span>
+              <% end %>
+            <% end %>
+
+            <!-- Account -->
+            <%= link_to "#", class: "text-white hover:text-silloun-yellow transition" do %>
+              <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"></path>
+              </svg>
+            <% end %>
+
+            <!-- Cart -->
+            <%= link_to mockups_public_cart_path, class: "relative bg-silloun-yellow text-silloun-green font-semibold px-4 py-2 rounded-full hover:bg-yellow-400 transition flex items-center" do %>
+              <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z"></path>
+              </svg>
+              <span class="text-sm">34,40 €</span>
+              <span class="absolute -top-1 -right-1 bg-silloun-green text-white text-xs w-5 h-5 rounded-full flex items-center justify-center">3</span>
+            <% end %>
+
+            <!-- Mobile menu button -->
+            <button class="lg:hidden text-white hover:text-silloun-yellow">
+              <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
+              </svg>
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Mobile Search (shown on small screens) -->
+      <div class="md:hidden px-4 pb-3">
+        <div class="flex">
+          <input type="text" 
+                 placeholder="Rechercher..." 
+                 class="flex-1 px-4 py-2 rounded-l-full border-0 focus:outline-none text-sm">
+          <button class="bg-silloun-yellow text-silloun-green px-4 py-2 rounded-r-full">
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
+            </svg>
+          </button>
+        </div>
+      </div>
+    </header>
+
+    <!-- Flash Messages -->
+    <% if content_for?(:flash) %>
+      <div class="max-w-7xl mx-auto px-4 py-4">
+        <%= yield :flash %>
+      </div>
+    <% end %>
+
+    <!-- Main Content -->
+    <main class="flex-1">
+      <%= yield %>
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-silloun-green text-white mt-auto">
+      <div class="max-w-7xl mx-auto px-4 py-12">
+        <div class="grid md:grid-cols-4 gap-8">
+          <!-- Brand -->
+          <div class="md:col-span-1">
+            <%= silloun_logo(variant: :jaune, size: 48) %>
+            <p class="mt-4 text-sm text-white/80">
+              La marketplace qui reconnecte producteurs et consommateurs. Click & collect direct producteur.
+            </p>
+          </div>
+
+          <!-- Navigation -->
+          <div>
+            <h4 class="font-piepie text-silloun-yellow mb-4">DÉCOUVRIR</h4>
+            <ul class="space-y-2 text-sm">
+              <li><%= link_to "Tous les produits", mockups_public_products_path, class: "hover:text-silloun-yellow transition" %></li>
+              <li><%= link_to "Les producteurs", mockups_public_producers_path, class: "hover:text-silloun-yellow transition" %></li>
+              <li><%= link_to "Les marchés", mockups_public_markets_path, class: "hover:text-silloun-yellow transition" %></li>
+              <li><%= link_to "Catégories", mockups_public_categories_path, class: "hover:text-silloun-yellow transition" %></li>
+            </ul>
+          </div>
+
+          <!-- Producer -->
+          <div>
+            <h4 class="font-piepie text-silloun-yellow mb-4">PRODUCTEUR</h4>
+            <ul class="space-y-2 text-sm">
+              <li><%= link_to "Devenir producteur", mockups_public_become_producer_index_path, class: "hover:text-silloun-yellow transition" %></li>
+              <li><%= link_to "Espace producteur", "#", class: "hover:text-silloun-yellow transition" %></li>
+              <li><%= link_to "Aide & FAQ", "#", class: "hover:text-silloun-yellow transition" %></li>
+            </ul>
+          </div>
+
+          <!-- Legal -->
+          <div>
+            <h4 class="font-piepie text-silloun-yellow mb-4">INFORMATIONS</h4>
+            <ul class="space-y-2 text-sm">
+              <li><a href="#" class="hover:text-silloun-yellow transition">À propos</a></li>
+              <li><a href="#" class="hover:text-silloun-yellow transition">Contact</a></li>
+              <li><a href="#" class="hover:text-silloun-yellow transition">CGU / CGV</a></li>
+              <li><a href="#" class="hover:text-silloun-yellow transition">Mentions légales</a></li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="border-t border-white/20 mt-8 pt-8 flex flex-col md:flex-row justify-between items-center">
+          <p class="text-sm text-white/60">
+            © <%= Date.today.year %> Silloun. Tous droits réservés.
+          </p>
+          <p class="font-marydale text-silloun-yellow text-lg mt-2 md:mt-0">
+            Franchement local
+          </p>
+        </div>
+      </div>
+    </footer>
+  </body>
+</html>

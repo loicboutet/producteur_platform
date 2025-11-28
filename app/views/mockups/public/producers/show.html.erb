@@ -1,0 +1,272 @@
+<% content_for(:title, "#{@producer[:farm_name]} - Silloun") %>
+
+<!-- Breadcrumb -->
+<div class="bg-gray-50 py-3">
+  <div class="max-w-7xl mx-auto px-4">
+    <nav class="text-sm">
+      <ol class="flex items-center space-x-2 text-gray-500">
+        <li><%= link_to "Accueil", mockups_public_home_index_path, class: "hover:text-silloun-green" %></li>
+        <li><span>/</span></li>
+        <li><%= link_to "Producteurs", mockups_public_producers_path, class: "hover:text-silloun-green" %></li>
+        <li><span>/</span></li>
+        <li class="text-silloun-green font-medium"><%= @producer[:farm_name] %></li>
+      </ol>
+    </nav>
+  </div>
+</div>
+
+<!-- Producer Header -->
+<section class="bg-silloun-green py-8">
+  <div class="max-w-7xl mx-auto px-4">
+    <div class="flex flex-col md:flex-row gap-8">
+      <!-- Producer Photo with Yellow Frame -->
+      <div class="md:w-1/3">
+        <div class="relative inline-block">
+          <div class="w-full max-w-xs aspect-[3/4] bg-gray-300 rounded-lg overflow-hidden mx-auto">
+            <%= image_tag "pictures/vobs.studio_Portrait_dune_agricultrice._Elle_porte_une_salopett_33ef692c-abe1-483a-89e1-28b000f76624.png",
+                class: "w-full h-full object-cover",
+                alt: @producer[:name] %>
+          </div>
+          <!-- Yellow Frame -->
+          <div class="absolute inset-4 border-4 border-silloun-yellow pointer-events-none rounded">
+            <div class="absolute -top-6 left-1/2 transform -translate-x-1/2">
+              <%= silloun_chapeau(variant: :vert_jaune, size: 30, class_name: "w-12 h-auto") %>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <!-- Producer Info -->
+      <div class="md:w-2/3">
+        <div class="flex items-center gap-3 mb-2">
+          <% if @producer[:verified] %>
+            <span class="bg-silloun-yellow text-silloun-green px-3 py-1 rounded-full text-xs font-semibold flex items-center">
+              <svg class="w-3 h-3 mr-1" fill="currentColor" viewBox="0 0 20 20">
+                <path fill-rule="evenodd" d="M6.267 3.455a3.066 3.066 0 001.745-.723 3.066 3.066 0 013.976 0 3.066 3.066 0 001.745.723 3.066 3.066 0 012.812 2.812c.051.643.304 1.254.723 1.745a3.066 3.066 0 010 3.976 3.066 3.066 0 00-.723 1.745 3.066 3.066 0 01-2.812 2.812 3.066 3.066 0 00-1.745.723 3.066 3.066 0 01-3.976 0 3.066 3.066 0 00-1.745-.723 3.066 3.066 0 01-2.812-2.812 3.066 3.066 0 00-.723-1.745 3.066 3.066 0 010-3.976 3.066 3.066 0 00.723-1.745 3.066 3.066 0 012.812-2.812zm7.44 5.252a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"></path>
+              </svg>
+              Producteur vérifié
+            </span>
+          <% end %>
+          <span class="text-white/60 text-sm flex items-center">
+            <svg class="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"></path>
+            </svg>
+            À <%= @producer[:distance] %> km de vous
+          </span>
+        </div>
+        
+        <p class="font-marydale text-silloun-yellow text-2xl">Maraîchère Bio</p>
+        <h1 class="font-piepie text-silloun-yellow text-4xl md:text-5xl mb-2"><%= @producer[:farm_name].upcase %></h1>
+        <p class="text-white text-lg mb-6"><%= @producer[:name] %> • <%= @producer[:city] %></p>
+        
+        <p class="text-white/90 mb-6 max-w-2xl">
+          <%= @producer[:description] %>
+        </p>
+        
+        <!-- Stats -->
+        <div class="flex flex-wrap gap-6 mb-6">
+          <div class="text-center">
+            <p class="font-piepie text-silloun-yellow text-3xl"><%= @producer[:products_count] %></p>
+            <p class="text-white/60 text-sm">Produits</p>
+          </div>
+          <div class="text-center">
+            <p class="font-piepie text-silloun-yellow text-3xl">Bio</p>
+            <p class="text-white/60 text-sm">Certifié</p>
+          </div>
+        </div>
+        <div class="flex flex-wrap gap-3">
+          <a href="#products" class="bg-silloun-yellow text-silloun-green font-semibold px-6 py-3 rounded-full hover:bg-yellow-400 transition inline-flex items-center">
+            Voir les produits
+            <svg class="w-5 h-5 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+            </svg>
+          </a>
+          <a href="#pickup" class="border-2 border-white text-white font-semibold px-6 py-3 rounded-full hover:bg-white hover:text-silloun-green transition">
+            Points de retrait
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Pickup Points -->
+<section id="pickup" class="py-10 bg-gray-50">
+  <div class="max-w-7xl mx-auto px-4">
+    <h2 class="font-piepie text-silloun-green text-2xl mb-6">POINTS DE RETRAIT</h2>
+    
+    <div class="grid md:grid-cols-2 gap-6">
+      <% @pickup_points.each do |point| %>
+        <div class="bg-white rounded-xl shadow-sm p-6 border-l-4 <%= point[:type] == 'farm' ? 'border-silloun-green' : 'border-silloun-yellow' %>">
+          <div class="flex items-start gap-4">
+            <div class="w-12 h-12 rounded-full flex items-center justify-center flex-shrink-0 <%= point[:type] == 'farm' ? 'bg-silloun-green/10' : 'bg-silloun-yellow/20' %>">
+              <% if point[:type] == 'farm' %>
+                <svg class="w-6 h-6 text-silloun-green" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"></path>
+                </svg>
+              <% else %>
+                <svg class="w-6 h-6 text-silloun-yellow" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"></path>
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"></path>
+                </svg>
+              <% end %>
+            </div>
+            
+            <div class="flex-1">
+              <h3 class="font-semibold text-silloun-green text-lg"><%= point[:name] %></h3>
+              <p class="text-gray-600 text-sm mt-1"><%= point[:address] %></p>
+              
+              <div class="mt-3 space-y-1">
+                <% point[:hours].each do |schedule| %>
+                  <p class="text-sm flex items-center">
+                    <svg class="w-4 h-4 mr-2 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                    </svg>
+                    <span class="font-medium"><%= schedule[:day] %></span>
+                    <span class="mx-2 text-gray-300">•</span>
+                    <span class="text-gray-600"><%= schedule[:time] %></span>
+                  </p>
+                <% end %>
+              </div>
+            </div>
+          </div>
+        </div>
+      <% end %>
+    </div>
+  </div>
+</section>
+
+<!-- Products -->
+<section id="products" class="py-10 bg-white">
+  <div class="max-w-7xl mx-auto px-4">
+    <div class="flex items-center justify-between mb-6">
+      <h2 class="font-piepie text-silloun-green text-2xl">LES PRODUITS DE <%= @producer[:farm_name].upcase %></h2>
+      <span class="text-gray-500"><%= @products.size %> produits</span>
+    </div>
+    
+    <!-- Products Grid -->
+    <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 md:gap-6">
+      <% @products.each do |product| %>
+        <%= link_to mockups_public_product_path(product[:id]), class: "group bg-white rounded-xl border border-gray-200 hover:shadow-lg hover:border-silloun-green/30 transition-all duration-300 overflow-hidden" do %>
+          <!-- Product Image -->
+          <div class="relative aspect-square bg-gray-100">
+            <div class="absolute inset-0 flex items-center justify-center">
+              <% case product[:category] 
+                 when "Légumes" %>
+                <span class="text-6xl">🥬</span>
+              <% when "Fruits" %>
+                <span class="text-6xl">🍎</span>
+              <% when "Produits laitiers" %>
+                <span class="text-6xl">🧀</span>
+              <% else %>
+                <span class="text-6xl">🧺</span>
+              <% end %>
+            </div>
+            
+            <!-- Stock Badge -->
+            <% unless product[:available] %>
+              <div class="absolute inset-0 bg-black/50 flex items-center justify-center">
+                <span class="bg-red-500 text-white px-3 py-1 rounded-full text-sm font-semibold">Rupture</span>
+              </div>
+            <% end %>
+          </div>
+          
+          <!-- Product Info -->
+          <div class="p-4">
+            <span class="text-xs text-gray-500"><%= product[:category] %></span>
+            <h3 class="font-semibold text-gray-800 group-hover:text-silloun-green transition mt-1">
+              <%= product[:name] %>
+            </h3>
+            
+            <!-- Price & Add to cart -->
+            <div class="flex items-center justify-between mt-3">
+              <p class="font-piepie text-silloun-green">
+                <%= number_to_currency(product[:price], unit: "€", format: "%n %u") %>
+                <span class="text-xs font-normal text-gray-500">/ <%= product[:unit] %></span>
+              </p>
+              
+              <% if product[:available] %>
+                <span class="w-8 h-8 bg-silloun-yellow rounded-full flex items-center justify-center group-hover:scale-110 transition-transform">
+                  <svg class="w-4 h-4 text-silloun-green" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6"></path>
+                  </svg>
+                </span>
+              <% end %>
+            </div>
+          </div>
+        <% end %>
+      <% end %>
+    </div>
+  </div>
+</section>
+
+<!-- About the Farm -->
+<section class="py-10 bg-silloun-yellow">
+  <div class="max-w-7xl mx-auto px-4">
+    <div class="grid md:grid-cols-2 gap-8 items-center">
+      <div>
+        <p class="font-marydale text-silloun-green text-2xl mb-2">À propos</p>
+        <h2 class="font-piepie text-silloun-green text-3xl mb-4">NOTRE HISTOIRE</h2>
+        
+        <div class="space-y-4 text-silloun-green/80">
+          <p>
+            Installée depuis 15 ans sur les terres familiales, Marie perpétue une tradition 
+            agricole respectueuse de l'environnement. La Ferme du Soleil, c'est 5 hectares 
+            de maraîchage en agriculture biologique.
+          </p>
+          <p>
+            "Je cultive des légumes comme le faisaient mes grands-parents, avec passion et 
+            patience. Chaque tomate, chaque courgette est le fruit d'un travail quotidien 
+            où la nature garde le dernier mot."
+          </p>
+        </div>
+        
+        <div class="mt-6 flex flex-wrap gap-3">
+          <span class="bg-white px-3 py-1 rounded-full text-sm text-silloun-green font-medium">🌱 Bio certifié</span>
+          <span class="bg-white px-3 py-1 rounded-full text-sm text-silloun-green font-medium">🚜 Agriculture familiale</span>
+          <span class="bg-white px-3 py-1 rounded-full text-sm text-silloun-green font-medium">💧 Irrigation raisonnée</span>
+        </div>
+      </div>
+      
+      <!-- Farm Photos -->
+      <div class="grid grid-cols-2 gap-4">
+        <div class="aspect-square bg-gray-200 rounded-lg flex items-center justify-center">
+          <span class="text-gray-400 text-sm text-center p-4">📷 Photo de la ferme</span>
+        </div>
+        <div class="aspect-square bg-gray-200 rounded-lg flex items-center justify-center">
+          <span class="text-gray-400 text-sm text-center p-4">📷 Photo des cultures</span>
+        </div>
+        <div class="aspect-square bg-gray-200 rounded-lg flex items-center justify-center col-span-2">
+          <span class="text-gray-400 text-sm text-center p-4">📷 Photo panoramique des champs</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Other Producers -->
+<section class="py-10 bg-white">
+  <div class="max-w-7xl mx-auto px-4">
+    <h2 class="font-piepie text-silloun-green text-2xl mb-6">DÉCOUVREZ AUSSI</h2>
+    
+    <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+      <% [
+        { name: "Les Vergers du Limousin", specialty: "Arboriculteur", distance: 5.1 },
+        { name: "Chèvrerie des Collines", specialty: "Fromagère", distance: 8.7 },
+        { name: "Rucher du Plateau", specialty: "Apiculteur", distance: 4.2 },
+        { name: "La Bergerie Haute", specialty: "Éleveur", distance: 12.3 }
+      ].each do |producer| %>
+        <%= link_to mockups_public_producer_path(1), class: "group bg-gray-50 rounded-xl p-4 hover:bg-silloun-yellow/10 transition" do %>
+          <div class="w-16 h-16 bg-gray-200 rounded-full mx-auto mb-3 flex items-center justify-center">
+            <span class="text-2xl">👨‍🌾</span>
+          </div>
+          <h3 class="font-semibold text-silloun-green text-center text-sm group-hover:text-silloun-green/80">
+            <%= producer[:name] %>
+          </h3>
+          <p class="text-xs text-gray-500 text-center mt-1"><%= producer[:specialty] %></p>
+          <p class="text-xs text-silloun-green text-center mt-1"><%= producer[:distance] %> km</p>
+        <% end %>
+      <% end %>
+    </div>
+  </div>
+</section>

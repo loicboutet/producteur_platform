@@ -1,0 +1,95 @@
+<% content_for(:title, "Points de retrait - Espace Producteur") %>
+
+<!-- Header -->
+<div class="flex flex-col md:flex-row md:items-center md:justify-between mb-8">
+  <div>
+    <h1 class="font-piepie text-3xl md:text-4xl text-silloun-green mb-2">MA FERME</h1>
+    <p class="text-gray-600">Gérez votre point de retrait à la ferme</p>
+  </div>
+  <%= link_to edit_mockups_producer_pickup_point_path(1), class: "btn-silloun-primary mt-4 md:mt-0 inline-flex items-center" do %>
+    <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"></path>
+    </svg>
+    Modifier les horaires
+  <% end %>
+</div>
+
+<% @pickup_points.each do |point| %>
+  <div class="bg-white rounded-xl shadow-sm border border-gray-100 overflow-hidden mb-8">
+    <!-- Header -->
+    <div class="p-6 border-b border-gray-100 flex items-center justify-between">
+      <div class="flex items-center">
+        <div class="w-12 h-12 bg-silloun-green rounded-lg flex items-center justify-center mr-4">
+          <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"></path>
+          </svg>
+        </div>
+        <div>
+          <h2 class="font-piepie text-xl text-silloun-green"><%= point[:name].upcase %></h2>
+          <p class="text-gray-600"><%= point[:address] %>, <%= point[:postal_code] %> <%= point[:city] %></p>
+        </div>
+      </div>
+      <% if point[:active] %>
+        <span class="inline-flex items-center px-3 py-1 rounded-full text-sm font-medium bg-green-100 text-green-800">
+          <span class="w-2 h-2 bg-green-500 rounded-full mr-2"></span>
+          Actif
+        </span>
+      <% else %>
+        <span class="inline-flex items-center px-3 py-1 rounded-full text-sm font-medium bg-gray-100 text-gray-600">
+          <span class="w-2 h-2 bg-gray-400 rounded-full mr-2"></span>
+          Inactif
+        </span>
+      <% end %>
+    </div>
+
+    <!-- Description -->
+    <% if point[:description].present? %>
+      <div class="p-6 border-b border-gray-100 bg-gray-50">
+        <p class="text-gray-700"><%= point[:description] %></p>
+      </div>
+    <% end %>
+
+    <!-- Schedules -->
+    <div class="p-6">
+      <h3 class="font-semibold text-gray-800 mb-4">Horaires d'ouverture</h3>
+      <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-4">
+        <% days = ["Lundi", "Mardi", "Mercredi", "Jeudi", "Vendredi", "Samedi", "Dimanche"] %>
+        <% days.each do |day| %>
+          <% day_schedules = point[:schedules].select { |s| s[:day] == day && s[:active] } %>
+          <div class="p-3 rounded-lg <%= day_schedules.any? ? 'bg-green-50 border border-green-200' : 'bg-gray-50 border border-gray-200' %>">
+            <p class="font-medium <%= day_schedules.any? ? 'text-green-800' : 'text-gray-500' %>"><%= day %></p>
+            <% if day_schedules.any? %>
+              <% day_schedules.each do |schedule| %>
+                <p class="text-sm text-green-600"><%= schedule[:open] %> - <%= schedule[:close] %></p>
+              <% end %>
+            <% else %>
+              <p class="text-sm text-gray-400">Fermé</p>
+            <% end %>
+          </div>
+        <% end %>
+      </div>
+    </div>
+  </div>
+<% end %>
+
+<!-- Info Box -->
+<div class="bg-blue-50 rounded-xl p-6">
+  <div class="flex items-start">
+    <svg class="w-6 h-6 text-blue-600 mr-3 flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+    </svg>
+    <div>
+      <h4 class="font-semibold text-blue-800 mb-1">À propos des points de retrait</h4>
+      <p class="text-sm text-blue-700">
+        Votre point de retrait à la ferme est automatiquement créé avec votre compte producteur. 
+        Les clients peuvent choisir de récupérer leurs commandes directement chez vous aux horaires que vous définissez.
+        Vous pouvez également vous inscrire sur des marchés pour proposer d'autres points de retrait.
+      </p>
+      <div class="mt-3">
+        <%= link_to mockups_producer_market_presences_path, class: "text-blue-600 hover:text-blue-800 font-medium text-sm" do %>
+          Gérer mes marchés →
+        <% end %>
+      </div>
+    </div>
+  </div>
+</div>

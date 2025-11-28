@@ -1,0 +1,167 @@
+<% content_for(:title) { "#{@product[:name]} - Silloun" } %>
+
+<!-- Product Detail -->
+<section class="py-8">
+  <div class="max-w-7xl mx-auto px-4">
+    <!-- Breadcrumb -->
+    <nav class="text-sm text-gray-500 mb-6">
+      <%= link_to "Accueil", mockups_public_home_index_path, class: "hover:text-silloun-green" %> 
+      <span class="mx-2">/</span>
+      <%= link_to "Produits", mockups_public_products_path, class: "hover:text-silloun-green" %>
+      <span class="mx-2">/</span>
+      <span class="text-silloun-green"><%= @product[:name] %></span>
+    </nav>
+
+    <div class="grid lg:grid-cols-2 gap-8 lg:gap-12">
+      <!-- Product Images -->
+      <div>
+        <div class="aspect-square bg-gray-100 rounded-2xl overflow-hidden mb-4">
+          <%= image_tag @product[:images].first, 
+                        alt: @product[:name], 
+                        class: "w-full h-full object-cover" %>
+        </div>
+        <!-- Thumbnails (if multiple images) -->
+        <div class="grid grid-cols-4 gap-2">
+          <% 4.times do |i| %>
+            <div class="aspect-square bg-gray-100 rounded-lg overflow-hidden cursor-pointer border-2 <%= i == 0 ? 'border-silloun-green' : 'border-transparent hover:border-gray-300' %>">
+              <%= image_tag @product[:images].first, alt: "", class: "w-full h-full object-cover" %>
+            </div>
+          <% end %>
+        </div>
+      </div>
+
+      <!-- Product Info -->
+      <div>
+        <span class="inline-block bg-silloun-green text-white text-xs px-3 py-1 rounded-full mb-4">
+          <%= @product[:category] %>
+        </span>
+        
+        <h1 class="font-piepie text-silloun-green text-3xl md:text-4xl mb-4"><%= @product[:name].upcase %></h1>
+        
+        <!-- Producer -->
+        <%= link_to mockups_public_producer_path(@producer[:id]), class: "flex items-center mb-6 group" do %>
+          <div class="w-12 h-12 rounded-full overflow-hidden border-2 border-silloun-yellow mr-3">
+            <%= image_tag "pictures/vobs.studio_Portrait_dune_agricultrice._Elle_porte_une_salopett_33ef692c-abe1-483a-89e1-28b000f76624.png", 
+                          alt: @producer[:name], 
+                          class: "w-full h-full object-cover" %>
+          </div>
+          <div>
+            <p class="font-semibold text-silloun-green group-hover:text-silloun-green"><%= @producer[:farm_name] %></p>
+            <p class="text-sm text-gray-500"><%= @producer[:city] %> • <%= @producer[:distance] %> km</p>
+          </div>
+        <% end %>
+        
+        <!-- Price -->
+        <div class="flex items-baseline mb-6">
+          <span class="font-piepie text-silloun-green text-4xl"><%= number_to_currency(@product[:price], unit: "€", format: "%n %u") %></span>
+          <span class="text-gray-500 text-lg ml-2">/ <%= @product[:unit] %></span>
+        </div>
+        
+        <!-- Stock -->
+        <% if @product[:available] %>
+          <p class="text-green-600 flex items-center mb-6">
+            <svg class="w-5 h-5 mr-2" fill="currentColor" viewBox="0 0 20 20">
+              <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"></path>
+            </svg>
+            En stock (<%= @product[:stock] %> <%= @product[:unit] %> disponibles)
+          </p>
+        <% else %>
+          <p class="text-red-600 flex items-center mb-6">
+            <svg class="w-5 h-5 mr-2" fill="currentColor" viewBox="0 0 20 20">
+              <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z" clip-rule="evenodd"></path>
+            </svg>
+            Rupture de stock
+          </p>
+        <% end %>
+        
+        <!-- Quantity & Add to Cart -->
+        <div class="flex items-center gap-4 mb-8">
+          <div class="flex items-center border border-gray-200 rounded-lg">
+            <button class="px-4 py-3 text-silloun-green hover:bg-gray-100 transition">
+              <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20 12H4"></path>
+              </svg>
+            </button>
+            <input type="number" value="1" min="1" class="w-16 text-center border-x border-gray-200 py-3 focus:outline-none">
+            <button class="px-4 py-3 text-silloun-green hover:bg-gray-100 transition">
+              <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"></path>
+              </svg>
+            </button>
+          </div>
+          <button class="flex-1 btn-silloun-primary py-3">
+            <svg class="w-5 h-5 mr-2 inline" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z"></path>
+            </svg>
+            Ajouter au panier
+          </button>
+        </div>
+        
+        <!-- Description -->
+        <div class="mb-8">
+          <h3 class="font-piepie text-silloun-green text-lg mb-3">DESCRIPTION</h3>
+          <p class="text-gray-600 leading-relaxed"><%= @product[:description] %></p>
+        </div>
+        
+        <!-- Pickup points -->
+        <div class="bg-gray-50 rounded-2xl p-6">
+          <h3 class="font-piepie text-silloun-green text-lg mb-4">POINTS DE RETRAIT</h3>
+          <div class="space-y-4">
+            <div class="flex items-start">
+              <div class="w-10 h-10 bg-silloun-green rounded-full flex items-center justify-center flex-shrink-0 mr-4">
+                <svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"></path>
+                </svg>
+              </div>
+              <div>
+                <p class="font-semibold text-silloun-green">À la ferme</p>
+                <p class="text-sm text-gray-600">123 Route de la Campagne, 87000 Limoges</p>
+                <p class="text-sm text-gray-500">Lun-Ven 9h-18h, Sam 9h-12h</p>
+              </div>
+            </div>
+            <div class="flex items-start">
+              <div class="w-10 h-10 bg-silloun-yellow rounded-full flex items-center justify-center flex-shrink-0 mr-4">
+                <svg class="w-5 h-5 text-silloun-green" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"></path>
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"></path>
+                </svg>
+              </div>
+              <div>
+                <p class="font-semibold text-silloun-green">Marché de Limoges</p>
+                <p class="text-sm text-gray-600">Place de la Motte, 87000 Limoges</p>
+                <p class="text-sm text-gray-500">Sam 8h-13h</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Related Products -->
+<section class="py-12 bg-gray-50">
+  <div class="max-w-7xl mx-auto px-4">
+    <h2 class="font-piepie text-silloun-green text-2xl mb-8">AUTRES PRODUITS DE CE PRODUCTEUR</h2>
+    <div class="grid grid-cols-2 lg:grid-cols-4 gap-4 md:gap-6">
+      <% @related_products.each do |product| %>
+        <%= link_to mockups_public_product_path(product[:id]), class: "group" do %>
+          <div class="bg-white rounded-2xl shadow-sm overflow-hidden hover:shadow-xl transition-all duration-300 border border-gray-100">
+            <div class="relative h-40 bg-gray-100 overflow-hidden">
+              <%= image_tag "pictures/vobs.studio_httpss.mj.run2yoSBUleddg_Photo_dun_ensemble_de_lg_2c75fed6-bb89-496e-85c3-71561aae6c38_1.png", 
+                            alt: product[:name], 
+                            class: "w-full h-full object-cover group-hover:scale-105 transition-transform duration-300" %>
+            </div>
+            <div class="p-4">
+              <h3 class="font-semibold text-silloun-green mb-2"><%= product[:name] %></h3>
+              <div class="flex items-center justify-between">
+                <span class="font-bold text-lg text-silloun-green"><%= number_to_currency(product[:price], unit: "€", format: "%n %u") %></span>
+                <span class="text-gray-400 text-sm">/ <%= product[:unit] %></span>
+              </div>
+            </div>
+          </div>
+        <% end %>
+      <% end %>
+    </div>
+  </div>
+</section>

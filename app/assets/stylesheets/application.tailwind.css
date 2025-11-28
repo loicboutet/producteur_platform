@@ -2,12 +2,157 @@
 @tailwind components;
 @tailwind utilities;
 
-/*
+/* ===========================================
+   SILLOUN BRAND STYLES
+   Couleurs officielles:
+   - Jaune: #FBE216
+   - Vert: #005D46
+   =========================================== */
 
-@layer components {
-  .btn-primary {
-    @apply py-2 px-4 bg-blue-200;
+@layer base {
+  :root {
+    --silloun-yellow: #FBE216;
+    --silloun-green: #005D46;
   }
 }
 
-*/
+@layer utilities {
+  /* Couleurs Silloun - Background */
+  .bg-silloun-yellow {
+    background-color: #FBE216;
+  }
+  
+  .bg-silloun-green {
+    background-color: #005D46;
+  }
+  
+  /* Couleurs Silloun - Text */
+  .text-silloun-yellow {
+    color: #FBE216;
+  }
+  
+  .text-silloun-green {
+    color: #005D46;
+  }
+  
+  /* Couleurs Silloun - Border */
+  .border-silloun-yellow {
+    border-color: #FBE216;
+  }
+  
+  .border-silloun-green {
+    border-color: #005D46;
+  }
+
+  /* Hover states */
+  .hover\:bg-silloun-yellow:hover {
+    background-color: #FBE216;
+  }
+  
+  .hover\:bg-silloun-green:hover {
+    background-color: #005D46;
+  }
+  
+  .hover\:text-silloun-yellow:hover {
+    color: #FBE216;
+  }
+  
+  .hover\:text-silloun-green:hover {
+    color: #005D46;
+  }
+
+  /* Ring colors */
+  .ring-silloun-yellow {
+    --tw-ring-color: #FBE216;
+  }
+  
+  .ring-silloun-green {
+    --tw-ring-color: #005D46;
+  }
+
+  .focus\:ring-silloun-green:focus {
+    --tw-ring-color: #005D46;
+  }
+
+  .focus\:border-silloun-green:focus {
+    border-color: #005D46;
+  }
+}
+
+@layer components {
+  /* Silloun Typography - Police simulée PIEPIE */
+  .font-piepie {
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 900;
+    letter-spacing: -0.02em;
+    text-transform: uppercase;
+  }
+  
+  /* Silloun Typography - Police Marydale (script) */
+  .font-marydale {
+    font-family: 'Brush Script MT', 'Segoe Script', cursive;
+    font-style: italic;
+  }
+
+  /* Silloun Buttons */
+  .btn-silloun-primary {
+    @apply font-bold py-3 px-6 rounded-full transition;
+    background-color: #FBE216;
+    color: #005D46;
+  }
+  
+  .btn-silloun-primary:hover {
+    opacity: 0.9;
+  }
+  
+  .btn-silloun-secondary {
+    @apply font-bold py-3 px-6 rounded-full transition text-white;
+    background-color: #005D46;
+  }
+  
+  .btn-silloun-secondary:hover {
+    opacity: 0.9;
+  }
+  
+  .btn-silloun-outline {
+    @apply font-bold py-3 px-6 rounded-full transition;
+    border: 2px solid #005D46;
+    color: #005D46;
+    background-color: transparent;
+  }
+  
+  .btn-silloun-outline:hover {
+    background-color: #005D46;
+    color: white;
+  }
+
+  /* Silloun Cards */
+  .card-silloun {
+    @apply bg-white rounded-2xl shadow-lg overflow-hidden border border-gray-100;
+  }
+
+  /* Silloun Input */
+  .input-silloun {
+    @apply w-full px-4 py-3 border-2 border-gray-200 rounded-lg transition;
+  }
+  
+  .input-silloun:focus {
+    border-color: #005D46;
+    outline: none;
+  }
+
+  /* Silloun Alerts */
+  .alert-silloun-info {
+    @apply p-4 rounded-lg;
+    background-color: #FBE216;
+    color: #005D46;
+  }
+  
+  .alert-silloun-success {
+    @apply bg-green-100 text-green-800 p-4 rounded-lg;
+  }
+  
+  .alert-silloun-error {
+    @apply bg-red-100 text-red-800 p-4 rounded-lg;
+  }
+}

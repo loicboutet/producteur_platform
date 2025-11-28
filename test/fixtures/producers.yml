@@ -1,15 +1,15 @@
 # Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
 
 one:
-  name: MyString
-  email: MyString
-  stripe_account_id: MyString
-  stripe_account_status: MyString
+  name: Ferme du Soleil
+  email: ferme.soleil@example.com
+  stripe_account_id: acct_test_producer_one
+  stripe_account_status: active
   user: one
 
 two:
-  name: MyString
-  email: MyString
-  stripe_account_id: MyString
-  stripe_account_status: MyString
+  name: Ferme des Champs
+  email: ferme.champs@example.com
+  stripe_account_id: acct_test_producer_two
+  stripe_account_status: active
   user: two

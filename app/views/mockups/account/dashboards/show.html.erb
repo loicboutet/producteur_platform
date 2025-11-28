@@ -1,0 +1,140 @@
+<% content_for(:title, "Mon Compte - Silloun") %>
+
+<div class="max-w-4xl">
+  <!-- Welcome Header -->
+  <div class="mb-8">
+    <p class="font-marydale text-silloun-green text-xl">Bonjour,</p>
+    <h1 class="font-piepie text-silloun-green text-3xl"><%= @user[:first_name].upcase %> !</h1>
+  </div>
+
+  <!-- Pending Order Alert -->
+  <% if @pending_order %>
+    <div class="bg-silloun-yellow rounded-xl p-6 mb-8 shadow-sm">
+      <div class="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
+        <div class="flex items-center gap-4">
+          <div class="w-12 h-12 bg-silloun-green rounded-full flex items-center justify-center flex-shrink-0">
+            <svg class="w-6 h-6 text-silloun-yellow" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+            </svg>
+          </div>
+          <div>
+            <p class="font-semibold text-silloun-green">Une commande est prête à retirer !</p>
+            <p class="text-silloun-green/70 text-sm">
+              <%= @pending_order[:reference] %> chez <%= @pending_order[:producer][:farm_name] %>
+            </p>
+          </div>
+        </div>
+        <%= link_to mockups_account_order_path(@pending_order[:id]), 
+            class: "bg-silloun-green text-white font-semibold px-6 py-2 rounded-full hover:bg-silloun-green/90 transition text-center" do %>
+          Voir les détails
+        <% end %>
+      </div>
+    </div>
+  <% end %>
+
+  <!-- Stats Cards -->
+  <div class="grid grid-cols-2 md:grid-cols-4 gap-4 mb-8">
+    <div class="bg-white rounded-xl p-4 shadow-sm">
+      <p class="text-gray-500 text-sm">Commandes</p>
+      <p class="font-piepie text-silloun-green text-2xl"><%= @user[:orders_count] %></p>
+    </div>
+    <div class="bg-white rounded-xl p-4 shadow-sm">
+      <p class="text-gray-500 text-sm">Total dépensé</p>
+      <p class="font-piepie text-silloun-green text-2xl"><%= number_to_currency(@user[:total_spent], unit: "€", format: "%n%u") %></p>
+    </div>
+    <div class="bg-white rounded-xl p-4 shadow-sm">
+      <p class="text-gray-500 text-sm">En attente</p>
+      <p class="font-piepie text-silloun-green text-2xl">1</p>
+    </div>
+    <div class="bg-white rounded-xl p-4 shadow-sm">
+      <p class="text-gray-500 text-sm">Membre depuis</p>
+      <p class="font-piepie text-silloun-green text-2xl">6 mois</p>
+    </div>
+  </div>
+
+  <!-- Recent Orders -->
+  <div class="bg-white rounded-xl shadow-sm overflow-hidden mb-8">
+    <div class="px-6 py-4 border-b border-gray-100 flex items-center justify-between">
+      <h2 class="font-piepie text-silloun-green text-lg">MES DERNIÈRES COMMANDES</h2>
+      <%= link_to "Voir tout", mockups_account_orders_path, class: "text-silloun-green text-sm hover:underline" %>
+    </div>
+    
+    <div class="divide-y divide-gray-100">
+      <% @recent_orders.each do |order| %>
+        <%= link_to mockups_account_order_path(order[:id]), class: "block hover:bg-gray-50 transition" do %>
+          <div class="px-6 py-4 flex items-center gap-4">
+            <!-- Status Icon -->
+            <div class="w-10 h-10 rounded-full flex items-center justify-center flex-shrink-0 
+                        <%= order[:status] == 'ready' ? 'bg-silloun-yellow' : 'bg-gray-100' %>">
+              <% if order[:status] == 'ready' %>
+                <svg class="w-5 h-5 text-silloun-green" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                </svg>
+              <% else %>
+                <svg class="w-5 h-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                </svg>
+              <% end %>
+            </div>
+            
+            <!-- Order Info -->
+            <div class="flex-1 min-w-0">
+              <div class="flex items-center gap-2">
+                <p class="font-semibold text-gray-800"><%= order[:reference] %></p>
+                <span class="px-2 py-0.5 rounded-full text-xs font-medium
+                            <%= order[:status] == 'ready' ? 'bg-silloun-yellow text-silloun-green' : 'bg-gray-100 text-gray-600' %>">
+                  <%= order[:status_label] %>
+                </span>
+              </div>
+              <p class="text-gray-500 text-sm truncate">
+                <%= order[:producer][:farm_name] %> • <%= order[:items_count] %> articles
+              </p>
+            </div>
+            
+            <!-- Price & Date -->
+            <div class="text-right">
+              <p class="font-semibold text-silloun-green"><%= number_to_currency(order[:total], unit: "€", format: "%n %u") %></p>
+              <p class="text-gray-400 text-xs"><%= time_ago_in_words(order[:created_at]) %></p>
+            </div>
+            
+            <svg class="w-5 h-5 text-gray-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
+            </svg>
+          </div>
+        <% end %>
+      <% end %>
+    </div>
+  </div>
+
+  <!-- Quick Actions -->
+  <div class="grid md:grid-cols-2 gap-4">
+    <%= link_to mockups_public_products_path, class: "bg-white rounded-xl p-6 shadow-sm hover:shadow-md transition group" do %>
+      <div class="flex items-center gap-4">
+        <div class="w-12 h-12 bg-silloun-yellow rounded-full flex items-center justify-center group-hover:scale-110 transition">
+          <svg class="w-6 h-6 text-silloun-green" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z"></path>
+          </svg>
+        </div>
+        <div>
+          <p class="font-semibold text-silloun-green">Continuer mes achats</p>
+          <p class="text-gray-500 text-sm">Découvrez les produits de nos producteurs</p>
+        </div>
+      </div>
+    <% end %>
+    
+    <%= link_to mockups_public_producers_path, class: "bg-white rounded-xl p-6 shadow-sm hover:shadow-md transition group" do %>
+      <div class="flex items-center gap-4">
+        <div class="w-12 h-12 bg-silloun-green rounded-full flex items-center justify-center group-hover:scale-110 transition">
+          <svg class="w-6 h-6 text-silloun-yellow" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"></path>
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"></path>
+          </svg>
+        </div>
+        <div>
+          <p class="font-semibold text-silloun-green">Trouver des producteurs</p>
+          <p class="text-gray-500 text-sm">Explorez les producteurs près de chez vous</p>
+        </div>
+      </div>
+    <% end %>
+  </div>
+</div>

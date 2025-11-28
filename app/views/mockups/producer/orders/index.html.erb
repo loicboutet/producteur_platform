@@ -1,0 +1,165 @@
+<% content_for(:title, "Commandes - Espace Producteur") %>
+
+<!-- Header -->
+<div class="flex flex-col md:flex-row md:items-center md:justify-between mb-8">
+  <div>
+    <h1 class="font-piepie text-3xl md:text-4xl text-silloun-green mb-2">MES COMMANDES</h1>
+    <p class="text-gray-600">Gérez et traitez les commandes de vos clients</p>
+  </div>
+</div>
+
+<!-- Stats Row -->
+<div class="grid grid-cols-2 lg:grid-cols-5 gap-4 mb-8">
+  <% statuses = [
+    { key: nil, label: "Toutes", count: @orders.count, color: "gray" },
+    { key: "new", label: "Nouvelles", count: @orders.count { |o| o[:status] == "new" }, color: "blue" },
+    { key: "preparing", label: "En préparation", count: @orders.count { |o| o[:status] == "preparing" }, color: "yellow" },
+    { key: "ready", label: "Prêtes", count: @orders.count { |o| o[:status] == "ready" }, color: "green" },
+    { key: "picked_up", label: "Retirées", count: @orders.count { |o| o[:status] == "picked_up" }, color: "gray" }
+  ] %>
+  
+  <% statuses.each do |status| %>
+    <% is_active = @status_filter == status[:key] || (@status_filter.nil? && status[:key].nil?) %>
+    <%= link_to mockups_producer_orders_path(status: status[:key]), 
+        class: "bg-white rounded-lg p-4 shadow-sm border-2 transition hover:shadow-md #{is_active ? 'border-silloun-green' : 'border-gray-100'}" do %>
+      <p class="text-2xl font-bold text-<%= status[:color] %>-600"><%= status[:count] %></p>
+      <p class="text-sm text-gray-500"><%= status[:label] %></p>
+    <% end %>
+  <% end %>
+</div>
+
+<!-- Filters -->
+<div class="bg-white rounded-xl shadow-sm border border-gray-100 p-4 mb-6">
+  <div class="flex flex-col md:flex-row md:items-center space-y-4 md:space-y-0 md:space-x-4">
+    <!-- Search -->
+    <div class="flex-1">
+      <div class="relative">
+        <svg class="absolute left-3 top-1/2 transform -translate-y-1/2 w-5 h-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
+        </svg>
+        <input type="text" placeholder="Rechercher par référence ou client..." 
+               class="w-full pl-10 pr-4 py-2 border-2 border-gray-200 rounded-lg focus:outline-none focus:border-silloun-green">
+      </div>
+    </div>
+    
+    <!-- Date Filter -->
+    <input type="date" class="px-4 py-2 border-2 border-gray-200 rounded-lg focus:outline-none focus:border-silloun-green">
+    
+    <!-- Pickup Filter -->
+    <select class="px-4 py-2 border-2 border-gray-200 rounded-lg focus:outline-none focus:border-silloun-green bg-white">
+      <option value="">Tous les points de retrait</option>
+      <option value="farm">À la ferme</option>
+      <option value="market">Marchés</option>
+    </select>
+  </div>
+</div>
+
+<!-- Orders List -->
+<div class="space-y-4">
+  <% @orders.each do |order| %>
+    <div class="bg-white rounded-xl shadow-sm border border-gray-100 overflow-hidden hover:shadow-md transition">
+      <div class="p-4 md:p-6">
+        <div class="flex flex-col md:flex-row md:items-center md:justify-between">
+          <!-- Order Info -->
+          <div class="flex items-start space-x-4 mb-4 md:mb-0">
+            <div class="w-12 h-12 rounded-full bg-gray-100 flex items-center justify-center flex-shrink-0">
+              <span class="text-gray-600 font-medium"><%= order[:customer][:name].split.map(&:first).join %></span>
+            </div>
+            <div>
+              <div class="flex items-center space-x-2 mb-1">
+                <span class="font-bold text-gray-900"><%= order[:reference] %></span>
+                <% status_colors = {
+                  "new" => "bg-blue-100 text-blue-800",
+                  "preparing" => "bg-yellow-100 text-yellow-800",
+                  "ready" => "bg-green-100 text-green-800",
+                  "picked_up" => "bg-gray-100 text-gray-600"
+                } %>
+                <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium <%= status_colors[order[:status]] %>">
+                  <%= order[:status_label] %>
+                </span>
+              </div>
+              <p class="text-gray-600"><%= order[:customer][:name] %></p>
+              <p class="text-sm text-gray-500">
+                <%= order[:items_count] %> articles • <%= time_ago_in_words(order[:created_at]) %>
+              </p>
+            </div>
+          </div>
+
+          <!-- Pickup Info -->
+          <div class="flex flex-col md:items-end mb-4 md:mb-0">
+            <div class="flex items-center text-sm text-gray-600 mb-1">
+              <% if order[:pickup_point][:type] == "farm" %>
+                <svg class="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"></path>
+                </svg>
+              <% else %>
+                <svg class="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"></path>
+                </svg>
+              <% end %>
+              <%= order[:pickup_point][:name] %>
+            </div>
+            <p class="text-sm text-gray-500">
+              <%= order[:pickup_point][:date].strftime("%A %d %B") %> • <%= order[:pickup_point][:time] %>
+            </p>
+          </div>
+
+          <!-- Amount & Actions -->
+          <div class="flex items-center justify-between md:justify-end space-x-4">
+            <span class="text-xl font-bold text-silloun-green"><%= number_to_currency(order[:total], unit: "€", format: "%n %u") %></span>
+            
+            <div class="flex items-center space-x-2">
+              <% case order[:status] %>
+              <% when "new" %>
+                <button class="bg-silloun-yellow text-silloun-green font-bold py-2 px-4 rounded-lg hover:bg-yellow-400 transition text-sm">
+                  Préparer
+                </button>
+              <% when "preparing" %>
+                <button class="bg-green-600 text-white font-bold py-2 px-4 rounded-lg hover:bg-green-700 transition text-sm">
+                  Marquer prêt
+                </button>
+              <% when "ready" %>
+                <button class="bg-silloun-green text-white font-bold py-2 px-4 rounded-lg hover:bg-green-800 transition text-sm">
+                  Confirmer retrait
+                </button>
+              <% end %>
+              
+              <%= link_to mockups_producer_order_path(order[:id]), class: "p-2 text-gray-500 hover:text-silloun-green hover:bg-gray-100 rounded-lg transition" do %>
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
+                </svg>
+              <% end %>
+            </div>
+          </div>
+        </div>
+
+        <!-- Items Preview (collapsed) -->
+        <div class="mt-4 pt-4 border-t border-gray-100">
+          <div class="flex flex-wrap gap-2">
+            <% order[:items].first(3).each do |item| %>
+              <span class="inline-flex items-center px-2 py-1 bg-gray-100 rounded text-xs text-gray-700">
+                <%= item[:quantity] %>x <%= item[:name] %>
+              </span>
+            <% end %>
+            <% if order[:items].count > 3 %>
+              <span class="inline-flex items-center px-2 py-1 bg-gray-100 rounded text-xs text-gray-500">
+                +<%= order[:items].count - 3 %> autres
+              </span>
+            <% end %>
+          </div>
+        </div>
+      </div>
+    </div>
+  <% end %>
+</div>
+
+<!-- Empty State -->
+<% if @orders.empty? %>
+  <div class="bg-white rounded-xl shadow-sm border border-gray-100 p-12 text-center">
+    <svg class="w-16 h-16 mx-auto text-gray-300 mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z"></path>
+    </svg>
+    <h3 class="text-lg font-semibold text-gray-900 mb-2">Aucune commande</h3>
+    <p class="text-gray-600">Les nouvelles commandes apparaîtront ici.</p>
+  </div>
+<% end %>

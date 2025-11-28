@@ -1,0 +1,93 @@
+<% content_for :title, "#{@product[:name]} - Admin Silloun" %>
+
+<div class="space-y-6">
+  <!-- Breadcrumb -->
+  <div class="flex items-center space-x-2 text-sm">
+    <%= link_to "Produits", mockups_admin_products_path, class: "text-purple-600 hover:text-purple-700" %>
+    <svg class="w-4 h-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
+    </svg>
+    <span class="text-gray-900 font-medium"><%= @product[:name] %></span>
+  </div>
+
+  <div class="grid lg:grid-cols-3 gap-6">
+    <!-- Product Info -->
+    <div class="lg:col-span-2 space-y-6">
+      <div class="bg-white rounded-xl shadow-sm border border-gray-100 p-6">
+        <div class="flex items-start gap-6">
+          <div class="w-32 h-32 bg-gray-100 rounded-xl flex items-center justify-center text-4xl">🥬</div>
+          <div class="flex-1">
+            <h1 class="font-piepie text-2xl text-gray-900"><%= @product[:name] %></h1>
+            <p class="text-gray-600 mt-1"><%= @product[:description] %></p>
+            
+            <div class="grid grid-cols-2 gap-4 mt-4">
+              <div>
+                <p class="text-sm text-gray-500">Prix</p>
+                <p class="font-bold text-xl text-gray-900"><%= number_to_currency(@product[:price], unit: "€", format: "%n %u") %>/<%= @product[:unit] %></p>
+              </div>
+              <div>
+                <p class="text-sm text-gray-500">Stock</p>
+                <p class="font-bold text-xl <%= @product[:stock] > 0 ? 'text-green-600' : 'text-red-600' %>"><%= @product[:stock] %> <%= @product[:unit] %></p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Recent Orders -->
+      <div class="bg-white rounded-xl shadow-sm border border-gray-100">
+        <div class="p-6 border-b border-gray-100">
+          <h2 class="font-semibold text-gray-900">Commandes récentes incluant ce produit</h2>
+        </div>
+        <div class="divide-y divide-gray-100">
+          <% @recent_orders.each do |order| %>
+            <div class="p-4 hover:bg-gray-50">
+              <div class="flex items-center justify-between">
+                <div>
+                  <p class="font-medium text-gray-900"><%= order[:reference] %></p>
+                  <p class="text-sm text-gray-500"><%= order[:customer_name] %></p>
+                </div>
+                <div class="text-right">
+                  <p class="font-medium text-gray-900"><%= number_to_currency(order[:total], unit: "€", format: "%n %u") %></p>
+                  <p class="text-xs text-gray-500"><%= time_ago_in_words(order[:created_at]) %></p>
+                </div>
+              </div>
+            </div>
+          <% end %>
+        </div>
+      </div>
+    </div>
+
+    <!-- Sidebar -->
+    <div class="space-y-6">
+      <div class="bg-white rounded-xl shadow-sm border border-gray-100 p-6">
+        <h3 class="font-semibold text-gray-900 mb-4">Producteur</h3>
+        <div class="flex items-center space-x-3">
+          <div class="w-12 h-12 bg-silloun-green rounded-full flex items-center justify-center">
+            <span class="text-white font-bold">MD</span>
+          </div>
+          <div>
+            <p class="font-medium text-gray-900"><%= @product[:producer_name] %></p>
+            <%= link_to "Voir le profil →", mockups_admin_producer_path(1), class: "text-sm text-purple-600 hover:text-purple-700" %>
+          </div>
+        </div>
+      </div>
+
+      <div class="bg-white rounded-xl shadow-sm border border-gray-100 p-6">
+        <h3 class="font-semibold text-gray-900 mb-4">Informations</h3>
+        <dl class="space-y-3 text-sm">
+          <div class="flex justify-between">
+            <dt class="text-gray-500">Catégorie</dt>
+            <dd class="font-medium text-gray-900"><%= @product[:category] %></dd>
+          </div>
+          <div class="flex justify-between">
+            <dt class="text-gray-500">Disponible</dt>
+            <dd class="font-medium <%= @product[:available] ? 'text-green-600' : 'text-red-600' %>">
+              <%= @product[:available] ? 'Oui' : 'Non' %>
+            </dd>
+          </div>
+        </dl>
+      </div>
+    </div>
+  </div>
+</div>

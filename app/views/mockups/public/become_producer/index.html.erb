@@ -1,0 +1,335 @@
+<% content_for(:title, "Devenir Producteur - Silloun") %>
+<% content_for(:hide_become_producer, true) %>
+
+<!-- Hero Section -->
+<section class="bg-silloun-green py-12">
+  <div class="max-w-7xl mx-auto px-4">
+    <div class="grid md:grid-cols-2 gap-12 items-center">
+      <div>
+        <p class="font-marydale text-silloun-yellow text-2xl mb-2">Vendez vos produits</p>
+        <h1 class="font-piepie text-silloun-yellow text-4xl md:text-5xl mb-4">DEVENEZ PRODUCTEUR SILLOUN</h1>
+        <p class="text-white/90 text-lg mb-6">
+          Rejoignez notre communauté de producteurs et vendez vos produits en direct 
+          aux consommateurs de votre région. Inscription gratuite, commission juste, 
+          paiements sécurisés.
+        </p>
+        
+        <div class="flex flex-wrap gap-4 text-white/80">
+          <div class="flex items-center">
+            <svg class="w-5 h-5 mr-2 text-silloun-yellow" fill="currentColor" viewBox="0 0 20 20">
+              <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"></path>
+            </svg>
+            Inscription gratuite
+          </div>
+          <div class="flex items-center">
+            <svg class="w-5 h-5 mr-2 text-silloun-yellow" fill="currentColor" viewBox="0 0 20 20">
+              <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"></path>
+            </svg>
+            Paiement sécurisé
+          </div>
+          <div class="flex items-center">
+            <svg class="w-5 h-5 mr-2 text-silloun-yellow" fill="currentColor" viewBox="0 0 20 20">
+              <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"></path>
+            </svg>
+            Commission juste
+          </div>
+        </div>
+      </div>
+      
+      <!-- Stats -->
+      <div class="grid grid-cols-2 gap-4">
+        <div class="bg-white/10 rounded-xl p-6 text-center">
+          <p class="font-piepie text-silloun-yellow text-4xl">45+</p>
+          <p class="text-white/80 text-sm">Producteurs actifs</p>
+        </div>
+        <div class="bg-white/10 rounded-xl p-6 text-center">
+          <p class="font-piepie text-silloun-yellow text-4xl">1200+</p>
+          <p class="text-white/80 text-sm">Commandes / mois</p>
+        </div>
+        <div class="bg-white/10 rounded-xl p-6 text-center">
+          <p class="font-piepie text-silloun-yellow text-4xl">8%</p>
+          <p class="text-white/80 text-sm">Commission seulement</p>
+        </div>
+        <div class="bg-white/10 rounded-xl p-6 text-center">
+          <p class="font-piepie text-silloun-yellow text-4xl">48h</p>
+          <p class="text-white/80 text-sm">Paiement rapide</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Registration Form -->
+<section class="py-12 bg-gray-50">
+  <div class="max-w-3xl mx-auto px-4">
+    <div class="bg-white rounded-2xl shadow-lg p-8">
+      <div class="text-center mb-8">
+        <h2 class="font-piepie text-silloun-green text-2xl">INSCRIPTION PRODUCTEUR</h2>
+        <p class="text-gray-600 mt-2">Remplissez le formulaire ci-dessous pour créer votre compte producteur</p>
+      </div>
+      
+      <%= form_with url: mockups_public_become_producer_index_path, method: :post, class: "space-y-6" do |f| %>
+        <!-- Personal Information -->
+        <div class="border-b pb-6">
+          <h3 class="font-semibold text-silloun-green text-lg mb-4 flex items-center">
+            <span class="w-8 h-8 bg-silloun-green text-white rounded-full flex items-center justify-center text-sm mr-3">1</span>
+            Informations personnelles
+          </h3>
+          
+          <div class="grid md:grid-cols-2 gap-4">
+            <div>
+              <label class="block text-sm font-medium text-gray-700 mb-1">Prénom *</label>
+              <input type="text" class="w-full border rounded-lg px-4 py-2 focus:ring-silloun-green focus:border-silloun-green" placeholder="Votre prénom">
+            </div>
+            <div>
+              <label class="block text-sm font-medium text-gray-700 mb-1">Nom *</label>
+              <input type="text" class="w-full border rounded-lg px-4 py-2 focus:ring-silloun-green focus:border-silloun-green" placeholder="Votre nom">
+            </div>
+            <div>
+              <label class="block text-sm font-medium text-gray-700 mb-1">Email *</label>
+              <input type="email" class="w-full border rounded-lg px-4 py-2 focus:ring-silloun-green focus:border-silloun-green" placeholder="votre@email.com">
+            </div>
+            <div>
+              <label class="block text-sm font-medium text-gray-700 mb-1">Téléphone *</label>
+              <input type="tel" class="w-full border rounded-lg px-4 py-2 focus:ring-silloun-green focus:border-silloun-green" placeholder="06 12 34 56 78">
+            </div>
+          </div>
+        </div>
+        
+        <!-- Farm Information -->
+        <div class="border-b pb-6">
+          <h3 class="font-semibold text-silloun-green text-lg mb-4 flex items-center">
+            <span class="w-8 h-8 bg-silloun-green text-white rounded-full flex items-center justify-center text-sm mr-3">2</span>
+            Informations de l'exploitation
+          </h3>
+          
+          <div class="space-y-4">
+            <div>
+              <label class="block text-sm font-medium text-gray-700 mb-1">Nom de l'exploitation *</label>
+              <input type="text" class="w-full border rounded-lg px-4 py-2 focus:ring-silloun-green focus:border-silloun-green" placeholder="Ex: Ferme du Soleil">
+            </div>
+            
+            <div>
+              <label class="block text-sm font-medium text-gray-700 mb-1">Numéro SIRET *</label>
+              <input type="text" class="w-full border rounded-lg px-4 py-2 focus:ring-silloun-green focus:border-silloun-green" placeholder="123 456 789 00012">
+              <p class="text-xs text-gray-500 mt-1">Votre numéro SIRET sera vérifié lors de la validation de votre compte</p>
+            </div>
+            
+            <div>
+              <label class="block text-sm font-medium text-gray-700 mb-1">Type de production *</label>
+              <select class="w-full border rounded-lg px-4 py-2 focus:ring-silloun-green focus:border-silloun-green">
+                <option value="">Sélectionnez votre spécialité</option>
+                <option>Maraîchage</option>
+                <option>Arboriculture</option>
+                <option>Élevage</option>
+                <option>Fromagerie</option>
+                <option>Apiculture</option>
+                <option>Viticulture</option>
+                <option>Boulangerie / Pâtisserie</option>
+                <option>Autre</option>
+              </select>
+            </div>
+            
+            <div class="grid md:grid-cols-2 gap-4">
+              <div>
+                <label class="block text-sm font-medium text-gray-700 mb-1">Adresse *</label>
+                <input type="text" class="w-full border rounded-lg px-4 py-2 focus:ring-silloun-green focus:border-silloun-green" placeholder="123 Route de la Campagne">
+              </div>
+              <div>
+                <label class="block text-sm font-medium text-gray-700 mb-1">Code postal *</label>
+                <input type="text" class="w-full border rounded-lg px-4 py-2 focus:ring-silloun-green focus:border-silloun-green" placeholder="87000">
+              </div>
+            </div>
+            
+            <div>
+              <label class="block text-sm font-medium text-gray-700 mb-1">Ville *</label>
+              <input type="text" class="w-full border rounded-lg px-4 py-2 focus:ring-silloun-green focus:border-silloun-green" placeholder="Limoges">
+            </div>
+            
+            <div>
+              <label class="block text-sm font-medium text-gray-700 mb-1">Présentez votre exploitation</label>
+              <textarea rows="4" class="w-full border rounded-lg px-4 py-2 focus:ring-silloun-green focus:border-silloun-green" placeholder="Décrivez votre exploitation, vos méthodes de production, votre histoire..."></textarea>
+            </div>
+          </div>
+        </div>
+        
+        <!-- Account -->
+        <div class="border-b pb-6">
+          <h3 class="font-semibold text-silloun-green text-lg mb-4 flex items-center">
+            <span class="w-8 h-8 bg-silloun-green text-white rounded-full flex items-center justify-center text-sm mr-3">3</span>
+            Création du compte
+          </h3>
+          
+          <div class="grid md:grid-cols-2 gap-4">
+            <div>
+              <label class="block text-sm font-medium text-gray-700 mb-1">Mot de passe *</label>
+              <input type="password" class="w-full border rounded-lg px-4 py-2 focus:ring-silloun-green focus:border-silloun-green" placeholder="••••••••">
+              <p class="text-xs text-gray-500 mt-1">Minimum 8 caractères</p>
+            </div>
+            <div>
+              <label class="block text-sm font-medium text-gray-700 mb-1">Confirmer le mot de passe *</label>
+              <input type="password" class="w-full border rounded-lg px-4 py-2 focus:ring-silloun-green focus:border-silloun-green" placeholder="••••••••">
+            </div>
+          </div>
+        </div>
+        
+        <!-- Terms -->
+        <div class="space-y-4">
+          <label class="flex items-start cursor-pointer">
+            <input type="checkbox" class="mt-1 text-silloun-green focus:ring-silloun-green rounded">
+            <span class="ml-3 text-sm text-gray-600">
+              J'accepte les <a href="#" class="text-silloun-green underline">conditions générales d'utilisation</a> 
+              et les <a href="#" class="text-silloun-green underline">conditions générales de vente</a> de Silloun *
+            </span>
+          </label>
+          
+          <label class="flex items-start cursor-pointer">
+            <input type="checkbox" class="mt-1 text-silloun-green focus:ring-silloun-green rounded">
+            <span class="ml-3 text-sm text-gray-600">
+              J'accepte de recevoir des communications de la part de Silloun (conseils, actualités, etc.)
+            </span>
+          </label>
+        </div>
+        
+        <!-- Submit -->
+        <div class="pt-4">
+          <button type="submit" class="w-full bg-silloun-yellow text-silloun-green font-bold py-4 rounded-full hover:bg-yellow-400 transition text-lg">
+            Créer mon compte producteur
+          </button>
+          <p class="text-center text-sm text-gray-500 mt-4">
+            Vous avez déjà un compte ? 
+            <a href="#" class="text-silloun-green underline">Connectez-vous</a>
+          </p>
+        </div>
+      <% end %>
+    </div>
+  </div>
+</section>
+
+<!-- Benefits -->
+<section class="py-12 bg-white">
+  <div class="max-w-7xl mx-auto px-4">
+    <div class="text-center mb-10">
+      <p class="font-marydale text-silloun-green text-xl mb-2">Pourquoi rejoindre Silloun ?</p>
+      <h2 class="font-piepie text-silloun-green text-3xl">LES AVANTAGES</h2>
+    </div>
+    
+    <div class="grid md:grid-cols-3 gap-8">
+      <div class="text-center">
+        <div class="w-16 h-16 bg-silloun-yellow rounded-full flex items-center justify-center mx-auto mb-4">
+          <svg class="w-8 h-8 text-silloun-green" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+          </svg>
+        </div>
+        <h3 class="font-semibold text-silloun-green text-lg mb-2">Commission juste</h3>
+        <p class="text-gray-600">
+          Seulement 8% de commission sur vos ventes. 
+          Vous gardez 92% de ce que vous vendez.
+        </p>
+      </div>
+      
+      <div class="text-center">
+        <div class="w-16 h-16 bg-silloun-yellow rounded-full flex items-center justify-center mx-auto mb-4">
+          <svg class="w-8 h-8 text-silloun-green" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 9V7a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2m2 4h10a2 2 0 002-2v-6a2 2 0 00-2-2H9a2 2 0 00-2 2v6a2 2 0 002 2zm7-5a2 2 0 11-4 0 2 2 0 014 0z"></path>
+          </svg>
+        </div>
+        <h3 class="font-semibold text-silloun-green text-lg mb-2">Paiement rapide</h3>
+        <p class="text-gray-600">
+          Recevez vos paiements sous 48h après le retrait 
+          de la commande par le client.
+        </p>
+      </div>
+      
+      <div class="text-center">
+        <div class="w-16 h-16 bg-silloun-yellow rounded-full flex items-center justify-center mx-auto mb-4">
+          <svg class="w-8 h-8 text-silloun-green" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"></path>
+          </svg>
+        </div>
+        <h3 class="font-semibold text-silloun-green text-lg mb-2">Zéro risque</h3>
+        <p class="text-gray-600">
+          Inscription gratuite, pas d'abonnement. 
+          Vous ne payez que lorsque vous vendez.
+        </p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Testimonials -->
+<section class="py-12 bg-silloun-yellow">
+  <div class="max-w-7xl mx-auto px-4">
+    <div class="text-center mb-10">
+      <p class="font-marydale text-silloun-green text-xl mb-2">Ils nous font confiance</p>
+      <h2 class="font-piepie text-silloun-green text-3xl">TÉMOIGNAGES</h2>
+    </div>
+    
+    <div class="grid md:grid-cols-2 gap-8">
+      <div class="bg-white rounded-2xl p-6 shadow">
+        <div class="flex items-center gap-4 mb-4">
+          <div class="w-16 h-16 bg-gray-200 rounded-full flex items-center justify-center">
+            <span class="text-2xl">👨‍🌾</span>
+          </div>
+          <div>
+            <p class="font-semibold text-silloun-green">Pierre Martin</p>
+            <p class="text-gray-500 text-sm">Les Vergers du Limousin</p>
+          </div>
+        </div>
+        <p class="text-gray-600 italic">
+          "Grâce à Silloun, j'ai pu développer ma clientèle locale sans passer par 
+          les grandes surfaces. Les clients viennent directement à la ferme ou au 
+          marché, c'est un vrai plus pour notre relation."
+        </p>
+      </div>
+      
+      <div class="bg-white rounded-2xl p-6 shadow">
+        <div class="flex items-center gap-4 mb-4">
+          <div class="w-16 h-16 bg-gray-200 rounded-full flex items-center justify-center">
+            <span class="text-2xl">👩‍🌾</span>
+          </div>
+          <div>
+            <p class="font-semibold text-silloun-green">Marie Dupont</p>
+            <p class="text-gray-500 text-sm">Ferme du Soleil</p>
+          </div>
+        </div>
+        <p class="text-gray-600 italic">
+          "Simple d'utilisation, commission raisonnable, et surtout un vrai soutien 
+          de l'équipe Silloun. Je recommande à tous les producteurs qui veulent 
+          vendre en direct !"
+        </p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FAQ -->
+<section class="py-12 bg-white">
+  <div class="max-w-3xl mx-auto px-4">
+    <div class="text-center mb-10">
+      <h2 class="font-piepie text-silloun-green text-3xl">QUESTIONS FRÉQUENTES</h2>
+    </div>
+    
+    <div class="space-y-4">
+      <% [
+        { q: "Combien coûte l'inscription ?", a: "L'inscription est totalement gratuite. Vous ne payez qu'une commission de 8% sur vos ventes effectives." },
+        { q: "Quand suis-je payé ?", a: "Les paiements sont effectués sous 48h après que le client ait récupéré sa commande. Les fonds sont versés directement sur votre compte bancaire via Stripe." },
+        { q: "Puis-je vendre à la ferme ET sur les marchés ?", a: "Oui ! Vous pouvez configurer plusieurs points de retrait : à la ferme, sur différents marchés... C'est vous qui décidez où et quand." },
+        { q: "Comment sont vérifiés les producteurs ?", a: "Nous vérifions le numéro SIRET de chaque producteur avant de valider son compte. Cela garantit le sérieux de notre plateforme." },
+        { q: "Puis-je modifier mes produits et prix à tout moment ?", a: "Absolument ! Vous avez un tableau de bord complet pour gérer vos produits, prix, stocks et disponibilités en temps réel." }
+      ].each do |faq| %>
+        <details class="bg-gray-50 rounded-xl">
+          <summary class="px-6 py-4 cursor-pointer font-semibold text-silloun-green flex items-center justify-between">
+            <%= faq[:q] %>
+            <svg class="w-5 h-5 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+            </svg>
+          </summary>
+          <div class="px-6 pb-4 text-gray-600">
+            <%= faq[:a] %>
+          </div>
+        </details>
+      <% end %>
+    </div>
+  </div>
+</section>

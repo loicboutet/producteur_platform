@@ -1,0 +1,171 @@
+<% content_for(:title, "Paiements - Espace Producteur") %>
+
+<!-- Header -->
+<div class="flex flex-col md:flex-row md:items-center md:justify-between mb-8">
+  <div>
+    <h1 class="font-piepie text-3xl md:text-4xl text-silloun-green mb-2">PAIEMENTS</h1>
+    <p class="text-gray-600">Gérez vos paiements et suivez vos revenus</p>
+  </div>
+  <a href="#" class="btn-silloun-outline mt-4 md:mt-0 inline-flex items-center">
+    <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"></path>
+    </svg>
+    Tableau de bord Stripe
+  </a>
+</div>
+
+<!-- Stripe Status -->
+<% if @producer[:stripe_connected] %>
+  <div class="bg-green-50 border border-green-200 rounded-xl p-4 mb-8 flex items-center justify-between">
+    <div class="flex items-center">
+      <div class="w-12 h-12 bg-green-100 rounded-lg flex items-center justify-center mr-4">
+        <svg class="w-6 h-6 text-green-600" fill="currentColor" viewBox="0 0 20 20">
+          <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"></path>
+        </svg>
+      </div>
+      <div>
+        <p class="font-bold text-green-800">Compte Stripe Connect actif</p>
+        <p class="text-sm text-green-600">Vos paiements sont automatiquement transférés sur votre compte bancaire</p>
+      </div>
+    </div>
+  </div>
+<% else %>
+  <div class="bg-orange-50 border border-orange-200 rounded-xl p-6 mb-8">
+    <div class="flex items-start">
+      <div class="w-12 h-12 bg-orange-100 rounded-lg flex items-center justify-center mr-4 flex-shrink-0">
+        <svg class="w-6 h-6 text-orange-600" fill="currentColor" viewBox="0 0 20 20">
+          <path fill-rule="evenodd" d="M8.257 3.099c.765-1.36 2.722-1.36 3.486 0l5.58 9.92c.75 1.334-.213 2.98-1.742 2.98H4.42c-1.53 0-2.493-1.646-1.743-2.98l5.58-9.92zM11 13a1 1 0 11-2 0 1 1 0 012 0zm-1-8a1 1 0 00-1 1v3a1 1 0 002 0V6a1 1 0 00-1-1z" clip-rule="evenodd"></path>
+        </svg>
+      </div>
+      <div class="flex-1">
+        <p class="font-bold text-orange-800 mb-1">Configurez votre compte de paiement</p>
+        <p class="text-sm text-orange-700 mb-4">Connectez votre compte bancaire via Stripe pour recevoir vos paiements automatiquement.</p>
+        <%= link_to mockups_producer_stripe_connect_path, class: "btn-silloun-primary inline-flex items-center" do %>
+          Connecter mon compte bancaire
+        <% end %>
+      </div>
+    </div>
+  </div>
+<% end %>
+
+<!-- Balance Cards -->
+<div class="grid md:grid-cols-3 gap-6 mb-8">
+  <!-- Pending Balance -->
+  <div class="bg-white rounded-xl shadow-sm border border-gray-100 p-6">
+    <div class="flex items-center justify-between mb-4">
+      <div class="w-12 h-12 bg-yellow-100 rounded-lg flex items-center justify-center">
+        <svg class="w-6 h-6 text-yellow-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+        </svg>
+      </div>
+    </div>
+    <p class="text-3xl font-bold text-gray-900"><%= number_to_currency(@pending_balance, unit: "€", format: "%n %u") %></p>
+    <p class="text-sm text-gray-500">En attente de virement</p>
+    <p class="text-xs text-gray-400 mt-1">Sera viré sous 7 jours</p>
+  </div>
+
+  <!-- Available Balance -->
+  <div class="bg-white rounded-xl shadow-sm border border-gray-100 p-6">
+    <div class="flex items-center justify-between mb-4">
+      <div class="w-12 h-12 bg-green-100 rounded-lg flex items-center justify-center">
+        <svg class="w-6 h-6 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+        </svg>
+      </div>
+    </div>
+    <p class="text-3xl font-bold text-silloun-green"><%= number_to_currency(@available_balance, unit: "€", format: "%n %u") %></p>
+    <p class="text-sm text-gray-500">Total perçu ce mois</p>
+  </div>
+
+  <!-- Commission -->
+  <div class="bg-white rounded-xl shadow-sm border border-gray-100 p-6">
+    <div class="flex items-center justify-between mb-4">
+      <div class="w-12 h-12 bg-purple-100 rounded-lg flex items-center justify-center">
+        <svg class="w-6 h-6 text-purple-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 7h6m0 10v-3m-3 3h.01M9 17h.01M9 14h.01M12 14h.01M15 11h.01M12 11h.01M9 11h.01M7 21h10a2 2 0 002-2V5a2 2 0 00-2-2H7a2 2 0 00-2 2v14a2 2 0 002 2z"></path>
+        </svg>
+      </div>
+    </div>
+    <p class="text-3xl font-bold text-gray-900">10%</p>
+    <p class="text-sm text-gray-500">Commission Silloun</p>
+    <p class="text-xs text-gray-400 mt-1">Prélevée automatiquement</p>
+  </div>
+</div>
+
+<!-- Transactions -->
+<div class="bg-white rounded-xl shadow-sm border border-gray-100 overflow-hidden">
+  <div class="p-6 border-b border-gray-100 flex items-center justify-between">
+    <h2 class="font-piepie text-xl text-silloun-green">DERNIÈRES TRANSACTIONS</h2>
+    <button class="btn-silloun-outline text-sm inline-flex items-center">
+      <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path>
+      </svg>
+      Exporter
+    </button>
+  </div>
+  
+  <div class="overflow-x-auto">
+    <table class="w-full">
+      <thead class="bg-gray-50 border-b border-gray-100">
+        <tr>
+          <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Commande</th>
+          <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Date</th>
+          <th class="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider">Montant</th>
+          <th class="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider">Commission</th>
+          <th class="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider">Net</th>
+          <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Statut</th>
+        </tr>
+      </thead>
+      <tbody class="divide-y divide-gray-100">
+        <% @transactions.each do |tx| %>
+          <tr class="hover:bg-gray-50 transition">
+            <td class="px-6 py-4">
+              <span class="font-medium text-gray-900"><%= tx[:reference] %></span>
+            </td>
+            <td class="px-6 py-4 text-gray-600">
+              <%= tx[:date].strftime("%d/%m/%Y") %>
+            </td>
+            <td class="px-6 py-4 text-right text-gray-900">
+              <%= number_to_currency(tx[:amount], unit: "€", format: "%n %u") %>
+            </td>
+            <td class="px-6 py-4 text-right text-red-600">
+              -<%= number_to_currency(tx[:commission], unit: "€", format: "%n %u") %>
+            </td>
+            <td class="px-6 py-4 text-right font-semibold text-silloun-green">
+              <%= number_to_currency(tx[:net], unit: "€", format: "%n %u") %>
+            </td>
+            <td class="px-6 py-4">
+              <% if tx[:status] == "paid" %>
+                <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-green-100 text-green-800">
+                  Versé
+                </span>
+              <% else %>
+                <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-yellow-100 text-yellow-800">
+                  En attente
+                </span>
+              <% end %>
+            </td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<!-- Info -->
+<div class="mt-8 bg-blue-50 rounded-xl p-6">
+  <div class="flex items-start">
+    <svg class="w-6 h-6 text-blue-600 mr-3 flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+    </svg>
+    <div>
+      <h4 class="font-semibold text-blue-800 mb-1">Comment fonctionnent les paiements ?</h4>
+      <ul class="text-sm text-blue-700 space-y-1">
+        <li>• Les clients paient directement sur Silloun via Stripe</li>
+        <li>• Une commission de 10% est prélevée automatiquement</li>
+        <li>• Votre part nette est versée sur votre compte sous 7 jours</li>
+        <li>• Vous pouvez suivre tous vos paiements ici ou sur le tableau de bord Stripe</li>
+      </ul>
+    </div>
+  </div>
+</div>

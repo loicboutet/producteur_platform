@@ -1,0 +1,269 @@
+<% content_for(:title, "Tableau de bord - Espace Producteur") %>
+
+<!-- Welcome Section -->
+<div class="mb-8">
+  <h1 class="font-piepie text-3xl md:text-4xl text-silloun-green mb-2">
+    BONJOUR <%= @producer[:first_name].upcase %> ! 👋
+  </h1>
+  <p class="text-gray-600">Voici un résumé de votre activité sur Silloun</p>
+</div>
+
+<!-- Alerts Section -->
+<% new_orders_count = @recent_orders.count { |o| o[:status] == "new" } %>
+<% if new_orders_count > 0 %>
+  <div class="bg-silloun-yellow rounded-xl p-4 mb-8 flex items-center justify-between">
+    <div class="flex items-center">
+      <span class="text-2xl mr-3">🔔</span>
+      <div>
+        <p class="font-bold text-silloun-green">Vous avez <%= new_orders_count %> nouvelle(s) commande(s) !</p>
+        <p class="text-sm text-silloun-green opacity-80">N'oubliez pas de les préparer pour vos clients</p>
+      </div>
+    </div>
+    <%= link_to "Voir les commandes", mockups_producer_orders_path, class: "btn-silloun-secondary text-sm" %>
+  </div>
+<% end %>
+
+<% if @low_stock_products.any? %>
+  <div class="bg-orange-100 border border-orange-300 rounded-xl p-4 mb-8 flex items-center justify-between">
+    <div class="flex items-center">
+      <span class="text-2xl mr-3">⚠️</span>
+      <div>
+        <p class="font-bold text-orange-800">Stock faible sur <%= @low_stock_products.count %> produit(s)</p>
+        <p class="text-sm text-orange-700">
+          <%= @low_stock_products.map { |p| p[:name] }.join(", ") %>
+        </p>
+      </div>
+    </div>
+    <%= link_to "Gérer les stocks", mockups_producer_products_path, class: "bg-orange-600 hover:bg-orange-700 text-white font-bold py-2 px-4 rounded-lg text-sm transition" %>
+  </div>
+<% end %>
+
+<!-- Stats Cards -->
+<div class="grid grid-cols-2 lg:grid-cols-4 gap-4 mb-8">
+  <!-- Revenue This Month -->
+  <div class="bg-white rounded-xl p-6 shadow-sm border border-gray-100">
+    <div class="flex items-center justify-between mb-4">
+      <div class="w-12 h-12 bg-green-100 rounded-lg flex items-center justify-center">
+        <svg class="w-6 h-6 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+        </svg>
+      </div>
+      <span class="text-green-600 text-sm font-medium flex items-center">
+        <svg class="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 10l7-7m0 0l7 7m-7-7v18"></path>
+        </svg>
+        +<%= @stats[:revenue_growth] %>%
+      </span>
+    </div>
+    <p class="text-2xl font-bold text-gray-900"><%= number_to_currency(@stats[:this_month_revenue], unit: "€", format: "%n %u") %></p>
+    <p class="text-sm text-gray-500">Ventes ce mois</p>
+  </div>
+
+  <!-- Orders This Month -->
+  <div class="bg-white rounded-xl p-6 shadow-sm border border-gray-100">
+    <div class="flex items-center justify-between mb-4">
+      <div class="w-12 h-12 bg-blue-100 rounded-lg flex items-center justify-center">
+        <svg class="w-6 h-6 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z"></path>
+        </svg>
+      </div>
+      <span class="text-green-600 text-sm font-medium flex items-center">
+        <svg class="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 10l7-7m0 0l7 7m-7-7v18"></path>
+        </svg>
+        +<%= @stats[:orders_growth] %>%
+      </span>
+    </div>
+    <p class="text-2xl font-bold text-gray-900"><%= @stats[:this_month_orders] %></p>
+    <p class="text-sm text-gray-500">Commandes ce mois</p>
+  </div>
+
+  <!-- Average Order -->
+  <div class="bg-white rounded-xl p-6 shadow-sm border border-gray-100">
+    <div class="flex items-center justify-between mb-4">
+      <div class="w-12 h-12 bg-purple-100 rounded-lg flex items-center justify-center">
+        <svg class="w-6 h-6 text-purple-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 7h6m0 10v-3m-3 3h.01M9 17h.01M9 14h.01M12 14h.01M15 11h.01M12 11h.01M9 11h.01M7 21h10a2 2 0 002-2V5a2 2 0 00-2-2H7a2 2 0 00-2 2v14a2 2 0 002 2z"></path>
+        </svg>
+      </div>
+    </div>
+    <p class="text-2xl font-bold text-gray-900"><%= number_to_currency(@stats[:average_order], unit: "€", format: "%n %u") %></p>
+    <p class="text-sm text-gray-500">Panier moyen</p>
+  </div>
+
+  <!-- Returning Customers -->
+  <div class="bg-white rounded-xl p-6 shadow-sm border border-gray-100">
+    <div class="flex items-center justify-between mb-4">
+      <div class="w-12 h-12 bg-silloun-yellow rounded-lg flex items-center justify-center">
+        <svg class="w-6 h-6 text-silloun-green" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"></path>
+        </svg>
+      </div>
+    </div>
+    <p class="text-2xl font-bold text-gray-900"><%= @stats[:returning_rate] %>%</p>
+    <p class="text-sm text-gray-500">Clients fidèles</p>
+  </div>
+</div>
+
+<div class="grid lg:grid-cols-3 gap-8">
+  <!-- Recent Orders -->
+  <div class="lg:col-span-2">
+    <div class="bg-white rounded-xl shadow-sm border border-gray-100 overflow-hidden">
+      <div class="p-6 border-b border-gray-100 flex items-center justify-between">
+        <h2 class="font-piepie text-xl text-silloun-green">DERNIÈRES COMMANDES</h2>
+        <%= link_to "Voir tout", mockups_producer_orders_path, class: "text-silloun-green hover:underline text-sm font-medium" %>
+      </div>
+      
+      <div class="divide-y divide-gray-100">
+        <% @recent_orders.each do |order| %>
+          <div class="p-4 hover:bg-gray-50 transition">
+            <div class="flex items-center justify-between">
+              <div class="flex items-center space-x-4">
+                <div class="w-10 h-10 rounded-full bg-gray-100 flex items-center justify-center">
+                  <span class="text-gray-600 font-medium text-sm"><%= order[:customer][:name].split.map(&:first).join %></span>
+                </div>
+                <div>
+                  <p class="font-medium text-gray-900"><%= order[:customer][:name] %></p>
+                  <p class="text-sm text-gray-500"><%= order[:reference] %> • <%= order[:items_count] %> articles</p>
+                </div>
+              </div>
+              <div class="text-right">
+                <p class="font-bold text-gray-900"><%= number_to_currency(order[:total], unit: "€", format: "%n %u") %></p>
+                <% status_classes = {
+                  "new" => "bg-blue-100 text-blue-800",
+                  "preparing" => "bg-yellow-100 text-yellow-800",
+                  "ready" => "bg-green-100 text-green-800",
+                  "picked_up" => "bg-gray-100 text-gray-600"
+                } %>
+                <span class="inline-block px-2 py-1 text-xs font-medium rounded-full <%= status_classes[order[:status]] %>">
+                  <%= order[:status_label] %>
+                </span>
+              </div>
+            </div>
+          </div>
+        <% end %>
+      </div>
+    </div>
+  </div>
+
+  <!-- Quick Actions & Top Products -->
+  <div class="space-y-8">
+    <!-- Quick Actions -->
+    <div class="bg-white rounded-xl shadow-sm border border-gray-100 p-6">
+      <h2 class="font-piepie text-xl text-silloun-green mb-4">ACTIONS RAPIDES</h2>
+      <div class="space-y-3">
+        <%= link_to new_mockups_producer_product_path, class: "flex items-center p-3 rounded-lg bg-silloun-yellow hover:bg-yellow-400 transition group" do %>
+          <div class="w-10 h-10 bg-silloun-green rounded-lg flex items-center justify-center mr-3">
+            <svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"></path>
+            </svg>
+          </div>
+          <div>
+            <p class="font-semibold text-silloun-green">Ajouter un produit</p>
+            <p class="text-sm text-silloun-green opacity-80">Enrichir votre catalogue</p>
+          </div>
+        <% end %>
+
+        <%= link_to mockups_producer_orders_path(status: "new"), class: "flex items-center p-3 rounded-lg bg-gray-100 hover:bg-gray-200 transition group" do %>
+          <div class="w-10 h-10 bg-blue-500 rounded-lg flex items-center justify-center mr-3">
+            <svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-6 9l2 2 4-4"></path>
+            </svg>
+          </div>
+          <div>
+            <p class="font-semibold text-gray-800">Traiter les commandes</p>
+            <p class="text-sm text-gray-600"><%= new_orders_count %> en attente</p>
+          </div>
+        <% end %>
+
+        <%= link_to mockups_producer_products_path, class: "flex items-center p-3 rounded-lg bg-gray-100 hover:bg-gray-200 transition group" do %>
+          <div class="w-10 h-10 bg-purple-500 rounded-lg flex items-center justify-center mr-3">
+            <svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 7h.01M7 3h5c.512 0 1.024.195 1.414.586l7 7a2 2 0 010 2.828l-7 7a2 2 0 01-2.828 0l-7-7A1.994 1.994 0 013 12V7a4 4 0 014-4z"></path>
+            </svg>
+          </div>
+          <div>
+            <p class="font-semibold text-gray-800">Mettre à jour les stocks</p>
+            <p class="text-sm text-gray-600"><%= @producer[:products_count] %> produits</p>
+          </div>
+        <% end %>
+      </div>
+    </div>
+
+    <!-- Top Products -->
+    <div class="bg-white rounded-xl shadow-sm border border-gray-100 p-6">
+      <h2 class="font-piepie text-xl text-silloun-green mb-4">TOP PRODUITS</h2>
+      <div class="space-y-4">
+        <% @stats[:top_products].first(4).each_with_index do |product, index| %>
+          <div class="flex items-center justify-between">
+            <div class="flex items-center">
+              <span class="w-6 h-6 rounded-full bg-silloun-green text-white text-xs font-bold flex items-center justify-center mr-3">
+                <%= index + 1 %>
+              </span>
+              <span class="text-gray-800"><%= product[:name] %></span>
+            </div>
+            <div class="text-right">
+              <p class="font-semibold text-gray-900"><%= product[:sales] %> vendus</p>
+              <p class="text-xs text-gray-500"><%= number_to_currency(product[:revenue], unit: "€", format: "%n %u") %></p>
+            </div>
+          </div>
+        <% end %>
+      </div>
+      <%= link_to "Voir les statistiques", mockups_producer_stats_path, class: "block text-center text-silloun-green hover:underline text-sm font-medium mt-4" %>
+    </div>
+  </div>
+</div>
+
+<!-- Upcoming Pickups -->
+<div class="mt-8 bg-white rounded-xl shadow-sm border border-gray-100 p-6">
+  <h2 class="font-piepie text-xl text-silloun-green mb-4">PROCHAINS RETRAITS</h2>
+  <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-4">
+    <!-- Today at Farm -->
+    <div class="border border-gray-200 rounded-lg p-4">
+      <div class="flex items-center justify-between mb-3">
+        <span class="bg-green-100 text-green-800 text-xs font-medium px-2 py-1 rounded-full">Aujourd'hui</span>
+        <span class="text-sm text-gray-500">10h00 - 12h00</span>
+      </div>
+      <div class="flex items-center mb-2">
+        <svg class="w-5 h-5 text-gray-400 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"></path>
+        </svg>
+        <span class="font-medium text-gray-800">À la ferme</span>
+      </div>
+      <p class="text-2xl font-bold text-silloun-green">2 commandes</p>
+      <p class="text-sm text-gray-500">68,30 € de CA</p>
+    </div>
+
+    <!-- Saturday Market -->
+    <div class="border border-gray-200 rounded-lg p-4">
+      <div class="flex items-center justify-between mb-3">
+        <span class="bg-blue-100 text-blue-800 text-xs font-medium px-2 py-1 rounded-full">Samedi</span>
+        <span class="text-sm text-gray-500">08h00 - 13h00</span>
+      </div>
+      <div class="flex items-center mb-2">
+        <svg class="w-5 h-5 text-gray-400 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"></path>
+        </svg>
+        <span class="font-medium text-gray-800">Marché de Limoges</span>
+      </div>
+      <p class="text-2xl font-bold text-silloun-green">1 commande</p>
+      <p class="text-sm text-gray-500">28,00 € de CA</p>
+    </div>
+
+    <!-- Tuesday Market -->
+    <div class="border border-gray-200 rounded-lg p-4">
+      <div class="flex items-center justify-between mb-3">
+        <span class="bg-gray-100 text-gray-800 text-xs font-medium px-2 py-1 rounded-full">Mardi</span>
+        <span class="text-sm text-gray-500">07h00 - 13h00</span>
+      </div>
+      <div class="flex items-center mb-2">
+        <svg class="w-5 h-5 text-gray-400 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"></path>
+        </svg>
+        <span class="font-medium text-gray-800">Marché de Brive</span>
+      </div>
+      <p class="text-2xl font-bold text-silloun-green">1 commande</p>
+      <p class="text-sm text-gray-500">22,30 € de CA</p>
+    </div>
+  </div>
+</div>
